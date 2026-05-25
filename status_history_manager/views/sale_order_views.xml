@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sale_order_form_history" model="ir.ui.view">
+        <field name="name">sale.order.form.history</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Change History tab — only rendered for History User / Manager -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Change History"
+                      name="change_history_page"
+                      icon="fa-history"
+                      groups="status_history_manager.group_history_user">
+                    <div class="o_field_widget">
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <span class="badge bg-success me-1">
+                                    <i class="fa fa-exchange"/> Status Changes
+                                </span>
+                                <span class="badge bg-primary me-1">
+                                    <i class="fa fa-usd"/> Price Changes
+                                </span>
+                                <span class="badge bg-warning text-dark me-1">
+                                    <i class="fa fa-cubes"/> Quantity Changes
+                                </span>
+                                <span class="badge bg-secondary me-1">
+                                    <i class="fa fa-percent"/> Discount Changes
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <field name="history_log_ids"
+                           widget="one2many"
+                           mode="list"
+                           nolabel="1"
+                           options="{'no_create': True, 'no_open': False}">
+                        <list create="false" edit="false" delete="false"
+                              decoration-success="change_type == 'state'"
+                              decoration-info="change_type == 'price'"
+                              decoration-warning="change_type == 'quantity'"
+                              decoration-muted="change_type == 'discount'">
+                            <field name="date" string="Date &amp; Time"/>
+                            <field name="employee_name" string="Changed By"/>
+                            <field name="field_label" string="Changed Field"/>
+                            <field name="change_type" string="Type"
+                                   widget="badge"
+                                   decoration-success="change_type == 'state'"
+                                   decoration-info="change_type == 'price'"
+                                   decoration-warning="change_type == 'quantity'"
+                                   decoration-muted="change_type == 'discount'"/>
+                            <field name="product_name" string="Product"/>
+                            <field name="value_from" string="From"/>
+                            <field name="value_to" string="To"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

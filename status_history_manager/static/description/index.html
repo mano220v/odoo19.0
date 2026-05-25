@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<style>
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #333; margin: 0; padding: 0; background:#fff; }
+  .hero { background: linear-gradient(135deg,#1a1050 0%,#4a2080 60%,#714baf 100%);
+          color:#fff; padding:52px 44px 44px; text-align:center; }
+  .hero h1 { font-size:38px; margin:0 0 10px; font-weight:800; letter-spacing:-1px; }
+  .hero p  { font-size:18px; margin:0; opacity:.88; }
+  .price-tag { display:inline-block; background:#714baf; color:#fff; border:3px solid #fff;
+               border-radius:30px; padding:8px 30px; font-size:22px; font-weight:800;
+               margin-top:22px; letter-spacing:.5px; }
+  .section   { padding:40px 44px; max-width:960px; margin:0 auto; }
+  .section h2 { color:#1a1050; font-size:24px; border-bottom:3px solid #714baf;
+                padding-bottom:8px; margin-bottom:20px; }
+  .screenshot-wrap { text-align:center; margin:28px 0; }
+  .screenshot-wrap img { width:100%; max-width:900px; border-radius:10px;
+                          box-shadow:0 6px 32px rgba(0,0,0,.18); border:1px solid #ddd; }
+  .screenshot-caption { font-size:13px; color:#888; margin-top:8px; font-style:italic; }
+  .grid3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:18px; margin:18px 0; }
+  .card  { background:#f7f5ff; border-radius:10px; padding:20px 18px;
+           border-left:5px solid #714baf; }
+  .card h3 { margin:0 0 6px; color:#1a1050; font-size:15px; }
+  .card p  { margin:0; font-size:13px; color:#555; line-height:1.5; }
+  .badge-row { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; }
+  .badge { padding:5px 14px; border-radius:20px; font-size:13px; font-weight:700; }
+  .b-green  { background:#d5f5e3; color:#1e8449; }
+  .b-blue   { background:#d6eaf8; color:#1a5276; }
+  .b-orange { background:#fdebd0; color:#ca6f1e; }
+  .b-gray   { background:#f2f3f4; color:#5d6d7e; }
+  .b-purple { background:#ede0ff; color:#5b2d8e; }
+  table  { width:100%; border-collapse:collapse; margin-top:14px; font-size:14px; }
+  th     { background:#714baf; color:#fff; padding:10px 14px; text-align:left; }
+  td     { padding:8px 14px; border-bottom:1px solid #eee; }
+  tr:nth-child(even) td { background:#fafafa; }
+  .highlight { background:#f2eeff; border:1px solid #c5a8ff; border-radius:8px;
+               padding:14px 18px; margin:18px 0; font-size:14px; }
+  .steps { counter-reset:step; }
+  .step  { counter-increment:step; display:flex; gap:14px; margin:14px 0; align-items:flex-start; }
+  .step::before { content:counter(step); background:#714baf; color:#fff;
+                  min-width:30px; height:30px; border-radius:50%; display:flex;
+                  align-items:center; justify-content:center;
+                  font-weight:800; font-size:14px; flex-shrink:0; }
+  footer { background:#1a1050; color:#aaa; text-align:center; padding:24px; font-size:13px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>📋 Field Tracker History Management</h1>
+  <p>Complete audit trail for Purchase, Sales &amp; Inventory —<br/>
+     who changed what, when, and from which value to which.</p>
+  <div class="price-tag">💰 Only $3.00 — One-time Purchase</div>
+</div>
+
+<div class="section">
+  <h2>🎯 What Does This Module Do?</h2>
+  <p>Every time an employee changes a <strong>Status</strong>, <strong>Price</strong>,
+  <strong>Quantity</strong> or <strong>Discount</strong> on a Purchase Order, Sales Order,
+  or Stock Transfer — the module records it <strong>automatically</strong>. No setup.
+  No configuration. Just install and it works.</p>
+
+  <div class="highlight">
+    <strong>📌 Example:</strong> Arjun Sharma changed the Unit Price of "Dell Laptop 14in"
+    on PO/2025/0042 from <strong>$1,200.00</strong> → <strong>$1,050.00</strong>
+    on 25 May 2025 at 11:15 AM.
+  </div>
+</div>
+
+<div class="section">
+  <h2>📦 Purchase Orders — Change History Tab</h2>
+  <p>See every status, price, and quantity change directly inside the Purchase Order form,
+  in the <strong>Change History</strong> notebook tab. Colour-coded by type for instant clarity.</p>
+  <div class="screenshot-wrap">
+    <img src="screenshot_01_purchase.png" alt="Purchase Order Change History Tab"/>
+    <div class="screenshot-caption">Purchase Order form — Change History tab showing status, price and quantity changes with employee names</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>🛒 Sales Orders — Full Audit Including Discounts</h2>
+  <p>Sales Orders also track <strong>Discount %</strong> changes in addition to status,
+  price and quantity — giving you a complete picture of how deals evolved.</p>
+  <div class="screenshot-wrap">
+    <img src="screenshot_02_sales.png" alt="Sales Order Change History Tab"/>
+    <div class="screenshot-caption">Sales Order form — tracking Status, Price, Quantity and Discount changes per line</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>🏭 Inventory Transfers — Status &amp; Quantity Tracking</h2>
+  <p>Stock Pickings record both <strong>Demand Quantity</strong> and <strong>Done Quantity</strong>
+  changes on every move line, alongside the picking status transitions.</p>
+  <div class="screenshot-wrap">
+    <img src="screenshot_03_inventory.png" alt="Inventory Transfer Change History Tab"/>
+    <div class="screenshot-caption">Stock Picking form — Change History for inventory status and quantity adjustments</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>🗂️ Global Change History Menu</h2>
+  <p>In addition to the notebook tab on each document, a dedicated
+  <strong>Change History</strong> menu is added under Purchase, Sales and Inventory apps —
+  with search, filters, and group-by support.</p>
+  <div class="screenshot-wrap">
+    <img src="screenshot_04_global_history.png" alt="Global Change History List View"/>
+    <div class="screenshot-caption">Global Change History list — searchable, filterable view across all documents and employees</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>✅ What Gets Tracked</h2>
+  <table>
+    <tr><th>Document</th><th>Field Tracked</th><th>Change Type</th></tr>
+    <tr><td>Purchase Order</td><td>Status</td><td><span class="badge b-green">State</span></td></tr>
+    <tr><td>Purchase Order Line</td><td>Unit Price</td><td><span class="badge b-blue">Price</span></td></tr>
+    <tr><td>Purchase Order Line</td><td>Ordered Quantity</td><td><span class="badge b-orange">Quantity</span></td></tr>
+    <tr><td>Sale Order</td><td>Status</td><td><span class="badge b-green">State</span></td></tr>
+    <tr><td>Sale Order Line</td><td>Unit Price</td><td><span class="badge b-blue">Price</span></td></tr>
+    <tr><td>Sale Order Line</td><td>Ordered Quantity</td><td><span class="badge b-orange">Quantity</span></td></tr>
+    <tr><td>Sale Order Line</td><td>Discount (%)</td><td><span class="badge b-gray">Discount</span></td></tr>
+    <tr><td>Stock Picking</td><td>Status</td><td><span class="badge b-green">State</span></td></tr>
+    <tr><td>Stock Move</td><td>Demand Quantity</td><td><span class="badge b-orange">Quantity</span></td></tr>
+    <tr><td>Stock Move</td><td>Done Quantity</td><td><span class="badge b-orange">Quantity</span></td></tr>
+  </table>
+
+  <h2 style="margin-top:36px">👤 Each Log Entry Records</h2>
+  <div class="badge-row">
+    <span class="badge b-purple">📅 Date &amp; Time</span>
+    <span class="badge b-green">👤 Employee Name</span>
+    <span class="badge b-blue">🔄 Changed Field</span>
+    <span class="badge b-orange">📉 From Value</span>
+    <span class="badge b-orange">📈 To Value</span>
+    <span class="badge b-gray">📦 Product (for lines)</span>
+    <span class="badge b-gray">🔗 Document Reference</span>
+  </div>
+
+  <h2 style="margin-top:36px">🚀 How to Use</h2>
+  <div class="steps">
+    <div class="step"><div>Install the module — <strong>no configuration required</strong>.</div></div>
+    <div class="step"><div>Open any <strong>Purchase Order</strong>, <strong>Sales Order</strong> or <strong>Inventory Transfer</strong>.</div></div>
+    <div class="step"><div>Click the <strong>Change History</strong> tab in the notebook.</div></div>
+    <div class="step"><div>See the complete, colour-coded log of all changes made by your team.</div></div>
+    <div class="step"><div>Use the <strong>Change History</strong> menu (under Purchase / Sales / Inventory) for a global view.</div></div>
+  </div>
+
+  <h2 style="margin-top:36px">⚙️ Technical Details</h2>
+  <div class="grid3">
+    <div class="card"><h3>✅ Odoo 19</h3><p>Fully compatible with Odoo 19. Version string: 19.0.1.0.0</p></div>
+    <div class="card"><h3>🔗 Dependencies</h3><p>purchase, sale_management, stock, hr — all standard Odoo modules</p></div>
+    <div class="card"><h3>🔒 Security</h3><p>All users can read. Only administrators can modify or delete log entries.</p></div>
+    <div class="card"><h3>⚡ Performance</h3><p>Context guard prevents recursive writes. Only real changes are logged.</p></div>
+    <div class="card"><h3>🏷️ License</h3><p>OPL-1 — Odoo Proprietary License. Single Odoo instance.</p></div>
+    <div class="card"><h3>💰 Price</h3><p>$3.00 one-time. No subscription. No hidden fees.</p></div>
+  </div>
+</div>
+
+<footer>
+  Field Tracker History Management — Odoo 19 — $3.00 — OPL-1 License<br/>
+</footer>
+</body>
+</html>
