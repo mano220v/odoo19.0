@@ -52,7 +52,7 @@ Perfect for:
     'maintainer': 'Techie Buddy',
 
     'license': 'OPL-1',
-    'price': 213.00,
+    'price': 0.00,
     'currency': 'USD',
 
     'depends': [
