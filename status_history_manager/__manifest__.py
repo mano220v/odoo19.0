@@ -5,7 +5,7 @@
     'summary': 'Track status, price & quantity changes in Purchase, Sales and Inventory with employee audit log',
 
     'description': """
-Status & Changes History Manager
+Audit log - Status & Changes History Manager
 =================================
 
 Track every important change across your business documents — automatically.
