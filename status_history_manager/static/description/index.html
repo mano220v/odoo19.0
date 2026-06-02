@@ -1,173 +1,694 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-          rel="stylesheet"/>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
-<style>
-  body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #333; margin: 0; padding: 0; background:#fff; }
-  .hero { background: linear-gradient(135deg,#1a1050 0%,#4a2080 60%,#714baf 100%);
-          color:#fff; padding:52px 44px 44px; text-align:center; }
-  .hero h1 { font-size:38px; margin:0 0 10px; font-weight:800; letter-spacing:-1px; }
-  .hero p  { font-size:18px; margin:0; opacity:.88; }
-  .price-tag { display:inline-block; background:#714baf; color:#fff; border:3px solid #fff;
-               border-radius:30px; padding:8px 30px; font-size:22px; font-weight:800;
-               margin-top:22px; letter-spacing:.5px; }
-  .section   { padding:40px 44px; max-width:960px; margin:0 auto; }
-  .section h2 { color:#1a1050; font-size:24px; border-bottom:3px solid #714baf;
-                padding-bottom:8px; margin-bottom:20px; }
-  .screenshot-wrap { text-align:center; margin:28px 0; }
-  .screenshot-wrap img { width:100%; max-width:900px; border-radius:10px;
-                          box-shadow:0 6px 32px rgba(0,0,0,.18); border:1px solid #ddd; }
-  .screenshot-caption { font-size:13px; color:#888; margin-top:8px; font-style:italic; }
-  .grid3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:18px; margin:18px 0; }
-  .card  { background:#f7f5ff; border-radius:10px; padding:20px 18px;
-           border-left:5px solid #714baf; }
-  .card h3 { margin:0 0 6px; color:#1a1050; font-size:15px; }
-  .card p  { margin:0; font-size:13px; color:#555; line-height:1.5; }
-  .badge-row { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; }
-  .badge { padding:5px 14px; border-radius:20px; font-size:13px; font-weight:700; }
-  .b-green  { background:#d5f5e3; color:#1e8449; }
-  .b-blue   { background:#d6eaf8; color:#1a5276; }
-  .b-orange { background:#fdebd0; color:#ca6f1e; }
-  .b-gray   { background:#f2f3f4; color:#5d6d7e; }
-  .b-purple { background:#ede0ff; color:#5b2d8e; }
-  table  { width:100%; border-collapse:collapse; margin-top:14px; font-size:14px; }
-  th     { background:#714baf; color:#fff; padding:10px 14px; text-align:left; }
-  td     { padding:8px 14px; border-bottom:1px solid #eee; }
-  tr:nth-child(even) td { background:#fafafa; }
-  .highlight { background:#f2eeff; border:1px solid #c5a8ff; border-radius:8px;
-               padding:14px 18px; margin:18px 0; font-size:14px; }
-  .steps { counter-reset:step; }
-  .step  { counter-increment:step; display:flex; gap:14px; margin:14px 0; align-items:flex-start; }
-  .step::before { content:counter(step); background:#714baf; color:#fff;
-                  min-width:30px; height:30px; border-radius:50%; display:flex;
-                  align-items:center; justify-content:center;
-                  font-weight:800; font-size:14px; flex-shrink:0; }
-  footer { background:#1a1050; color:#aaa; text-align:center; padding:24px; font-size:13px; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Field Tracker History Management</title>
+  <style>
+    :root{
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-2: #f8f6ff;
+      --text: #1f2937;
+      --muted: #5b6472;
+      --line: #e6e8ef;
+      --primary: #5b3fd3;
+      --primary-2: #7d5cff;
+      --primary-3: #2f2b7a;
+      --green: #e8f8ef;
+      --green-t: #177245;
+      --blue: #e8f1ff;
+      --blue-t: #1f5ea8;
+      --orange: #fff1e1;
+      --orange-t: #b85b00;
+      --gray: #eef1f4;
+      --gray-t: #586270;
+      --purple: #f0e8ff;
+      --purple-t: #6a2fd8;
+      --shadow: 0 18px 45px rgba(26, 16, 80, .10);
+      --shadow-soft: 0 10px 30px rgba(31, 41, 55, .08);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    body{
+      margin:0;
+      padding:0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(125,92,255,.10), transparent 28%),
+        radial-gradient(circle at top right, rgba(91,63,211,.08), transparent 22%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .page{
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .hero{
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1b114f 0%, #39258c 45%, #6f4dd8 100%);
+      color: #fff;
+      border-radius: 28px;
+      padding: 34px 28px 30px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:-40px -60px auto auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(255,255,255,.16), transparent 68%);
+      border-radius: 50%;
+      pointer-events:none;
+    }
+
+    .hero-ribbon{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 14px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      margin-bottom: 18px;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero h1{
+      margin: 0;
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1.08;
+      letter-spacing: -1px;
+      font-weight: 900;
+    }
+
+    .hero p{
+      margin: 14px auto 0;
+      max-width: 860px;
+      font-size: 17px;
+      color: rgba(255,255,255,.90);
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 20px;
+      margin-top: 22px;
+      align-items: stretch;
+    }
+
+    .hero-card, .section, .faq-item, .stats-card, .feature-card, .tech-card, .shot-card, .note-box{
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-card{
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.12);
+      color: #fff;
+      padding: 18px;
+    }
+
+    .hero-card h3{
+      margin: 0 0 10px;
+      font-size: 16px;
+      letter-spacing: .2px;
+    }
+
+    .hero-card ul{
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(255,255,255,.90);
+    }
+
+    .hero-card li{ margin: 8px 0; }
+
+    .price-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-top: 16px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--primary-3);
+      font-weight: 900;
+      font-size: 16px;
+      box-shadow: 0 12px 25px rgba(0,0,0,.12);
+    }
+
+    .hero-shot{
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 24px;
+      padding: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 240px;
+    }
+
+    .hero-shot img{
+      width:100%;
+      max-width: 100%;
+      display:block;
+      border-radius: 18px;
+      box-shadow: 0 14px 35px rgba(0,0,0,.18);
+    }
+
+    .section{
+      margin-top: 22px;
+      padding: 26px;
+    }
+
+    .section-head{
+      margin-bottom: 18px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .section h2{
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.2;
+      color: var(--primary-3);
+      letter-spacing: -.4px;
+    }
+
+    .section p.lead{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 920px;
+    }
+
+    .highlight{
+      margin-top: 18px;
+      padding: 18px 18px;
+      background: linear-gradient(135deg, #f5efff 0%, #eef4ff 100%);
+      border: 1px solid #d9cdfb;
+      border-radius: 18px;
+      color: #2c275b;
+    }
+
+    .badge-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 16px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .b-green{ background: var(--green); color: var(--green-t); border-color: #cdeedb; }
+    .b-blue{ background: var(--blue); color: var(--blue-t); border-color: #cedefd; }
+    .b-orange{ background: var(--orange); color: var(--orange-t); border-color: #f5d2a8; }
+    .b-gray{ background: var(--gray); color: var(--gray-t); border-color: #dbe1e7; }
+    .b-purple{ background: var(--purple); color: var(--purple-t); border-color: #dcc9ff; }
+
+    .grid{
+      display:grid;
+      gap: 16px;
+    }
+
+    .grid-2{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .feature-card, .tech-card{
+      padding: 18px;
+    }
+
+    .feature-top{
+      display:flex;
+      gap: 14px;
+      align-items:flex-start;
+    }
+
+    .icon-box{
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+      background: linear-gradient(135deg, #ede8ff, #dfe9ff);
+      color: var(--primary);
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .feature-card h3, .tech-card h3{
+      margin: 0 0 8px;
+      font-size: 17px;
+      color: var(--primary-3);
+    }
+
+    .feature-card p, .tech-card p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .shot-card{
+      padding: 18px;
+      overflow:hidden;
+    }
+
+    .shot-card h3{
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: var(--primary-3);
+    }
+
+    .shot-card img{
+      width:100%;
+      display:block;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 30px rgba(31,41,55,.08);
+      background:#fff;
+    }
+
+    .shot-caption{
+      margin-top: 10px;
+      font-size: 13px;
+      color: #6b7280;
+      font-style: italic;
+    }
+
+    table{
+      width:100%;
+      border-collapse: separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      margin-top: 14px;
+      background: #fff;
+      box-shadow: var(--shadow-soft);
+    }
+
+    thead th{
+      background: linear-gradient(135deg, var(--primary-3), var(--primary));
+      color:#fff;
+      text-align:left;
+      padding: 14px 16px;
+      font-size: 14px;
+    }
+
+    tbody td{
+      padding: 12px 16px;
+      border-top: 1px solid #eef1f5;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    tbody tr:nth-child(even) td{
+      background: #fafbff;
+    }
+
+    .steps{
+      display:grid;
+      gap: 12px;
+      margin-top: 14px;
+      counter-reset: step;
+    }
+
+    .step{
+      counter-increment: step;
+      display:flex;
+      gap: 14px;
+      align-items:flex-start;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fff, #fbfbff);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .step::before{
+      content: counter(step);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color:#fff;
+      font-weight: 900;
+      box-shadow: 0 10px 20px rgba(91,63,211,.25);
+    }
+
+    .faq-item{
+      padding: 0;
+      overflow: hidden;
+    }
+
+    details{
+      border-top: 1px solid var(--line);
+    }
+
+    details:first-child{
+      border-top: 0;
+    }
+
+    summary{
+      cursor: pointer;
+      list-style: none;
+      padding: 18px 18px;
+      font-weight: 800;
+      color: var(--primary-3);
+    }
+
+    summary::-webkit-details-marker{
+      display:none;
+    }
+
+    details div{
+      padding: 0 18px 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    footer{
+      text-align:center;
+      padding: 24px 16px 8px;
+      color: #7b8190;
+      font-size: 13px;
+    }
+
+    .muted{
+      color: var(--muted);
+    }
+
+    @media (max-width: 900px){
+      .hero-grid,
+      .grid-2,
+      .grid-3{
+        grid-template-columns: 1fr;
+      }
+
+      .page{
+        padding: 14px;
+      }
+
+      .hero,
+      .section{
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .hero h1{
+        font-size: 32px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="page">
 
-<div class="hero">
-  <h1>📋 Field Tracker History Management</h1>
-  <p>Complete audit trail for Purchase, Sales &amp; Inventory —<br/>
-     who changed what, when, and from which value to which.</p>
-  <div class="price-tag">💰 Only Free</div>
-</div>
+    <header class="hero">
+      <div class="hero-ribbon">📌 Ready for Odoo Community &amp; Enterprise</div>
+      <h1>Field Tracker History Management</h1>
+      <p>
+        Complete audit trail for Purchase, Sales &amp; Inventory — see who changed what,
+        when it changed, and the exact before/after values.
+      </p>
 
-<div class="section">
-  <h2>🎯 What Does This Module Do?</h2>
-  <p>Every time an employee changes a <strong>Status</strong>, <strong>Price</strong>,
-  <strong>Quantity</strong> or <strong>Discount</strong> on a Purchase Order, Sales Order,
-  or Stock Transfer — the module records it <strong>automatically</strong>. No setup.
-  No configuration. Just install and it works.</p>
+      <div class="hero-grid">
+        <div class="hero-card">
+          <h3>What you get</h3>
+          <ul>
+            <li>Automatic tracking with no manual configuration</li>
+            <li>Change History notebook tab on each document</li>
+            <li>Global searchable history menu</li>
+            <li>Purchase, Sales, and Inventory line-level audit support</li>
+          </ul>
+          <div class="price-pill">💰 Only Free</div>
+        </div>
 
-  <div class="highlight">
-    <strong>📌 Example:</strong> Arjun Sharma changed the Unit Price of "Dell Laptop 14in"
-    on PO/2025/0042 from <strong>$1,200.00</strong> → <strong>$1,050.00</strong>
-    on 25 May 2025 at 11:15 AM.
+        <div class="hero-shot">
+          <img src="screenshot_04_global_history.png" alt="Global Change History List View" />
+        </div>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow">Overview</div>
+        <h2>What does this module do?</h2>
+        <p class="lead">
+          Every time an employee changes a Status, Price, Quantity, or Discount on a Purchase Order,
+          Sales Order, or Stock Transfer, the module records it automatically.
+          No setup. No configuration. Just install and use.
+        </p>
+      </div>
+
+      <div class="highlight">
+        <strong>Example:</strong> Arjun Sharma changed the Unit Price of “Dell Laptop 14in” on PO/2025/0042
+        from <strong>$1,200.00</strong> to <strong>$1,050.00</strong> on 25 May 2025 at 11:15 AM.
+      </div>
+
+      <div class="grid grid-2" style="margin-top:18px;">
+        <div class="feature-card">
+          <div class="feature-top">
+            <div class="icon-box">✓</div>
+            <div>
+              <h3>Automatic tracking</h3>
+              <p>Logs supported field changes instantly without custom code for every workflow.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-top">
+            <div class="icon-box">🕒</div>
+            <div>
+              <h3>Clear audit trail</h3>
+              <p>Shows old value, new value, employee name, and time of change in one place.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-top">
+            <div class="icon-box">🗂</div>
+            <div>
+              <h3>Notebook tab</h3>
+              <p>Review detailed change history directly inside the Purchase, Sales, and Inventory forms.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-top">
+            <div class="icon-box">🔎</div>
+            <div>
+              <h3>Searchable history</h3>
+              <p>Use the global history view to search, filter, and group logs across documents.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow">Screenshots</div>
+        <h2>See the module in action</h2>
+        <p class="lead">Use these screens to show how the audit history appears inside each business document.</p>
+      </div>
+
+      <div class="grid" style="gap:18px;">
+        <div class="shot-card">
+          <h3>Purchase Orders — Change History Tab</h3>
+          <img src="screenshot_01_purchase.png" alt="Purchase Order Change History Tab" />
+          <div class="shot-caption">Purchase Order form showing status, price, and quantity changes with employee names.</div>
+        </div>
+
+        <div class="shot-card">
+          <h3>Sales Orders — Full Audit Including Discounts</h3>
+          <img src="screenshot_02_sales.png" alt="Sales Order Change History Tab" />
+          <div class="shot-caption">Sales Order form tracking status, price, quantity, and discount changes per line.</div>
+        </div>
+
+        <div class="shot-card">
+          <h3>Inventory Transfers — Status &amp; Quantity Tracking</h3>
+          <img src="screenshot_03_inventory.png" alt="Inventory Transfer Change History Tab" />
+          <div class="shot-caption">Stock Picking form showing change history for inventory status and quantity adjustments.</div>
+        </div>
+
+        <div class="shot-card">
+          <h3>Global Change History Menu</h3>
+          <img src="screenshot_04_global_history.png" alt="Global Change History List View" />
+          <div class="shot-caption">Global list view with search, filters, and group-by support across all documents.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow">Tracked Data</div>
+        <h2>What gets tracked</h2>
+        <p class="lead">
+          The table below summarises the tracked document lines and the type of audit entry generated.
+        </p>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Document</th>
+            <th>Field Tracked</th>
+            <th>Change Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Purchase Order</td><td>Status</td><td><span class="badge b-green">State</span></td></tr>
+          <tr><td>Purchase Order Line</td><td>Unit Price</td><td><span class="badge b-blue">Price</span></td></tr>
+          <tr><td>Purchase Order Line</td><td>Ordered Quantity</td><td><span class="badge b-orange">Quantity</span></td></tr>
+          <tr><td>Sale Order</td><td>Status</td><td><span class="badge b-green">State</span></td></tr>
+          <tr><td>Sale Order Line</td><td>Unit Price</td><td><span class="badge b-blue">Price</span></td></tr>
+          <tr><td>Sale Order Line</td><td>Ordered Quantity</td><td><span class="badge b-orange">Quantity</span></td></tr>
+          <tr><td>Sale Order Line</td><td>Discount (%)</td><td><span class="badge b-gray">Discount</span></td></tr>
+          <tr><td>Stock Picking</td><td>Status</td><td><span class="badge b-green">State</span></td></tr>
+          <tr><td>Stock Move</td><td>Demand Quantity</td><td><span class="badge b-orange">Quantity</span></td></tr>
+          <tr><td>Stock Move</td><td>Done Quantity</td><td><span class="badge b-orange">Quantity</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="badge-row">
+        <span class="badge b-purple">📅 Date &amp; Time</span>
+        <span class="badge b-green">👤 Employee Name</span>
+        <span class="badge b-blue">🔄 Changed Field</span>
+        <span class="badge b-orange">📉 From Value</span>
+        <span class="badge b-orange">📈 To Value</span>
+        <span class="badge b-gray">📦 Product</span>
+        <span class="badge b-gray">🔗 Document Reference</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow">How to use</div>
+        <h2>Simple installation and use</h2>
+        <p class="lead">No complicated setup. Install the module and start checking change history from the relevant forms or from the global menu.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step"><div>Install the module — <strong>no configuration required</strong>.</div></div>
+        <div class="step"><div>Open any <strong>Purchase Order</strong>, <strong>Sales Order</strong> or <strong>Inventory Transfer</strong>.</div></div>
+        <div class="step"><div>Click the <strong>Change History</strong> tab in the notebook.</div></div>
+        <div class="step"><div>See the complete, colour-coded log of all changes made by your team.</div></div>
+        <div class="step"><div>Use the <strong>Change History</strong> menu under Purchase / Sales / Inventory for a global view.</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow">Technical details</div>
+        <h2>Module information</h2>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="tech-card">
+          <h3>✅ Odoo 19</h3>
+          <p>Fully compatible with Odoo 19. Version string: 19.0.1.0.0.</p>
+        </div>
+
+        <div class="tech-card">
+          <h3>🔗 Dependencies</h3>
+          <p>purchase, sale_management, stock, hr — all standard Odoo modules.</p>
+        </div>
+
+        <div class="tech-card">
+          <h3>🔒 Security</h3>
+          <p>All users can read. Only administrators can modify or delete log entries.</p>
+        </div>
+
+        <div class="tech-card">
+          <h3>⚡ Performance</h3>
+          <p>Context guard prevents recursive writes. Only real changes are logged.</p>
+        </div>
+
+        <div class="tech-card">
+          <h3>🏷️ License</h3>
+          <p>OPL-1 — Odoo Proprietary License. Single Odoo instance.</p>
+        </div>
+
+        <div class="tech-card">
+          <h3>💰 Price</h3>
+          <p>No subscription. No hidden fees.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow">FAQ</div>
+        <h2>Frequently asked questions</h2>
+      </div>
+
+      <div class="faq-item">
+        <details>
+          <summary>What changes are tracked?</summary>
+          <div>It tracks status, price, quantity, discount, and selected line-level changes for Purchase, Sales, and Inventory records.</div>
+        </details>
+        <details>
+          <summary>Do I need to write Python code?</summary>
+          <div>No. The module is designed to work after installation, without custom code for each tracked model.</div>
+        </details>
+        <details>
+          <summary>Where can users review the data?</summary>
+          <div>Users can review changes directly in the notebook tab and also in the global Change History menu for search and filtering.</div>
+        </details>
+        <details>
+          <summary>Does it support line-level changes?</summary>
+          <div>Yes. Selected line changes are recorded so the audit trail stays complete for operational review.</div>
+        </details>
+      </div>
+    </section>
+
+    <footer>
+      Field Tracker History Management — Odoo 19 — OPL-1 License
+    </footer>
   </div>
-</div>
-
-<div class="section">
-  <h2>📦 Purchase Orders — Change History Tab</h2>
-  <p>See every status, price, and quantity change directly inside the Purchase Order form,
-  in the <strong>Change History</strong> notebook tab. Colour-coded by type for instant clarity.</p>
-  <div class="screenshot-wrap">
-    <img src="screenshot_01_purchase.png" alt="Purchase Order Change History Tab"/>
-    <div class="screenshot-caption">Purchase Order form — Change History tab showing status, price and quantity changes with employee names</div>
-  </div>
-</div>
-
-<div class="section">
-  <h2>🛒 Sales Orders — Full Audit Including Discounts</h2>
-  <p>Sales Orders also track <strong>Discount %</strong> changes in addition to status,
-  price and quantity — giving you a complete picture of how deals evolved.</p>
-  <div class="screenshot-wrap">
-    <img src="screenshot_02_sales.png" alt="Sales Order Change History Tab"/>
-    <div class="screenshot-caption">Sales Order form — tracking Status, Price, Quantity and Discount changes per line</div>
-  </div>
-</div>
-
-<div class="section">
-  <h2>🏭 Inventory Transfers — Status &amp; Quantity Tracking</h2>
-  <p>Stock Pickings record both <strong>Demand Quantity</strong> and <strong>Done Quantity</strong>
-  changes on every move line, alongside the picking status transitions.</p>
-  <div class="screenshot-wrap">
-    <img src="screenshot_03_inventory.png" alt="Inventory Transfer Change History Tab"/>
-    <div class="screenshot-caption">Stock Picking form — Change History for inventory status and quantity adjustments</div>
-  </div>
-</div>
-
-<div class="section">
-  <h2>🗂️ Global Change History Menu</h2>
-  <p>In addition to the notebook tab on each document, a dedicated
-  <strong>Change History</strong> menu is added under Purchase, Sales and Inventory apps —
-  with search, filters, and group-by support.</p>
-  <div class="screenshot-wrap">
-    <img src="screenshot_04_global_history.png" alt="Global Change History List View"/>
-    <div class="screenshot-caption">Global Change History list — searchable, filterable view across all documents and employees</div>
-  </div>
-</div>
-
-<div class="section">
-  <h2>✅ What Gets Tracked</h2>
-  <table>
-    <tr><th>Document</th><th>Field Tracked</th><th>Change Type</th></tr>
-    <tr><td>Purchase Order</td><td>Status</td><td><span class="badge b-green">State</span></td></tr>
-    <tr><td>Purchase Order Line</td><td>Unit Price</td><td><span class="badge b-blue">Price</span></td></tr>
-    <tr><td>Purchase Order Line</td><td>Ordered Quantity</td><td><span class="badge b-orange">Quantity</span></td></tr>
-    <tr><td>Sale Order</td><td>Status</td><td><span class="badge b-green">State</span></td></tr>
-    <tr><td>Sale Order Line</td><td>Unit Price</td><td><span class="badge b-blue">Price</span></td></tr>
-    <tr><td>Sale Order Line</td><td>Ordered Quantity</td><td><span class="badge b-orange">Quantity</span></td></tr>
-    <tr><td>Sale Order Line</td><td>Discount (%)</td><td><span class="badge b-gray">Discount</span></td></tr>
-    <tr><td>Stock Picking</td><td>Status</td><td><span class="badge b-green">State</span></td></tr>
-    <tr><td>Stock Move</td><td>Demand Quantity</td><td><span class="badge b-orange">Quantity</span></td></tr>
-    <tr><td>Stock Move</td><td>Done Quantity</td><td><span class="badge b-orange">Quantity</span></td></tr>
-  </table>
-
-  <h2 style="margin-top:36px">👤 Each Log Entry Records</h2>
-  <div class="badge-row">
-    <span class="badge b-purple">📅 Date &amp; Time</span>
-    <span class="badge b-green">👤 Employee Name</span>
-    <span class="badge b-blue">🔄 Changed Field</span>
-    <span class="badge b-orange">📉 From Value</span>
-    <span class="badge b-orange">📈 To Value</span>
-    <span class="badge b-gray">📦 Product (for lines)</span>
-    <span class="badge b-gray">🔗 Document Reference</span>
-  </div>
-
-  <h2 style="margin-top:36px">🚀 How to Use</h2>
-  <div class="steps">
-    <div class="step"><div>Install the module — <strong>no configuration required</strong>.</div></div>
-    <div class="step"><div>Open any <strong>Purchase Order</strong>, <strong>Sales Order</strong> or <strong>Inventory Transfer</strong>.</div></div>
-    <div class="step"><div>Click the <strong>Change History</strong> tab in the notebook.</div></div>
-    <div class="step"><div>See the complete, colour-coded log of all changes made by your team.</div></div>
-    <div class="step"><div>Use the <strong>Change History</strong> menu (under Purchase / Sales / Inventory) for a global view.</div></div>
-  </div>
-
-  <h2 style="margin-top:36px">⚙️ Technical Details</h2>
-  <div class="grid3">
-    <div class="card"><h3>✅ Odoo 19</h3><p>Fully compatible with Odoo 19. Version string: 19.0.1.0.0</p></div>
-    <div class="card"><h3>🔗 Dependencies</h3><p>purchase, sale_management, stock, hr — all standard Odoo modules</p></div>
-    <div class="card"><h3>🔒 Security</h3><p>All users can read. Only administrators can modify or delete log entries.</p></div>
-    <div class="card"><h3>⚡ Performance</h3><p>Context guard prevents recursive writes. Only real changes are logged.</p></div>
-    <div class="card"><h3>🏷️ License</h3><p>OPL-1 — Odoo Proprietary License. Single Odoo instance.</p></div>
-    <div class="card"><h3>💰 Price</h3><p>No subscription. No hidden fees.</p></div>
-  </div>
-</div>
-
-<footer>
-  Field Tracker History Management — Odoo 19 — OPL-1 License<br/>
-</footer>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </html>
