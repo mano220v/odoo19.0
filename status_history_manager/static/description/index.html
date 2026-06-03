@@ -4,43 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Field Tracker History Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet" />
-    <!-- FIX 1: Font Awesome 5 Free CDN added — icons were completely invisible without this -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW37vuJ9RpCKs8jfaR+Q4O0c5y8qiW0mE/IOMP4E2oIeB45i9y7Cp7RKvF29dSM7XE+YA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        .shm-description,
-        .shm-description * {
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif !important;
-        }
-
-        .shm-description {
-            background: #f4f6fb !important;
-            color: #1f2937 !important;
-            margin: 0 auto !important;
-            max-width: 1180px !important;
-            padding: 18px !important;
-        }
-
-        .shm-description table {
-            border-collapse: separate !important;
-        }
-
-        .shm-description img {
-            height: auto !important;
-            max-width: 100% !important;
-        }
-    </style>
 </head>
 <body>
 
 <section class="oe_container">
-<div class="shm-description" style="background:#f4f6fb !important;color:#1f2937 !important;max-width:1180px !important;margin:0 auto !important;padding:18px !important;">
+<div class="shm-description" style="background-color:#f4f6fb !important;color:#1f2937 !important;max-width:1180px !important;margin:0 auto !important;padding:18px !important;font-family:Arial,Helvetica,sans-serif !important;box-sizing:border-box;">
 
-    <div style="background:linear-gradient(135deg,#111827 0%,#1f2a5a 45%,#5b3fd3 100%) !important;color:#fff !important;border-radius:26px;padding:38px 28px 30px;box-shadow:0 18px 40px rgba(17,24,39,.18) !important;overflow:hidden;">
+    <div style="background-color:#111827 !important;color:#fff !important;border-radius:26px;padding:38px 28px 30px;box-shadow:0 18px 40px rgba(17,24,39,.18) !important;overflow:hidden;">
         <div style="text-align:center;max-width:940px;margin:0 auto;">
-            <div style="display:inline-block;padding:8px 14px;background:rgba(255,255,255,.12) !important;border:1px solid rgba(255,255,255,.16) !important;border-radius:999px;font-size:13px;font-weight:bold;letter-spacing:.4px;margin-bottom:16px;">
+            <div style="display:inline-block;padding:8px 14px;background-color:rgba(255,255,255,.12) !important;border:1px solid rgba(255,255,255,.16) !important;border-radius:999px;font-size:13px;font-weight:bold;letter-spacing:.4px;margin-bottom:16px;">
                 Ready for Odoo Community &amp; Enterprise
             </div>
 
@@ -54,58 +26,53 @@
             </p>
 
             <div style="margin-top:22px;">
-                <span style="display:inline-block;background:#ffffff !important;color:#1f2a5a !important;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:800;margin:6px;box-shadow:0 10px 24px rgba(0,0,0,.12) !important;">
+                <span style="display:inline-block;background-color:#ffffff !important;color:#1f2a5a !important;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:800;margin:6px;box-shadow:0 10px 24px rgba(0,0,0,.12) !important;">
                     Odoo 19
                 </span>
-                <span style="display:inline-block;background:#2f855a !important;color:#fff !important;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:800;margin:6px;box-shadow:0 10px 24px rgba(0,0,0,.12) !important;">
+                <span style="display:inline-block;background-color:#2f855a !important;color:#fff !important;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:800;margin:6px;box-shadow:0 10px 24px rgba(0,0,0,.12) !important;">
                     Community &amp; Enterprise
                 </span>
-                <span style="display:inline-block;background:#f59e0b !important;color:#fff !important;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:800;margin:6px;box-shadow:0 10px 24px rgba(0,0,0,.12) !important;">
+                <span style="display:inline-block;background-color:#f59e0b !important;color:#fff !important;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:800;margin:6px;box-shadow:0 10px 24px rgba(0,0,0,.12) !important;">
                     Only Free
                 </span>
             </div>
         </div>
     </div>
 
-    <div style="margin-top:18px;background:#fff !important;border:1px solid #e8ebf2 !important;border-radius:20px;padding:18px;box-shadow:0 10px 26px rgba(31,41,55,.06) !important;">
+    <div style="margin-top:18px;background-color:#fff !important;border:1px solid #e8ebf2 !important;border-radius:20px;padding:18px;box-shadow:0 10px 26px rgba(31,41,55,.06) !important;">
         <table style="width:100%;border-collapse:collapse;">
             <tr>
-                <!-- FIX 2: Replaced display:flex with text-align:center + line-height:34px on all icon circles -->
                 <td style="width:25%;padding:10px 12px;vertical-align:top;">
-                    <div style="background:#f5f1ff !important;border:1px solid #e2d6ff !important;border-radius:16px;padding:16px;">
-                        <div style="width:34px;height:34px;border-radius:50%;background:#ede3ff !important;color:#5b3fd3 !important;font-size:14px;text-align:center;line-height:34px;margin-bottom:10px;">
-                            <!-- FIX 3: fa fa-cogs → fas fa-cogs (FA5 solid syntax) -->
-                            <i class="fas fa-cogs"></i>
+                    <div style="background-color:#f5f1ff !important;border:1px solid #e2d6ff !important;border-radius:16px;padding:16px;">
+                        <div style="width:34px;height:34px;border-radius:50%;background-color:#ede3ff !important;color:#5b3fd3 !important;font-size:14px;text-align:center;line-height:34px;margin-bottom:10px;">
+                            &#9881;
                         </div>
                         <div style="font-weight:800;color:#1f2a5a !important;margin-bottom:6px;">Automatic Tracking</div>
                         <div style="font-size:13px;line-height:1.6;color:#5b6472 !important;">No manual configuration required after installation.</div>
                     </div>
                 </td>
                 <td style="width:25%;padding:10px 12px;vertical-align:top;">
-                    <div style="background:#eef4ff !important;border:1px solid #d6e4ff !important;border-radius:16px;padding:16px;">
-                        <div style="width:34px;height:34px;border-radius:50%;background:#e7f0ff !important;color:#1f5ea8 !important;font-size:14px;text-align:center;line-height:34px;margin-bottom:10px;">
-                            <!-- FIX 3: fa fa-history → fas fa-history -->
-                            <i class="fas fa-history"></i>
+                    <div style="background-color:#eef4ff !important;border:1px solid #d6e4ff !important;border-radius:16px;padding:16px;">
+                        <div style="width:34px;height:34px;border-radius:50%;background-color:#e7f0ff !important;color:#1f5ea8 !important;font-size:14px;text-align:center;line-height:34px;margin-bottom:10px;">
+                            &#8635;
                         </div>
                         <div style="font-weight:800;color:#1f2a5a !important;margin-bottom:6px;">Change History Tab</div>
                         <div style="font-size:13px;line-height:1.6;color:#5b6472 !important;">See full audit details directly inside documents.</div>
                     </div>
                 </td>
                 <td style="width:25%;padding:10px 12px;vertical-align:top;">
-                    <div style="background:#fff4e7 !important;border:1px solid #ffd9aa !important;border-radius:16px;padding:16px;">
-                        <div style="width:34px;height:34px;border-radius:50%;background:#fff0da !important;color:#b85b00 !important;font-size:14px;text-align:center;line-height:34px;margin-bottom:10px;">
-                            <!-- FIX 3: fa fa-globe → fas fa-globe -->
-                            <i class="fas fa-globe"></i>
+                    <div style="background-color:#fff4e7 !important;border:1px solid #ffd9aa !important;border-radius:16px;padding:16px;">
+                        <div style="width:34px;height:34px;border-radius:50%;background-color:#fff0da !important;color:#b85b00 !important;font-size:14px;text-align:center;line-height:34px;margin-bottom:10px;">
+                            &#9673;
                         </div>
                         <div style="font-weight:800;color:#1f2a5a !important;margin-bottom:6px;">Global History Menu</div>
                         <div style="font-size:13px;line-height:1.6;color:#5b6472 !important;">Search, filter, and group all changes centrally.</div>
                     </div>
                 </td>
                 <td style="width:25%;padding:10px 12px;vertical-align:top;">
-                    <div style="background:#eefbf2 !important;border:1px solid #cfeedd !important;border-radius:16px;padding:16px;">
-                        <div style="width:34px;height:34px;border-radius:50%;background:#e3f7ea !important;color:#177245 !important;font-size:14px;text-align:center;line-height:34px;margin-bottom:10px;">
-                            <!-- FIX 3: fa fa-list-alt (doesn't exist in FA5 Free) → fas fa-list (valid FA5 free solid) -->
-                            <i class="fas fa-list"></i>
+                    <div style="background-color:#eefbf2 !important;border:1px solid #cfeedd !important;border-radius:16px;padding:16px;">
+                        <div style="width:34px;height:34px;border-radius:50%;background-color:#e3f7ea !important;color:#177245 !important;font-size:14px;text-align:center;line-height:34px;margin-bottom:10px;">
+                            &#9776;
                         </div>
                         <div style="font-weight:800;color:#1f2a5a !important;margin-bottom:6px;">Line-Level Audit</div>
                         <div style="font-size:13px;line-height:1.6;color:#5b6472 !important;">Tracks status, quantity, price, and discount changes.</div>
@@ -115,17 +82,17 @@
         </table>
     </div>
 
-    <div style="margin-top:26px;background:#fff !important;border:1px solid #e8ebf2 !important;border-radius:20px;padding:12px;box-shadow:0 10px 26px rgba(31,41,55,.06) !important;">
+    <div style="margin-top:26px;background-color:#fff !important;border:1px solid #e8ebf2 !important;border-radius:20px;padding:12px;box-shadow:0 10px 26px rgba(31,41,55,.06) !important;">
         <div style="text-align:center;">
-            <a href="#overview" style="display:inline-block;margin:6px;padding:12px 18px;border-radius:999px;background:#5b3fd3 !important;color:#fff !important;text-decoration:none;font-weight:800;font-size:14px;">Overview</a>
-            <a href="#screenshots" style="display:inline-block;margin:6px;padding:12px 18px;border-radius:999px;background:#f3f5fb !important;color:#1f2a5a !important;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #dfe5f2 !important;">Screenshots</a>
-            <a href="#setup" style="display:inline-block;margin:6px;padding:12px 18px;border-radius:999px;background:#f3f5fb !important;color:#1f2a5a !important;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #dfe5f2 !important;">Setup</a>
-            <a href="#faq" style="display:inline-block;margin:6px;padding:12px 18px;border-radius:999px;background:#f3f5fb !important;color:#1f2a5a !important;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #dfe5f2 !important;">FAQs</a>
-            <a href="#technical" style="display:inline-block;margin:6px;padding:12px 18px;border-radius:999px;background:#f3f5fb !important;color:#1f2a5a !important;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #dfe5f2 !important;">Technical</a>
+            <a href="#overview" class="btn btn-primary" style="display:inline-block;margin:6px;padding:12px 18px;border-radius:999px;background-color:#5b3fd3 !important;color:#fff !important;text-decoration:none;font-weight:800;font-size:14px;">Overview</a>
+            <a href="#screenshots" class="btn btn-light border" style="display:inline-block;margin:6px;padding:12px 18px;border-radius:999px;background-color:#f3f5fb !important;color:#1f2a5a !important;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #dfe5f2 !important;">Screenshots</a>
+            <a href="#setup" class="btn btn-light border" style="display:inline-block;margin:6px;padding:12px 18px;border-radius:999px;background-color:#f3f5fb !important;color:#1f2a5a !important;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #dfe5f2 !important;">Setup</a>
+            <a href="#faq" class="btn btn-light border" style="display:inline-block;margin:6px;padding:12px 18px;border-radius:999px;background-color:#f3f5fb !important;color:#1f2a5a !important;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #dfe5f2 !important;">FAQs</a>
+            <a href="#technical" class="btn btn-light border" style="display:inline-block;margin:6px;padding:12px 18px;border-radius:999px;background-color:#f3f5fb !important;color:#1f2a5a !important;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #dfe5f2 !important;">Technical</a>
         </div>
     </div>
 
-    <div id="overview" style="margin-top:28px;background:#fff !important;border:1px solid #e8ebf2 !important;border-radius:24px;padding:28px;box-shadow:0 10px 26px rgba(31,41,55,.06) !important;">
+    <div id="overview" style="margin-top:28px;background-color:#fff !important;border:1px solid #e8ebf2 !important;border-radius:24px;padding:28px;box-shadow:0 10px 26px rgba(31,41,55,.06) !important;">
         <div style="display:inline-block;font-size:12px;font-weight:900;letter-spacing:.18em;color:#5b3fd3 !important;text-transform:uppercase;margin-bottom:8px;">Overview</div>
         <h2 style="margin:0;color:#111827 !important;font-size:28px;line-height:1.2;letter-spacing:-.3px;">What does this module do?</h2>
         <p style="margin:12px 0 0;font-size:16px;line-height:1.8;color:#5b6472 !important;max-width:960px;">
@@ -135,7 +102,7 @@
             No setup. No configuration. Just install and it works.
         </p>
 
-        <div style="margin-top:18px;background:linear-gradient(135deg,#f5f1ff 0%,#eef4ff 100%) !important;border:1px solid #dccfff !important;border-radius:18px;padding:18px;color:#2a2858 !important;">
+        <div style="margin-top:18px;background-color:#f5f1ff !important;border:1px solid #dccfff !important;border-radius:18px;padding:18px;color:#2a2858 !important;">
             <strong>Example:</strong> Arjun Sharma changed the Unit Price of "Dell Laptop 14in"
             on PO/2025/0042 from <strong>$1,200.00</strong> to <strong>$1,050.00</strong>
             on 25 May 2025 at 11:15 AM.
@@ -144,13 +111,13 @@
         <table style="width:100%;border-collapse:separate;border-spacing:0 14px;margin-top:18px;">
             <tr>
                 <td style="width:50%;padding-right:10px;vertical-align:top;">
-                    <div style="background:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:18px;padding:18px;">
+                    <div style="background-color:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:18px;padding:18px;">
                         <div style="font-weight:800;color:#1f2a5a !important;margin-bottom:8px;">Chatter-Based Audit Trail</div>
                         <div style="font-size:14px;line-height:1.7;color:#5b6472 !important;">Show old and new values directly where users already work.</div>
                     </div>
                 </td>
                 <td style="width:50%;padding-left:10px;vertical-align:top;">
-                    <div style="background:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:18px;padding:18px;">
+                    <div style="background-color:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:18px;padding:18px;">
                         <div style="font-weight:800;color:#1f2a5a !important;margin-bottom:8px;">Searchable Log History</div>
                         <div style="font-size:14px;line-height:1.7;color:#5b6472 !important;">Review tracked events later across configured models from a dedicated view.</div>
                     </div>
@@ -158,13 +125,13 @@
             </tr>
             <tr>
                 <td style="width:50%;padding-right:10px;vertical-align:top;">
-                    <div style="background:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:18px;padding:18px;">
+                    <div style="background-color:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:18px;padding:18px;">
                         <div style="font-weight:800;color:#1f2a5a !important;margin-bottom:8px;">One2many Line Tracking</div>
                         <div style="font-size:14px;line-height:1.7;color:#5b6472 !important;">Preserve line-level changes that often get missed in normal review flows.</div>
                     </div>
                 </td>
                 <td style="width:50%;padding-left:10px;vertical-align:top;">
-                    <div style="background:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:18px;padding:18px;">
+                    <div style="background-color:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:18px;padding:18px;">
                         <div style="font-weight:800;color:#1f2a5a !important;margin-bottom:8px;">Clean User Experience</div>
                         <div style="font-size:14px;line-height:1.7;color:#5b6472 !important;">Premium layout that reads clearly in Odoo Apps Store.</div>
                     </div>
@@ -173,7 +140,7 @@
         </table>
     </div>
 
-    <div id="screenshots" style="margin-top:28px;background:#fff !important;border:1px solid #e8ebf2 !important;border-radius:24px;padding:28px;box-shadow:0 10px 26px rgba(31,41,55,.06) !important;">
+    <div id="screenshots" style="margin-top:28px;background-color:#fff !important;border:1px solid #e8ebf2 !important;border-radius:24px;padding:28px;box-shadow:0 10px 26px rgba(31,41,55,.06) !important;">
         <div style="display:inline-block;font-size:12px;font-weight:900;letter-spacing:.18em;color:#5b3fd3 !important;text-transform:uppercase;margin-bottom:8px;">Screenshots</div>
         <h2 style="margin:0;color:#111827 !important;font-size:28px;line-height:1.2;letter-spacing:-.3px;">Product screenshots</h2>
         <p style="margin:12px 0 0;font-size:16px;line-height:1.8;color:#5b6472 !important;max-width:960px;">
@@ -181,25 +148,25 @@
         </p>
 
         <div style="margin-top:20px;">
-            <div style="background:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:20px;padding:18px;margin-bottom:18px;">
+            <div style="background-color:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:20px;padding:18px;margin-bottom:18px;">
                 <h3 style="margin:0 0 12px;color:#1f2a5a !important;font-size:18px;">1. Global Change History</h3>
                 <img src="screenshot_04_global_history.png" alt="Global Change History" style="width:100%;display:block;border-radius:16px;border:1px solid #dfe5f2 !important;box-shadow:0 12px 28px rgba(31,41,55,.08) !important;" />
                 <div style="margin-top:10px;color:#6b7280 !important;font-size:13px;font-style:italic;">Searchable list view across all documents and employees.</div>
             </div>
 
-            <div style="background:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:20px;padding:18px;margin-bottom:18px;">
+            <div style="background-color:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:20px;padding:18px;margin-bottom:18px;">
                 <h3 style="margin:0 0 12px;color:#1f2a5a !important;font-size:18px;">2. Purchase Order Tracking</h3>
                 <img src="screenshot_01_purchase.png" alt="Purchase Tracking" style="width:100%;display:block;border-radius:16px;border:1px solid #dfe5f2 !important;box-shadow:0 12px 28px rgba(31,41,55,.08) !important;" />
                 <div style="margin-top:10px;color:#6b7280 !important;font-size:13px;font-style:italic;">Purchase Order form showing status, price, and quantity changes.</div>
             </div>
 
-            <div style="background:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:20px;padding:18px;margin-bottom:18px;">
+            <div style="background-color:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:20px;padding:18px;margin-bottom:18px;">
                 <h3 style="margin:0 0 12px;color:#1f2a5a !important;font-size:18px;">3. Sales Order Tracking</h3>
                 <img src="screenshot_02_sales.png" alt="Sales Tracking" style="width:100%;display:block;border-radius:16px;border:1px solid #dfe5f2 !important;box-shadow:0 12px 28px rgba(31,41,55,.08) !important;" />
                 <div style="margin-top:10px;color:#6b7280 !important;font-size:13px;font-style:italic;">Sales Order tracking with discount support.</div>
             </div>
 
-            <div style="background:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:20px;padding:18px;">
+            <div style="background-color:#fafbff !important;border:1px solid #e6eaf2 !important;border-radius:20px;padding:18px;">
                 <h3 style="margin:0 0 12px;color:#1f2a5a !important;font-size:18px;">4. Inventory Transfer Tracking</h3>
                 <img src="screenshot_03_inventory.png" alt="Inventory Tracking" style="width:100%;display:block;border-radius:16px;border:1px solid #dfe5f2 !important;box-shadow:0 12px 28px rgba(31,41,55,.08) !important;" />
                 <div style="margin-top:10px;color:#6b7280 !important;font-size:13px;font-style:italic;">Inventory transfer status and quantity audit history.</div>
@@ -207,7 +174,7 @@
         </div>
     </div>
 
-    <div id="setup" style="margin-top:28px;background:#fff !important;border:1px solid #e8ebf2 !important;border-radius:24px;padding:28px;box-shadow:0 10px 26px rgba(31,41,55,.06) !important;">
+    <div id="setup" style="margin-top:28px;background-color:#fff !important;border:1px solid #e8ebf2 !important;border-radius:24px;padding:28px;box-shadow:0 10px 26px rgba(31,41,55,.06) !important;">
         <div style="display:inline-block;font-size:12px;font-weight:900;letter-spacing:.18em;color:#5b3fd3 !important;text-transform:uppercase;margin-bottom:8px;">Setup</div>
         <h2 style="margin:0;color:#111827 !important;font-size:28px;line-height:1.2;letter-spacing:-.3px;">How to use it</h2>
 
@@ -215,7 +182,7 @@
             <!-- FIX 2: All 5 numbered step circles: display:flex removed, using text-align:center + line-height:34px instead -->
             <tr>
                 <td style="width:34px;vertical-align:top;">
-                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3 !important;color:#fff !important;font-weight:900;font-size:16px;text-align:center;line-height:34px;">1</div>
+                    <div style="width:34px;height:34px;border-radius:50%;background-color:#5b3fd3 !important;color:#fff !important;font-weight:900;font-size:16px;text-align:center;line-height:34px;">1</div>
                 </td>
                 <td style="padding-left:12px;vertical-align:middle;font-size:15px;line-height:1.7;color:#5b6472 !important;">
                     Install the module - no configuration required.
@@ -223,7 +190,7 @@
             </tr>
             <tr>
                 <td style="width:34px;vertical-align:top;">
-                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3 !important;color:#fff !important;font-weight:900;font-size:16px;text-align:center;line-height:34px;">2</div>
+                    <div style="width:34px;height:34px;border-radius:50%;background-color:#5b3fd3 !important;color:#fff !important;font-weight:900;font-size:16px;text-align:center;line-height:34px;">2</div>
                 </td>
                 <td style="padding-left:12px;vertical-align:middle;font-size:15px;line-height:1.7;color:#5b6472 !important;">
                     Open any Purchase Order, Sales Order, or Inventory Transfer.
@@ -231,7 +198,7 @@
             </tr>
             <tr>
                 <td style="width:34px;vertical-align:top;">
-                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3 !important;color:#fff !important;font-weight:900;font-size:16px;text-align:center;line-height:34px;">3</div>
+                    <div style="width:34px;height:34px;border-radius:50%;background-color:#5b3fd3 !important;color:#fff !important;font-weight:900;font-size:16px;text-align:center;line-height:34px;">3</div>
                 </td>
                 <td style="padding-left:12px;vertical-align:middle;font-size:15px;line-height:1.7;color:#5b6472 !important;">
                     Click the Change History tab in the notebook.
@@ -239,7 +206,7 @@
             </tr>
             <tr>
                 <td style="width:34px;vertical-align:top;">
-                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3 !important;color:#fff !important;font-weight:900;font-size:16px;text-align:center;line-height:34px;">4</div>
+                    <div style="width:34px;height:34px;border-radius:50%;background-color:#5b3fd3 !important;color:#fff !important;font-weight:900;font-size:16px;text-align:center;line-height:34px;">4</div>
                 </td>
                 <td style="padding-left:12px;vertical-align:middle;font-size:15px;line-height:1.7;color:#5b6472 !important;">
                     Review the complete colour-coded log of all changes made by your team.
@@ -247,7 +214,7 @@
             </tr>
             <tr>
                 <td style="width:34px;vertical-align:top;">
-                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3 !important;color:#fff !important;font-weight:900;font-size:16px;text-align:center;line-height:34px;">5</div>
+                    <div style="width:34px;height:34px;border-radius:50%;background-color:#5b3fd3 !important;color:#fff !important;font-weight:900;font-size:16px;text-align:center;line-height:34px;">5</div>
                 </td>
                 <td style="padding-left:12px;vertical-align:middle;font-size:15px;line-height:1.7;color:#5b6472 !important;">
                     Use the Change History menu under Purchase / Sales / Inventory for a global view.
@@ -256,50 +223,50 @@
         </table>
     </div>
 
-    <div id="faq" style="margin-top:28px;background:#fff !important;border:1px solid #e8ebf2 !important;border-radius:24px;padding:28px;box-shadow:0 10px 26px rgba(31,41,55,.06) !important;">
+    <div id="faq" style="margin-top:28px;background-color:#fff !important;border:1px solid #e8ebf2 !important;border-radius:24px;padding:28px;box-shadow:0 10px 26px rgba(31,41,55,.06) !important;">
         <div style="display:inline-block;font-size:12px;font-weight:900;letter-spacing:.18em;color:#5b3fd3 !important;text-transform:uppercase;margin-bottom:8px;">FAQs</div>
         <h2 style="margin:0;color:#111827 !important;font-size:28px;line-height:1.2;letter-spacing:-.3px;">Frequently asked questions</h2>
 
         <div style="margin-top:18px;border:1px solid #e6eaf2 !important;border-radius:18px;overflow:hidden;">
-            <div style="padding:18px 18px;background:#fafbff !important;border-bottom:1px solid #e6eaf2 !important;">
+            <div style="padding:18px 18px;background-color:#fafbff !important;border-bottom:1px solid #e6eaf2 !important;">
                 <div style="font-weight:800;color:#1f2a5a !important;margin-bottom:6px;">What changes are tracked?</div>
                 <div style="font-size:14px;line-height:1.7;color:#5b6472 !important;">Status, price, quantity, discount, and selected One2many line-level changes for supported records.</div>
             </div>
-            <div style="padding:18px;background:#fff !important;border-bottom:1px solid #e6eaf2 !important;">
+            <div style="padding:18px;background-color:#fff !important;border-bottom:1px solid #e6eaf2 !important;">
                 <div style="font-weight:800;color:#1f2a5a !important;margin-bottom:6px;">Do I need to write Python code?</div>
                 <div style="font-size:14px;line-height:1.7;color:#5b6472 !important;">No. The module works after installation without custom code for each tracked model.</div>
             </div>
-            <div style="padding:18px;background:#fafbff !important;border-bottom:1px solid #e6eaf2 !important;">
+            <div style="padding:18px;background-color:#fafbff !important;border-bottom:1px solid #e6eaf2 !important;">
                 <div style="font-weight:800;color:#1f2a5a !important;margin-bottom:6px;">Where can users review the data?</div>
                 <div style="font-size:14px;line-height:1.7;color:#5b6472 !important;">Changes appear in the notebook tab and also in the global history menu for reporting.</div>
             </div>
-            <div style="padding:18px;background:#fff !important;">
+            <div style="padding:18px;background-color:#fff !important;">
                 <div style="font-weight:800;color:#1f2a5a !important;margin-bottom:6px;">Does it support line-level changes?</div>
                 <div style="font-size:14px;line-height:1.7;color:#5b6472 !important;">Yes. Selected One2many child-line changes are recorded on the parent record.</div>
             </div>
         </div>
     </div>
 
-    <div id="technical" style="margin-top:28px;background:#fff !important;border:1px solid #e8ebf2 !important;border-radius:24px;padding:28px;box-shadow:0 10px 26px rgba(31,41,55,.06) !important;">
+    <div id="technical" style="margin-top:28px;background-color:#fff !important;border:1px solid #e8ebf2 !important;border-radius:24px;padding:28px;box-shadow:0 10px 26px rgba(31,41,55,.06) !important;">
         <div style="display:inline-block;font-size:12px;font-weight:900;letter-spacing:.18em;color:#5b3fd3 !important;text-transform:uppercase;margin-bottom:8px;">Technical</div>
         <h2 style="margin:0;color:#111827 !important;font-size:28px;line-height:1.2;letter-spacing:-.3px;">Module information</h2>
 
         <table style="width:100%;border-collapse:separate;border-spacing:0 14px;margin-top:18px;">
             <tr>
                 <td style="width:33.33%;padding:0 8px;vertical-align:top;">
-                    <div style="background:#f8f8ff !important;border:1px solid #e4e2ff !important;border-radius:18px;padding:18px;">
+                    <div style="background-color:#f8f8ff !important;border:1px solid #e4e2ff !important;border-radius:18px;padding:18px;">
                         <div style="font-weight:900;color:#1f2a5a !important;margin-bottom:8px;">Odoo 19</div>
                         <div style="font-size:14px;line-height:1.7;color:#5b6472 !important;">Fully compatible with Odoo 19. Version string: 19.0.1.0.0.</div>
                     </div>
                 </td>
                 <td style="width:33.33%;padding:0 8px;vertical-align:top;">
-                    <div style="background:#f8f8ff !important;border:1px solid #e4e2ff !important;border-radius:18px;padding:18px;">
+                    <div style="background-color:#f8f8ff !important;border:1px solid #e4e2ff !important;border-radius:18px;padding:18px;">
                         <div style="font-weight:900;color:#1f2a5a !important;margin-bottom:8px;">Dependencies</div>
                         <div style="font-size:14px;line-height:1.7;color:#5b6472 !important;">purchase, sale_management, stock, hr - standard Odoo modules.</div>
                     </div>
                 </td>
                 <td style="width:33.33%;padding:0 8px;vertical-align:top;">
-                    <div style="background:#f8f8ff !important;border:1px solid #e4e2ff !important;border-radius:18px;padding:18px;">
+                    <div style="background-color:#f8f8ff !important;border:1px solid #e4e2ff !important;border-radius:18px;padding:18px;">
                         <div style="font-weight:900;color:#1f2a5a !important;margin-bottom:8px;">Security</div>
                         <div style="font-size:14px;line-height:1.7;color:#5b6472 !important;">All users can read. Only administrators can modify or delete log entries.</div>
                     </div>
@@ -307,13 +274,13 @@
             </tr>
             <tr>
                 <td style="width:33.33%;padding:0 8px;vertical-align:top;">
-                    <div style="background:#f8f8ff !important;border:1px solid #e4e2ff !important;border-radius:18px;padding:18px;">
+                    <div style="background-color:#f8f8ff !important;border:1px solid #e4e2ff !important;border-radius:18px;padding:18px;">
                         <div style="font-weight:900;color:#1f2a5a !important;margin-bottom:8px;">Performance</div>
                         <div style="font-size:14px;line-height:1.7;color:#5b6472 !important;">Context guard prevents recursive writes. Only real changes are logged.</div>
                     </div>
                 </td>
                 <td style="width:33.33%;padding:0 8px;vertical-align:top;">
-                    <div style="background:#f8f8ff !important;border:1px solid #e4e2ff !important;border-radius:18px;padding:18px;">
+                    <div style="background-color:#f8f8ff !important;border:1px solid #e4e2ff !important;border-radius:18px;padding:18px;">
                         <div style="font-weight:900;color:#1f2a5a !important;margin-bottom:8px;">Price</div>
                         <div style="font-size:14px;line-height:1.7;color:#5b6472 !important;">No subscription. No hidden fees.</div>
                     </div>
@@ -322,7 +289,7 @@
         </table>
     </div>
 
-    <div style="margin-top:28px;background:#111827 !important;color:#fff !important;border-radius:22px;padding:24px;text-align:center;box-shadow:0 18px 40px rgba(17,24,39,.16) !important;">
+    <div style="margin-top:28px;background-color:#111827 !important;color:#fff !important;border-radius:22px;padding:24px;text-align:center;box-shadow:0 18px 40px rgba(17,24,39,.16) !important;">
         <div style="font-size:18px;font-weight:900;margin-bottom:8px;color:#fff !important;">Field Tracker History Management</div>
     </div>
 </div>
