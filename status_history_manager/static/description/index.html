@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Field Tracker History Management</title>
+    <!-- FIX 1: Font Awesome 5 Free CDN added — icons were completely invisible without this -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW37vuJ9RpCKs8jfaR+Q4O0c5y8qiW0mE/IOMP4E2oIeB45i9y7Cp7RKvF29dSM7XE+YA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body style="margin:0;padding:0;background:#f4f6fb;font-family:Arial,Helvetica,sans-serif;color:#1f2937;">
 
@@ -41,30 +43,43 @@
     <div style="margin-top:18px;background:#fff;border:1px solid #e8ebf2;border-radius:20px;padding:18px;box-shadow:0 10px 26px rgba(31,41,55,.06);">
         <table style="width:100%;border-collapse:collapse;">
             <tr>
+                <!-- FIX 2: Replaced display:flex with text-align:center + line-height:34px on all icon circles -->
                 <td style="width:25%;padding:10px 12px;vertical-align:top;">
                     <div style="background:#f5f1ff;border:1px solid #e2d6ff;border-radius:16px;padding:16px;">
-                        <div style="width:34px;height:34px;border-radius:50%;background:#ede3ff;color:#5b3fd3;font-size:14px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:10px;"><i class="fa fa-cogs"></i></div>
+                        <div style="width:34px;height:34px;border-radius:50%;background:#ede3ff;color:#5b3fd3;font-size:14px;text-align:center;line-height:34px;margin-bottom:10px;">
+                            <!-- FIX 3: fa fa-cogs → fas fa-cogs (FA5 solid syntax) -->
+                            <i class="fas fa-cogs"></i>
+                        </div>
                         <div style="font-weight:800;color:#1f2a5a;margin-bottom:6px;">Automatic Tracking</div>
                         <div style="font-size:13px;line-height:1.6;color:#5b6472;">No manual configuration required after installation.</div>
                     </div>
                 </td>
                 <td style="width:25%;padding:10px 12px;vertical-align:top;">
                     <div style="background:#eef4ff;border:1px solid #d6e4ff;border-radius:16px;padding:16px;">
-                        <div style="width:34px;height:34px;border-radius:50%;background:#e7f0ff;color:#1f5ea8;font-size:14px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:10px;"><i class="fa fa-history"></i></div>
+                        <div style="width:34px;height:34px;border-radius:50%;background:#e7f0ff;color:#1f5ea8;font-size:14px;text-align:center;line-height:34px;margin-bottom:10px;">
+                            <!-- FIX 3: fa fa-history → fas fa-history -->
+                            <i class="fas fa-history"></i>
+                        </div>
                         <div style="font-weight:800;color:#1f2a5a;margin-bottom:6px;">Change History Tab</div>
                         <div style="font-size:13px;line-height:1.6;color:#5b6472;">See full audit details directly inside documents.</div>
                     </div>
                 </td>
                 <td style="width:25%;padding:10px 12px;vertical-align:top;">
                     <div style="background:#fff4e7;border:1px solid #ffd9aa;border-radius:16px;padding:16px;">
-                        <div style="width:34px;height:34px;border-radius:50%;background:#fff0da;color:#b85b00;font-size:14px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:10px;"><i class="fa fa-globe"></i></div>
+                        <div style="width:34px;height:34px;border-radius:50%;background:#fff0da;color:#b85b00;font-size:14px;text-align:center;line-height:34px;margin-bottom:10px;">
+                            <!-- FIX 3: fa fa-globe → fas fa-globe -->
+                            <i class="fas fa-globe"></i>
+                        </div>
                         <div style="font-weight:800;color:#1f2a5a;margin-bottom:6px;">Global History Menu</div>
                         <div style="font-size:13px;line-height:1.6;color:#5b6472;">Search, filter, and group all changes centrally.</div>
                     </div>
                 </td>
                 <td style="width:25%;padding:10px 12px;vertical-align:top;">
                     <div style="background:#eefbf2;border:1px solid #cfeedd;border-radius:16px;padding:16px;">
-                        <div style="width:34px;height:34px;border-radius:50%;background:#e3f7ea;color:#177245;font-size:14px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:10px;"><i class="fa fa-list-alt"></i></div>
+                        <div style="width:34px;height:34px;border-radius:50%;background:#e3f7ea;color:#177245;font-size:14px;text-align:center;line-height:34px;margin-bottom:10px;">
+                            <!-- FIX 3: fa fa-list-alt (doesn't exist in FA5 Free) → fas fa-list (valid FA5 free solid) -->
+                            <i class="fas fa-list"></i>
+                        </div>
                         <div style="font-weight:800;color:#1f2a5a;margin-bottom:6px;">Line-Level Audit</div>
                         <div style="font-size:13px;line-height:1.6;color:#5b6472;">Tracks status, quantity, price, and discount changes.</div>
                     </div>
@@ -170,43 +185,44 @@
         <h2 style="margin:0;color:#111827;font-size:28px;line-height:1.2;letter-spacing:-.3px;">How to use it</h2>
 
         <table style="width:100%;border-collapse:separate;border-spacing:0 14px;margin-top:18px;">
+            <!-- FIX 2: All 5 numbered step circles: display:flex removed, using text-align:center + line-height:34px instead -->
             <tr>
-                <td style="width:25px;vertical-align:top;">
-                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;">1</div>
+                <td style="width:34px;vertical-align:top;">
+                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3;color:#fff;font-weight:900;font-size:16px;text-align:center;line-height:34px;">1</div>
                 </td>
-                <td style="padding-left:12px;vertical-align:top;font-size:15px;line-height:1.7;color:#5b6472;">
+                <td style="padding-left:12px;vertical-align:middle;font-size:15px;line-height:1.7;color:#5b6472;">
                     Install the module - no configuration required.
                 </td>
             </tr>
             <tr>
-                <td style="width:25px;vertical-align:top;">
-                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;">2</div>
+                <td style="width:34px;vertical-align:top;">
+                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3;color:#fff;font-weight:900;font-size:16px;text-align:center;line-height:34px;">2</div>
                 </td>
-                <td style="padding-left:12px;vertical-align:top;font-size:15px;line-height:1.7;color:#5b6472;">
+                <td style="padding-left:12px;vertical-align:middle;font-size:15px;line-height:1.7;color:#5b6472;">
                     Open any Purchase Order, Sales Order, or Inventory Transfer.
                 </td>
             </tr>
             <tr>
-                <td style="width:25px;vertical-align:top;">
-                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;">3</div>
+                <td style="width:34px;vertical-align:top;">
+                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3;color:#fff;font-weight:900;font-size:16px;text-align:center;line-height:34px;">3</div>
                 </td>
-                <td style="padding-left:12px;vertical-align:top;font-size:15px;line-height:1.7;color:#5b6472;">
+                <td style="padding-left:12px;vertical-align:middle;font-size:15px;line-height:1.7;color:#5b6472;">
                     Click the Change History tab in the notebook.
                 </td>
             </tr>
             <tr>
-                <td style="width:25px;vertical-align:top;">
-                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;">4</div>
+                <td style="width:34px;vertical-align:top;">
+                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3;color:#fff;font-weight:900;font-size:16px;text-align:center;line-height:34px;">4</div>
                 </td>
-                <td style="padding-left:12px;vertical-align:top;font-size:15px;line-height:1.7;color:#5b6472;">
+                <td style="padding-left:12px;vertical-align:middle;font-size:15px;line-height:1.7;color:#5b6472;">
                     Review the complete colour-coded log of all changes made by your team.
                 </td>
             </tr>
             <tr>
-                <td style="width:25px;vertical-align:top;">
-                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;">5</div>
+                <td style="width:34px;vertical-align:top;">
+                    <div style="width:34px;height:34px;border-radius:50%;background:#5b3fd3;color:#fff;font-weight:900;font-size:16px;text-align:center;line-height:34px;">5</div>
                 </td>
-                <td style="padding-left:12px;vertical-align:top;font-size:15px;line-height:1.7;color:#5b6472;">
+                <td style="padding-left:12px;vertical-align:middle;font-size:15px;line-height:1.7;color:#5b6472;">
                     Use the Change History menu under Purchase / Sales / Inventory for a global view.
                 </td>
             </tr>
