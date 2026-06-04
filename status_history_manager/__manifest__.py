@@ -51,7 +51,7 @@ Perfect for:
     'support': 'vsmanoj144@gmail.com',
     'maintainer': 'Techie Buddy',
 
-    'license': 'OPL-1',
+    'license': 'LGPL-3',
     'price': 0.00,
     'currency': 'USD',
 
