@@ -46,10 +46,10 @@ Perfect for:
 - Workflow accountability
     """,
 
-    'author': 'Odoo Prime',
-    'website': '',
+    'author': 'Odoo Wings',
+    'website': 'https://apps.odoo.com/apps/modules/browse?author=Odoo%20Prime',
     'support': 'vsmanoj144@gmail.com',
-    'maintainer': 'Odoo Prime',
+    'maintainer': 'Odoo Wings',
 
     'license': 'LGPL-3',
     'price': 0.00,
