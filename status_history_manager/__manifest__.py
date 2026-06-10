@@ -46,10 +46,10 @@ Perfect for:
 - Workflow accountability
     """,
 
-    'author': 'Techie Buddy',
+    'author': 'Odoo Prime',
     'website': '',
     'support': 'vsmanoj144@gmail.com',
-    'maintainer': 'Techie Buddy',
+    'maintainer': 'Odoo Prime',
 
     'license': 'LGPL-3',
     'price': 0.00,
