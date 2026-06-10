@@ -47,7 +47,7 @@ Perfect for:
     """,
 
     'author': 'Odoo Wings',
-    'website': 'https://apps.odoo.com/apps/modules/browse?author=Odoo%20Prime',
+    'website': 'https://apps.odoo.com/apps/modules/browse?author=Odoo%20Wings',
     'support': 'vsmanoj144@gmail.com',
     'maintainer': 'Odoo Wings',
 
