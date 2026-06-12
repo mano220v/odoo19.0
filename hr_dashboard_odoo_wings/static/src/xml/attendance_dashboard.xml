@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+  <t t-name="hr_dashboard_odoo_wings.AttendanceDashboard">
+    <div class="o_atd_root">
+
+      <!-- ░░ LOADING ░░ -->
+      <t t-if="state.loading">
+        <div class="o_atd_loading">
+          <i class="fa fa-circle-o-notch fa-spin fa-3x o_atd_spinner"/>
+          <p>Loading attendance data…</p>
+        </div>
+      </t>
+
+      <!-- ░░ ERROR ░░ -->
+      <t t-elif="state.error">
+        <div class="o_atd_error">
+          <i class="fa fa-exclamation-triangle fa-2x"/>
+          <p>Unable to load dashboard data. Please check the server log.</p>
+          <button class="btn btn-primary mt-2" t-on-click="() => this.loadData()">
+            <i class="fa fa-refresh me-1"/> Retry
+          </button>
+        </div>
+      </t>
+
+      <!-- ░░ DASHBOARD ░░ -->
+      <t t-else="">
+
+        <!-- ── Header ─────────────────────────────────────────────────── -->
+        <div class="o_atd_header">
+          <div class="o_atd_title">
+            <i class="fa fa-tachometer me-2"/>
+            <span>Employee Attendance</span>
+          </div>
+          <div class="o_atd_header_right">
+            <span class="o_atd_date_badge">
+              <i class="fa fa-calendar me-1"/>
+              <t t-esc="state.todayLabel"/>
+            </span>
+            <button class="o_atd_refresh_btn" t-on-click="() => this.loadData()">
+              <i class="fa fa-refresh me-1"/>Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- ── Cards ──────────────────────────────────────────────────── -->
+        <div class="o_atd_cards">
+
+          <!-- Total -->
+          <div class="o_atd_card o_atd_total"
+               t-on-click="() => this.openList('all')"
+               title="Click to view all employees">
+            <div class="o_atd_card_icon">
+              <i class="fa fa-users"/>
+            </div>
+            <div class="o_atd_card_body">
+              <div class="o_atd_card_count" t-esc="state.totalCount"/>
+              <div class="o_atd_card_label">Total Employees</div>
+            </div>
+            <div class="o_atd_card_arrow">
+              <i class="fa fa-chevron-right"/>
+            </div>
+          </div>
+
+          <!-- Present -->
+          <div class="o_atd_card o_atd_present"
+               t-on-click="() => this.openList('present')"
+               title="Click to view present employees">
+            <div class="o_atd_card_icon">
+              <i class="fa fa-check-circle"/>
+            </div>
+            <div class="o_atd_card_body">
+              <div class="o_atd_card_count" t-esc="state.presentCount"/>
+              <div class="o_atd_card_label">Present Today</div>
+              <div class="o_atd_card_pct">
+                <t t-esc="this.pct(state.presentCount)"/>%
+              </div>
+            </div>
+            <div class="o_atd_card_arrow">
+              <i class="fa fa-chevron-right"/>
+            </div>
+          </div>
+
+          <!-- On Leave -->
+          <div class="o_atd_card o_atd_on_leave"
+               t-on-click="() => this.openList('on_leave')"
+               title="Click to view employees on leave">
+            <div class="o_atd_card_icon">
+              <i class="fa fa-plane"/>
+            </div>
+            <div class="o_atd_card_body">
+              <div class="o_atd_card_count" t-esc="state.onLeaveCount"/>
+              <div class="o_atd_card_label">On Leave Today</div>
+              <div class="o_atd_card_pct">
+                <t t-esc="this.pct(state.onLeaveCount)"/>%
+              </div>
+            </div>
+            <div class="o_atd_card_arrow">
+              <i class="fa fa-chevron-right"/>
+            </div>
+          </div>
+
+          <!-- Absent -->
+          <div class="o_atd_card o_atd_absent"
+               t-on-click="() => this.openList('absent')"
+               title="Click to view absent employees">
+            <div class="o_atd_card_icon">
+              <i class="fa fa-times-circle"/>
+            </div>
+            <div class="o_atd_card_body">
+              <div class="o_atd_card_count" t-esc="state.absentCount"/>
+              <div class="o_atd_card_label">Absent Today</div>
+              <div class="o_atd_card_pct">
+                <t t-esc="this.pct(state.absentCount)"/>%
+              </div>
+            </div>
+            <div class="o_atd_card_arrow">
+              <i class="fa fa-chevron-right"/>
+            </div>
+          </div>
+
+        </div>
+        <!-- /Cards -->
+
+        <!-- ── Attendance Overview Panel ──────────────────────────────── -->
+        <div class="o_atd_overview">
+
+          <div class="o_atd_panel">
+            <div class="o_atd_panel_header">
+              <i class="fa fa-bar-chart me-2"/>Attendance Overview
+            </div>
+
+            <!-- Present bar -->
+            <div class="o_atd_bar_row">
+              <div class="o_atd_bar_label">
+                <span class="o_atd_dot o_dot_present"/>
+                <span>Present</span>
+              </div>
+              <div class="o_atd_bar_track">
+                <div class="o_atd_bar_fill o_fill_present"
+                     t-attf-style="width: {{this.pct(state.presentCount)}}%"/>
+              </div>
+              <div class="o_atd_bar_val">
+                <t t-esc="state.presentCount"/> / <t t-esc="state.totalCount"/>
+              </div>
+            </div>
+
+            <!-- On Leave bar -->
+            <div class="o_atd_bar_row">
+              <div class="o_atd_bar_label">
+                <span class="o_atd_dot o_dot_on_leave"/>
+                <span>On Leave</span>
+              </div>
+              <div class="o_atd_bar_track">
+                <div class="o_atd_bar_fill o_fill_on_leave"
+                     t-attf-style="width: {{this.pct(state.onLeaveCount)}}%"/>
+              </div>
+              <div class="o_atd_bar_val">
+                <t t-esc="state.onLeaveCount"/> / <t t-esc="state.totalCount"/>
+              </div>
+            </div>
+
+            <!-- Absent bar -->
+            <div class="o_atd_bar_row">
+              <div class="o_atd_bar_label">
+                <span class="o_atd_dot o_dot_absent"/>
+                <span>Absent</span>
+              </div>
+              <div class="o_atd_bar_track">
+                <div class="o_atd_bar_fill o_fill_absent"
+                     t-attf-style="width: {{this.pct(state.absentCount)}}%"/>
+              </div>
+              <div class="o_atd_bar_val">
+                <t t-esc="state.absentCount"/> / <t t-esc="state.totalCount"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Donut-style summary -->
+          <div class="o_atd_summary_panel">
+            <div class="o_atd_panel_header">
+              <i class="fa fa-info-circle me-2"/>Quick Summary
+            </div>
+            <div class="o_atd_summary_items">
+              <div class="o_atd_summary_item o_summary_present"
+                   t-on-click="() => this.openList('present')">
+                <div class="o_summary_circle o_circle_present">
+                  <t t-esc="this.pct(state.presentCount)"/>%
+                </div>
+                <div class="o_summary_label">Present</div>
+                <div class="o_summary_count"><t t-esc="state.presentCount"/> emp</div>
+              </div>
+              <div class="o_atd_summary_item o_summary_on_leave"
+                   t-on-click="() => this.openList('on_leave')">
+                <div class="o_summary_circle o_circle_on_leave">
+                  <t t-esc="this.pct(state.onLeaveCount)"/>%
+                </div>
+                <div class="o_summary_label">On Leave</div>
+                <div class="o_summary_count"><t t-esc="state.onLeaveCount"/> emp</div>
+              </div>
+              <div class="o_atd_summary_item o_summary_absent"
+                   t-on-click="() => this.openList('absent')">
+                <div class="o_summary_circle o_circle_absent">
+                  <t t-esc="this.pct(state.absentCount)"/>%
+                </div>
+                <div class="o_summary_label">Absent</div>
+                <div class="o_summary_count"><t t-esc="state.absentCount"/> emp</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /Overview -->
+
+        <!-- ── Footer ─────────────────────────────────────────────────── -->
+        <div class="o_atd_footer">
+          <i class="fa fa-clock-o me-1"/>
+          Last refreshed: <strong t-esc="state.lastRefresh"/>
+          
+          
+          Auto-refreshes every 5 minutes
+        </div>
+
+      </t>
+    </div>
+  </t>
+
+</templates>
