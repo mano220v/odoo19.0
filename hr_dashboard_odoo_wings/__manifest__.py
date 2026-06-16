@@ -5,7 +5,10 @@
     "summary": "Real-time HR attendance dashboard with present, absent, and on-leave counts, live drilldown, and employee analytics",
     "description": """
 Real-time HR Attendance Dashboard for Odoo 19.
-
+        Attendance dashboard
+        dashboard
+        Attendance 
+		Hr
 Track your workforce instantly with live metrics for:
 - Total Employees
 - Present Employees
