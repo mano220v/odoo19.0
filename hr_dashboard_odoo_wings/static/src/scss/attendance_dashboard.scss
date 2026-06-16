@@ -16,6 +16,20 @@ $shadow-hover   : 0 8px 28px rgba(0, 0, 0, 0.14);
 $radius-card    : 14px;
 $transition     : all 0.22s ease;
 
+.o_action:has(.hr-dashboard-container),
+.o_view_controller:has(.hr-dashboard-container),
+.o_content:has(.hr-dashboard-container) {
+    overflow-y: auto !important;
+    overflow-x: hidden;
+}
+
+/* 2. Make our container fill that space and scroll within it */
+.hr-dashboard-container {
+    height: 100%;
+    overflow-y: auto;   /* ← scroll here, not on the page body */
+    overflow-x: hidden;
+}
+
 // ── Root wrapper ─────────────────────────────────────────────────────────────
 .o_atd_root {
   padding: 28px 32px;
@@ -90,6 +104,21 @@ $transition     : all 0.22s ease;
     transition: $transition;
 
     &:hover { background: darken($color-total, 10%); transform: translateY(-1px); }
+    .fa { font-size: 12px; }
+  }
+
+  .o_atd_export_btn {
+    background: $color-present;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover { background: darken($color-present, 10%); transform: translateY(-1px); }
     .fa { font-size: 12px; }
   }
 }
@@ -355,4 +384,382 @@ $transition     : all 0.22s ease;
   padding: 8px 0 4px;
 
   strong { color: $color-text; }
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// DEPARTMENT-WISE ATTENDANCE SECTION
+// ══════════════════════════════════════════════════════════════════════════════
+
+.o_atd_dept_section {
+  margin-bottom: 24px;
+}
+
+// ── Section header row ────────────────────────────────────────────────────────
+.o_atd_dept_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.o_atd_dept_title {
+  font-size: 15px;
+  font-weight: 700;
+  color: $color-text;
+
+  .fa { color: $color-total; }
+}
+
+.o_atd_dept_legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: $color-subtext;
+  font-weight: 500;
+}
+
+.o_dept_legend_dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+// ── Horizontal scrollable row of department cards ─────────────────────────────
+.o_atd_dept_scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;            // space for scrollbar on some OS
+  scroll-snap-type: x mandatory;
+
+  // thin, styled scrollbar (webkit)
+  &::-webkit-scrollbar        { height: 5px; }
+  &::-webkit-scrollbar-track  { background: #f0f2f5; border-radius: 3px; }
+  &::-webkit-scrollbar-thumb  { background: #cbd5e0; border-radius: 3px; }
+  &::-webkit-scrollbar-thumb:hover { background: #a0aec0; }
+}
+
+// ── Single department card ────────────────────────────────────────────────────
+.o_atd_dept_card {
+  background: $color-card-bg;
+  border-radius: $radius-card;
+  box-shadow: $shadow-card;
+  padding: 18px 16px 0;
+  min-width: 180px;
+  max-width: 210px;
+  flex: 0 0 190px;
+  height: 200px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: $transition;
+  border-top: 4px solid #e2e8f0;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: $shadow-hover;
+    border-top-color: $color-total;
+  }
+}
+
+// Department name (clickable — opens full dept employee list)
+.o_atd_dept_name {
+  font-size: 13px;
+  font-weight: 700;
+  color: $color-text;
+  text-align: center;
+  cursor: pointer;
+  line-height: 1.35;
+  margin-bottom: 3px;
+  min-height: 36px;        
+  display: flex;          
+  align-items: center;
+  justify-content: center;
+  transition: color 0.18s;
+
+  .fa { color: $color-subtext; font-size: 11px; }
+
+  &:hover { color: $color-total; }
+}
+
+.o_atd_dept_total {
+  font-size: 11px;
+  color: $color-subtext;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+// ── 3 circles row ─────────────────────────────────────────────────────────────
+.o_atd_dept_circles {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.o_atd_dept_circle_wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 8px;
+  transition: $transition;
+
+  &:hover {
+    background: #f7fafc;
+    transform: translateY(-2px);
+  }
+}
+
+.o_atd_dept_circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  color: white;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+  transition: $transition;
+
+  // Colour variants
+  &.o_dc_present  { background: $color-present; }
+  &.o_dc_on_leave { background: $color-on-leave; }
+  &.o_dc_absent   { background: $color-absent; }
+}
+
+.o_atd_dept_circle_label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+
+  &.o_dcl_present  { color: $color-present; }
+  &.o_dcl_on_leave { color: darken($color-on-leave, 12%); }
+  &.o_dcl_absent   { color: $color-absent; }
+}
+
+// ── Mini stacked bar at bottom of card ───────────────────────────────────────
+.o_atd_dept_minibar {
+  width: calc(100% + 32px);        // bleed to card edges
+  margin-left: -16px;
+  margin-right: -16px;
+  margin-top: auto;              
+  height: 6px;
+  display: flex;
+  overflow: hidden;
+}
+
+.o_atd_dept_minibar_fill {
+  height: 100%;
+  transition: width 0.6s ease;
+
+  &.o_mb_present  { background: $color-present; }
+  &.o_mb_on_leave { background: $color-on-leave; }
+  &.o_mb_absent   { background: $color-absent; }
+}
+
+// ── Empty state ───────────────────────────────────────────────────────────────
+.o_atd_dept_empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 40px;
+  color: $color-subtext;
+  font-size: 14px;
+  width: 100%;
+  text-align: center;
+}
+// ── Export Modal ───────────────────────────────────────────────────────────
+.o_atd_modal_backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(45, 55, 72, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  animation: o_atd_fade_in 0.15s ease;
+}
+
+@keyframes o_atd_fade_in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.o_atd_modal {
+  background: $color-card-bg;
+  border-radius: $radius-card;
+  box-shadow: $shadow-hover;
+  width: 420px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.o_atd_modal_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 16px;
+  font-weight: 700;
+  color: $color-text;
+
+  .fa { color: $color-present; }
+
+  .o_atd_modal_close {
+    cursor: pointer;
+    color: $color-subtext;
+    font-size: 16px;
+    transition: color 0.15s;
+    &:hover { color: $color-absent; }
+  }
+}
+
+.o_atd_modal_body {
+  padding: 20px 22px;
+}
+
+.o_atd_modal_label {
+  font-size: 12px;
+  font-weight: 600;
+  color: $color-subtext;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 10px;
+}
+
+.o_atd_modal_choice_row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.o_atd_choice_btn {
+  flex: 1;
+  background: #f7fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: $color-subtext;
+  cursor: pointer;
+  transition: $transition;
+
+  .fa { font-size: 13px; }
+
+  &:hover { border-color: $color-present; color: $color-text; }
+
+  &.active {
+    background: rgba(28, 200, 138, 0.1);
+    border-color: $color-present;
+    color: darken($color-present, 8%);
+  }
+}
+
+.o_atd_modal_info {
+  background: rgba(78, 115, 223, 0.08);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: $color-text;
+
+  .fa { color: $color-total; }
+  strong { color: $color-total; }
+}
+
+.o_atd_modal_date_row {
+  display: flex;
+  gap: 14px;
+}
+
+.o_atd_modal_field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    color: $color-subtext;
+  }
+
+  input[type="date"] {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 9px 10px;
+    font-size: 13px;
+    color: $color-text;
+    outline: none;
+    transition: border-color 0.15s;
+
+    &:focus { border-color: $color-present; }
+  }
+}
+
+.o_atd_modal_error {
+  margin-top: 12px;
+  background: rgba(231, 74, 59, 0.08);
+  color: $color-absent;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12.5px;
+}
+
+.o_atd_modal_footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 22px;
+  border-top: 1px solid #edf2f7;
+}
+
+.o_atd_modal_btn_cancel {
+  background: #f7fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: $color-subtext;
+  cursor: pointer;
+  transition: $transition;
+
+  &:hover:not(:disabled) { background: #edf2f7; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.o_atd_modal_btn_confirm {
+  background: $color-present;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: $transition;
+  min-width: 110px;
+
+  &:hover:not(:disabled) { background: darken($color-present, 8%); }
+  &:disabled { opacity: 0.7; cursor: not-allowed; }
+  .fa { font-size: 12px; }
 }
