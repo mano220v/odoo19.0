@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         WORD DOCUMENT — SEARCH VIEW
+    ══════════════════════════════════════════════════════════════════════════ -->
+    <record id="view_word_document_search" model="ir.ui.view">
+      <field name="name">word.document.search</field>
+      <field name="model">word.document</field>
+      <field name="arch" type="xml">
+        <search string="Search Documents">
+          <field name="name" string="Title" filter_domain="[('name','ilike',self)]"/>
+          <field name="author_id"/>
+          <field name="tag_ids"/>
+          <field name="category_id"/>
+          <separator/>
+          <filter string="My Documents"  name="my_docs"
+                  domain="[('author_id','=',uid)]"/>
+          <filter string="Shared"        name="shared"
+                  domain="[('is_shared','=',True)]"/>
+          <filter string="Draft"         name="draft"
+                  domain="[('state','=','draft')]"/>
+          <filter string="Published"     name="published"
+                  domain="[('state','=','published')]"/>
+          <filter string="Archived"      name="archived"
+                  domain="[('state','=','archived')]"/>
+          <separator/>
+          <filter string="Templates"     name="templates"
+                  domain="[('is_template','=',True)]"/>
+          <separator/>
+          <filter string="Today"         name="today"
+                  domain="[('write_date','&gt;=',context_today().strftime('%Y-%m-%d'))]"/>
+          <filter string="This Week"     name="this_week"
+                  domain="[('write_date','&gt;=',(context_today()-relativedelta(weeks=1)).strftime('%Y-%m-%d'))]"/>
+          <group>
+            <filter string="Author"   name="by_author"   context="{'group_by':'author_id'}"/>
+            <filter string="Category" name="by_category" context="{'group_by':'category_id'}"/>
+            <filter string="Status"   name="by_state"    context="{'group_by':'state'}"/>
+            <filter string="Month"    name="by_month"    context="{'group_by':'write_date:month'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         WORD DOCUMENT — KANBAN VIEW (Home Screen)
+    ══════════════════════════════════════════════════════════════════════════ -->
+    <record id="view_word_document_kanban" model="ir.ui.view">
+      <field name="name">word.document.kanban</field>
+      <field name="model">word.document</field>
+      <field name="arch" type="xml">
+        <kanban class="o_word_kanban">
+          <field name="name"/>
+          <field name="author_id"/>
+          <field name="state"/>
+          <field name="word_count"/>
+          <field name="write_date"/>
+          <field name="tag_ids"/>
+          <field name="is_shared"/>
+          <templates>
+            <t t-name="card">
+              <div class="o_we_kanban_card" t-att-class="'state_' + record.state.raw_value">
+                <div class="o_we_card_body">
+                  <div class="o_we_card_icon">
+                    <i class="fa fa-file-text-o" title="Document"/>
+                  </div>
+                  <div class="o_we_card_content">
+                    <div class="o_we_card_title">
+                      <field name="name"/>
+                    </div>
+                    <div class="o_we_card_meta">
+                      <span class="o_we_author">
+                        <i class="fa fa-user" title="Author"/> <field name="author_id"/>
+                      </span>
+                      <span class="o_we_date">
+                        <i class="fa fa-clock-o" title="Last Modified"/>
+                        <field name="write_date" widget="date"/>
+                      </span>
+                    </div>
+                    <div class="o_we_card_stats">
+                      <span><field name="word_count"/> words</span>
+                      <field name="state" widget="badge"
+                             decoration-info="state == 'draft'"
+                             decoration-warning="state == 'review'"
+                             decoration-success="state == 'published'"
+                             decoration-danger="state == 'archived'"/>
+                    </div>
+                    <div t-if="record.tag_ids.raw_value.length" class="o_we_card_tags">
+                      <field name="tag_ids" widget="many2many_tags" options="{'color_field':'color'}"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="o_we_card_footer">
+                  <button class="btn btn-sm btn-primary o_we_open_btn"
+                          type="object" name="action_open_editor">
+                    <i class="fa fa-pencil"/> Open
+                  </button>
+                  <button class="btn btn-sm btn-outline-secondary"
+                          type="object" name="action_export_docx"
+                          title="Export as DOCX">
+                    <i class="fa fa-download"/> DOCX
+                  </button>
+                  <button class="btn btn-sm btn-outline-secondary"
+                          type="object" name="action_export_pdf"
+                          title="Export as PDF">
+                    <i class="fa fa-file-pdf-o"/> PDF
+                  </button>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         WORD DOCUMENT — LIST VIEW
+    ══════════════════════════════════════════════════════════════════════════ -->
+    <record id="view_word_document_list" model="ir.ui.view">
+      <field name="name">word.document.list</field>
+      <field name="model">word.document</field>
+      <field name="arch" type="xml">
+        <list string="Documents" decoration-muted="state == 'archived'"
+              decoration-success="state == 'published'"
+              multi_edit="1">
+          <field name="name" string="Title"/>
+          <field name="author_id" optional="show" widget="many2one_avatar_user"/>
+          <field name="category_id" optional="show"/>
+          <field name="tag_ids" widget="many2many_tags" options="{'color_field':'color'}" optional="show"/>
+          <field name="word_count" optional="show" string="Words"/>
+          <field name="page_count" optional="hide" string="Pages"/>
+          <field name="reading_time" optional="hide" string="Read (min)"/>
+          <field name="is_shared" optional="hide" widget="boolean_toggle"/>
+          <field name="state" widget="badge"
+                 decoration-info="state == 'draft'"
+                 decoration-warning="state == 'review'"
+                 decoration-success="state == 'published'"
+                 decoration-danger="state == 'archived'"/>
+          <field name="write_date" string="Last Modified" optional="show"/>
+          <button name="action_open_editor" type="object" string="Open" icon="fa-pencil"
+                  class="btn-primary"/>
+          <button name="action_export_docx" type="object" icon="fa-download"
+                  title="Export DOCX"/>
+          <button name="action_export_pdf" type="object" icon="fa-file-pdf-o"
+                  title="Export PDF"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         WORD DOCUMENT — FORM VIEW (standard Odoo form for metadata editing)
+    ══════════════════════════════════════════════════════════════════════════ -->
+    <record id="view_word_document_form" model="ir.ui.view">
+      <field name="name">word.document.form</field>
+      <field name="model">word.document</field>
+      <field name="arch" type="xml">
+        <form string="Word Document">
+          <header>
+            <button name="action_open_editor"  type="object" string="Open in Editor"
+                    class="btn-primary" icon="fa-pencil"/>
+            <button name="action_export_docx"  type="object" string="Export DOCX"
+                    class="btn-secondary" icon="fa-download"/>
+            <button name="action_export_pdf"   type="object" string="Export PDF"
+                    class="btn-secondary" icon="fa-file-pdf-o"/>
+            <button name="action_set_review"   type="object" string="Submit for Review"
+                    invisible="state not in ['draft']"/>
+            <button name="action_publish"      type="object" string="Publish"
+                    invisible="state not in ['draft','review']" class="btn-success"/>
+            <button name="action_set_draft"    type="object" string="Set to Draft"
+                    invisible="state not in ['published','review','archived']"/>
+            <button name="action_archive_doc"  type="object" string="Archive"
+                    invisible="state == 'archived'"/>
+            <button name="action_duplicate"    type="object" string="Duplicate"/>
+            <field name="state" widget="statusbar"
+                   statusbar_visible="draft,review,published"/>
+          </header>
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button name="action_view_attachments" type="object"
+                      class="oe_stat_button" icon="fa-paperclip">
+                <field name="attachment_count" widget="statinfo" string="Files"/>
+              </button>
+              <button name="action_open_editor" type="object"
+                      class="oe_stat_button" icon="fa-file-text-o">
+                <field name="word_count" widget="statinfo" string="Words"/>
+              </button>
+              <button class="oe_stat_button" icon="fa-clock-o" type="object"
+                      name="action_open_editor">
+                <field name="reading_time" widget="statinfo" string="Min Read"/>
+              </button>
+            </div>
+            <div class="oe_title">
+              <h1>
+                <field name="name" placeholder="Document Title…"/>
+              </h1>
+            </div>
+            <group>
+              <group>
+                <field name="author_id" widget="many2one_avatar_user"/>
+                <field name="category_id"/>
+                <field name="template_id" invisible="is_template"/>
+              </group>
+              <group>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="is_shared"/>
+                <field name="share_url" invisible="not is_shared" widget="url"/>
+                <field name="is_template"/>
+              </group>
+            </group>
+            <group>
+              <field name="tag_ids" widget="many2many_tags"
+                     options="{'color_field':'color','no_create_edit':True}"/>
+            </group>
+            <notebook>
+              <page string="Document Preview" name="preview">
+                <field name="content" widget="html" readonly="1" force_save="1"
+                       options="{'style-inline':True}"
+                       class="o_we_preview_content"/>
+              </page>
+              <page string="Statistics" name="stats">
+                <group>
+                  <group>
+                    <field name="word_count"/>
+                    <field name="char_count"/>
+                    <field name="reading_time"/>
+                    <field name="page_count"/>
+                  </group>
+                </group>
+              </page>
+            </notebook>
+          </sheet>
+          <chatter/>
+        </form>
+      </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         WORD DOCUMENT — MAIN ACTION
+    ══════════════════════════════════════════════════════════════════════════ -->
+    <record id="action_word_document_manager" model="ir.actions.act_window">
+      <field name="name">My Documents</field>
+      <field name="res_model">word.document</field>
+      <field name="view_mode">kanban,list,form</field>
+      <field name="domain">[]</field>
+      <field name="context">{'search_default_my_docs': 1}</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Create your first document
+        </p>
+        <p>
+          Use the Word Editor to write, format, and export professional documents
+          directly inside Odoo.
+        </p>
+      </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         CLIENT ACTION — Full-screen Word Editor
+    ══════════════════════════════════════════════════════════════════════════ -->
+    <record id="action_word_editor_client" model="ir.actions.client">
+      <field name="name">Word Editor</field>
+      <field name="tag">word_editor_action</field>
+    </record>
+
+    <record id="action_word_editor_new" model="ir.actions.client">
+      <field name="name">New Document</field>
+      <field name="tag">word_editor_action</field>
+      <field name="params" eval="{}"/>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         TEMPLATES — VIEWS
+    ══════════════════════════════════════════════════════════════════════════ -->
+    <record id="view_word_template_list" model="ir.ui.view">
+      <field name="name">word.document.template.list</field>
+      <field name="model">word.document.template</field>
+      <field name="arch" type="xml">
+        <list string="Templates">
+          <field name="sequence" widget="handle"/>
+          <field name="name"/>
+          <field name="category"/>
+          <field name="description"/>
+          <field name="active"/>
+        </list>
+      </field>
+    </record>
+
+    <record id="view_word_template_form" model="ir.ui.view">
+      <field name="name">word.document.template.form</field>
+      <field name="model">word.document.template</field>
+      <field name="arch" type="xml">
+        <form string="Document Template">
+          <header>
+            <button name="action_create_document" type="object"
+                    string="Create Document from Template" class="btn-primary"/>
+          </header>
+          <sheet>
+            <div class="oe_title">
+              <h1><field name="name" placeholder="Template Name…"/></h1>
+            </div>
+            <group>
+              <group>
+                <field name="category"/>
+                <field name="sequence"/>
+              </group>
+              <group>
+                <field name="active"/>
+                <field name="icon"/>
+                <field name="color" widget="color_picker"/>
+              </group>
+            </group>
+            <field name="description" placeholder="Describe when to use this template…"/>
+            <field name="content" widget="html" options="{'style-inline':True}"/>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_word_templates" model="ir.actions.act_window">
+      <field name="name">Templates</field>
+      <field name="res_model">word.document.template</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         TAGS — VIEWS
+    ══════════════════════════════════════════════════════════════════════════ -->
+    <record id="view_word_document_tag_list" model="ir.ui.view">
+      <field name="name">word.document.tag.list</field>
+      <field name="model">word.document.tag</field>
+      <field name="arch" type="xml">
+        <list string="Tags" editable="bottom">
+          <field name="name"/>
+          <field name="color" widget="color_picker"/>
+          <field name="document_count" string="Documents"/>
+        </list>
+      </field>
+    </record>
+
+    <record id="action_word_tags" model="ir.actions.act_window">
+      <field name="name">Tags</field>
+      <field name="res_model">word.document.tag</field>
+      <field name="view_mode">list</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         CATEGORIES — VIEWS
+    ══════════════════════════════════════════════════════════════════════════ -->
+    <record id="view_word_document_category_list" model="ir.ui.view">
+      <field name="name">word.document.category.list</field>
+      <field name="model">word.document.category</field>
+      <field name="arch" type="xml">
+        <list string="Categories" editable="bottom">
+          <field name="sequence" widget="handle"/>
+          <field name="name"/>
+          <field name="parent_id"/>
+          <field name="document_count" string="Documents"/>
+        </list>
+      </field>
+    </record>
+
+    <record id="action_word_categories" model="ir.actions.act_window">
+      <field name="name">Categories</field>
+      <field name="res_model">word.document.category</field>
+      <field name="view_mode">list</field>
+    </record>
+
+  </data>
+</odoo>

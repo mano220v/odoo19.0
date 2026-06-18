@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <!-- ═══ Root Application Menu ══════════════════════════════════════════ -->
+    <menuitem
+      id="menu_word_editor_root"
+      name="Word Editor"
+      web_icon="word_editor,static/description/icon.svg"
+      sequence="80"
+      groups="word_editor.group_word_editor_user"
+    />
+
+    <!-- ═══ My Documents ════════════════════════════════════════════════════ -->
+    <menuitem
+      id="menu_word_editor_documents"
+      name="My Documents"
+      parent="menu_word_editor_root"
+      action="action_word_document_manager"
+      sequence="10"
+    />
+
+    <!-- ═══ New Document (shortcut) ═════════════════════════════════════════ -->
+    <menuitem
+      id="menu_word_editor_new"
+      name="New Document"
+      parent="menu_word_editor_root"
+      action="action_word_editor_new"
+      sequence="20"
+    />
+
+    <!-- ═══ Templates ════════════════════════════════════════════════════════ -->
+    <menuitem
+      id="menu_word_editor_templates"
+      name="Templates"
+      parent="menu_word_editor_root"
+      action="action_word_templates"
+      sequence="30"
+    />
+
+    <!-- ═══ Configuration ════════════════════════════════════════════════════ -->
+    <menuitem
+      id="menu_word_editor_config"
+      name="Configuration"
+      parent="menu_word_editor_root"
+      sequence="90"
+      groups="word_editor.group_word_editor_manager"
+    />
+
+    <menuitem
+      id="menu_word_editor_tags"
+      name="Tags"
+      parent="menu_word_editor_config"
+      action="action_word_tags"
+      sequence="10"
+    />
+
+    <menuitem
+      id="menu_word_editor_categories"
+      name="Categories"
+      parent="menu_word_editor_config"
+      action="action_word_categories"
+      sequence="20"
+    />
+
+  </data>
+</odoo>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Word Editor for Odoo 19</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; color: #333; line-height: 1.6; }
+    .section { padding: 40px 0; }
+    .section:nth-child(even) { background: #f8f9fa; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+    h1 { font-size: 2.4rem; color: #1a365d; margin-bottom: 12px; }
+    h2 { font-size: 1.6rem; color: #2c5282; margin-bottom: 16px; border-left: 4px solid #4a90d9; padding-left: 12px; }
+    h3 { font-size: 1.1rem; color: #1a365d; margin-bottom: 8px; }
+    p  { margin-bottom: 12px; color: #555; }
+    .hero {
+      background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #4a90d9 100%);
+      color: white; padding: 60px 0; text-align: center;
+    }
+    .hero h1 { color: white; font-size: 2.8rem; }
+    .hero p   { color: rgba(255,255,255,.85); font-size: 1.1rem; max-width: 600px; margin: 12px auto 0; }
+    .badge {
+      display: inline-block; background: rgba(255,255,255,.2);
+      border: 1px solid rgba(255,255,255,.3); border-radius: 20px;
+      padding: 4px 14px; font-size: 13px; margin-bottom: 16px;
+    }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px;
+    }
+    .feature-card {
+      background: white; border: 1px solid #e2e8f0; border-radius: 10px;
+      padding: 22px; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .feature-icon { font-size: 2rem; margin-bottom: 12px; }
+    .highlight-box {
+      background: #ebf4ff; border: 1px solid #bee3f8; border-radius: 8px;
+      padding: 20px 24px; margin: 16px 0;
+    }
+    .highlight-box h3 { color: #2c5282; }
+    ul.check { list-style: none; }
+    ul.check li { padding: 4px 0; }
+    ul.check li::before { content: "✓ "; color: #38a169; font-weight: bold; }
+    .install-box {
+      background: #fff; border: 2px solid #4a90d9; border-radius: 10px;
+      padding: 24px; margin-top: 16px;
+    }
+    code {
+      background: #2d3748; color: #68d391; padding: 2px 8px;
+      border-radius: 4px; font-family: monospace; font-size: 0.9em;
+    }
+    pre {
+      background: #2d3748; color: #e2e8f0; padding: 16px; border-radius: 8px;
+      overflow-x: auto; font-family: monospace; line-height: 1.5;
+      margin: 12px 0;
+    }
+    .tag {
+      display: inline-block; background: #e2e8f0; color: #2d3748;
+      border-radius: 12px; padding: 2px 10px; font-size: 12px;
+      margin: 2px;
+    }
+    table.compat { width: 100%; border-collapse: collapse; }
+    table.compat td, table.compat th {
+      border: 1px solid #e2e8f0; padding: 10px 14px; text-align: left;
+    }
+    table.compat th { background: #ebf4ff; color: #2c5282; }
+    .check-green { color: #38a169; font-weight: bold; }
+    .footer { background: #1a365d; color: rgba(255,255,255,.7); text-align: center; padding: 24px; font-size: 13px; }
+  </style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="container">
+    <span class="badge">📝 Odoo 19 Compatible</span>
+    <h1>Word Editor for Odoo</h1>
+    <p>A full-featured, Word-like document processor built natively inside Odoo — write, format, collaborate and export without ever leaving your ERP.</p>
+  </div>
+</div>
+
+<!-- Overview -->
+<div class="section">
+  <div class="container">
+    <h2>What is Word Editor?</h2>
+    <p>
+      <strong>Word Editor</strong> brings a professional document-processing experience directly
+      into your Odoo instance. Create, edit, and manage business documents with a familiar
+      Word-style interface — complete with a rich formatting toolbar, A4 page layout simulation,
+      real-time auto-save, and one-click export to <strong>Microsoft Word (.docx)</strong>
+      and <strong>PDF</strong>.
+    </p>
+    <p>
+      No third-party subscriptions. No browser extensions. Everything lives inside Odoo,
+      next to your data.
+    </p>
+
+    <div class="highlight-box">
+      <h3>🚀 Key Highlights</h3>
+      <ul class="check">
+        <li>Full WYSIWYG editor with A4 paper layout simulation</li>
+        <li>Export to <strong>.docx</strong> (Microsoft Word) and <strong>PDF</strong></li>
+        <li>Auto-save every 3 seconds — never lose your work</li>
+        <li>4 built-in templates: Letter, Meeting Notes, Project Report, Invoice</li>
+        <li>Find &amp; Replace across the entire document</li>
+        <li>Chatter integration — comment and track changes on every document</li>
+        <li>Role-based access control (User / Manager)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<div class="section">
+  <div class="container">
+    <h2>Features</h2>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon">🖊️</div>
+        <h3>Rich Text Editing</h3>
+        <p>Bold, italic, underline, strikethrough, superscript, subscript, and custom text &amp; highlight colours.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔤</div>
+        <h3>Full Typography</h3>
+        <p>12 font families, 18 font sizes, 6 heading levels, paragraph styles, blockquote, and preformatted text.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <h3>A4 Page Layout</h3>
+        <p>Realistic A4 paper with margins, page rulers, zoom (50–200%), and page-break insertion.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📤</div>
+        <h3>Export to DOCX &amp; PDF</h3>
+        <p>Download as Microsoft Word (.docx) using python-docx, or generate a formatted PDF via Odoo's report engine.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💾</div>
+        <h3>Auto-Save</h3>
+        <p>Changes are saved automatically every 3 seconds. A save status indicator shows live save state.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3>Document Templates</h3>
+        <p>Pick from 4 ready-made templates (Blank, Business Letter, Meeting Notes, Project Report, Invoice) or create your own.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Find &amp; Replace</h3>
+        <p>Find next, replace single occurrence, or replace all — with a persistent panel inside the editor.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🗂️</div>
+        <h3>Document Manager</h3>
+        <p>Kanban, list, and form views. Organise with tags, categories, and status workflow (Draft → Review → Published).</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Collaboration</h3>
+        <p>Native Odoo chatter on every document — comments, followers, activities, and history tracking.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Security</h3>
+        <p>Two security groups: <strong>Word Editor User</strong> (own docs) and <strong>Word Editor Manager</strong> (all docs + config).</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Document Statistics</h3>
+        <p>Live word count, character count, estimated reading time, and page count — always visible in the status bar.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🖨️</div>
+        <h3>Print Support</h3>
+        <p>Print directly from the editor with browser print dialog — proper A4 margins applied automatically.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Keyboard Shortcuts -->
+<div class="section">
+  <div class="container">
+    <h2>Keyboard Shortcuts</h2>
+    <table class="compat">
+      <thead>
+        <tr><th>Shortcut</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>Ctrl + B</code></td><td>Bold</td></tr>
+        <tr><td><code>Ctrl + I</code></td><td>Italic</td></tr>
+        <tr><td><code>Ctrl + U</code></td><td>Underline</td></tr>
+        <tr><td><code>Ctrl + S</code></td><td>Save document</td></tr>
+        <tr><td><code>Ctrl + Z</code></td><td>Undo</td></tr>
+        <tr><td><code>Ctrl + Y</code></td><td>Redo</td></tr>
+        <tr><td><code>Ctrl + A</code></td><td>Select all</td></tr>
+        <tr><td><code>Ctrl + K</code></td><td>Insert link</td></tr>
+        <tr><td><code>Ctrl + F</code></td><td>Find &amp; replace panel</td></tr>
+        <tr><td><code>Tab</code></td><td>Indent (4 spaces)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Installation -->
+<div class="section">
+  <div class="container">
+    <h2>Installation</h2>
+
+    <div class="install-box">
+      <h3>1. Install the Module</h3>
+      <p>Download and unzip into your Odoo addons path, then install via <strong>Apps → Word Editor</strong>.</p>
+
+      <h3 style="margin-top:16px">2. Optional — Enable DOCX Export</h3>
+      <p>For native <code>.docx</code> export, install the Python libraries on your server:</p>
+      <pre>pip install python-docx beautifulsoup4</pre>
+      <p>
+        Without these libraries, the module still works fully — DOCX export falls back to
+        an HTML download. All other features (PDF export, editing, auto-save, templates) are
+        unaffected.
+      </p>
+
+      <h3 style="margin-top:16px">3. Set User Permissions</h3>
+      <p>
+        Go to <strong>Settings → Users</strong>, open a user record, and set the
+        <strong>Word Editor</strong> access level to <em>User</em> or <em>Manager</em>.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Compatibility -->
+<div class="section">
+  <div class="container">
+    <h2>Compatibility</h2>
+    <table class="compat">
+      <thead>
+        <tr><th>Odoo Version</th><th>Supported</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Odoo 19.0</td><td class="check-green">✓ Full support</td><td>Primary target</td></tr>
+        <tr><td>Odoo 18.0</td><td class="check-green">✓ Compatible</td><td>OWL 2.x compatible</td></tr>
+        <tr><td>Odoo 17.0</td><td class="check-green">✓ Compatible</td><td>Minor view adjustments may apply</td></tr>
+        <tr><td>Community &amp; Enterprise</td><td class="check-green">✓</td><td>Works on both editions</td></tr>
+        <tr><td>Multi-company</td><td class="check-green">✓</td><td>company_id field included</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:24px">
+      <span class="tag">Odoo 19</span>
+      <span class="tag">OWL 2</span>
+      <span class="tag">Word Processor</span>
+      <span class="tag">DOCX Export</span>
+      <span class="tag">PDF Export</span>
+      <span class="tag">Document Management</span>
+      <span class="tag">Productivity</span>
+      <span class="tag">python-docx</span>
+    </div>
+  </div>
+</div>
+
+<!-- Changelog -->
+<div class="section">
+  <div class="container">
+    <h2>Changelog</h2>
+    <div class="highlight-box">
+      <h3>v1.0.0 — Initial Release</h3>
+      <ul class="check">
+        <li>Full-screen Word Editor client action with OWL 2 components</li>
+        <li>A4 page layout with margins, ruler, and zoom control</li>
+        <li>Complete formatting toolbar (2 rows, 30+ actions)</li>
+        <li>DOCX export via python-docx (HTML fallback without it)</li>
+        <li>PDF export via Odoo's QWeb report engine</li>
+        <li>Auto-save every 3 seconds</li>
+        <li>Find &amp; Replace panel</li>
+        <li>Table insertion with visual grid picker</li>
+        <li>Link and image insertion modals</li>
+        <li>Colour picker (text colour and highlight)</li>
+        <li>4 document templates built-in</li>
+        <li>Template management for managers</li>
+        <li>Kanban + list + form views for document management</li>
+        <li>Tags, categories, status workflow</li>
+        <li>Chatter integration (mail.thread)</li>
+        <li>User / Manager security groups</li>
+        <li>Multi-company support</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Word Editor for Odoo · OPL-1 License · Compatible with Odoo 17, 18, 19
+</div>
+
+</body>
+</html>
