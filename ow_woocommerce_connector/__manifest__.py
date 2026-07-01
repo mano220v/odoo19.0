@@ -16,6 +16,7 @@ sync logs, and a backend dashboard for operational visibility.
     "support": "vsmanoj144@gmail.com",
     "license": "OPL-1",
     'price': 85.00,
+    'currency': 'USD',
     "depends": ["base", "sale_management", "stock", "web"],
     "data": [
         "security/ir.model.access.csv",
