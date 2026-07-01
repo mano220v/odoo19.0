@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ow_woocommerce_connector.Dashboard">
+        <Layout display="display" className="'h-100 overflow-auto'">
+            <t t-set-slot="control-panel-create-button">
+                <button type="button" class="btn btn-primary" t-on-click="() => this.fetchData()">
+                    <i class="fa fa-refresh me-1"/>Refresh
+                </button>
+            </t>
+            <div class="o_woo_dashboard">
+
+                <!-- Header -->
+                <div class="o_woo_dashboard_header">
+                    <div class="o_woo_header_left">
+                        <div class="o_woo_brand">
+                            <i class="fa fa-shopping-bag"/>
+                        </div>
+                        <div>
+                            <h2>WooCommerce Connector</h2>
+                            <p>Operational overview for store synchronization.</p>
+                        </div>
+                    </div>
+                    <div class="o_woo_header_right">
+                        <div class="o_woo_last_sync">
+                            <span>Last Sync</span>
+                            <strong><t t-esc="formatDateTime(state.data.last_sync)"/></strong>
+                        </div>
+                        <button type="button" class="btn btn-outline-secondary"
+                                t-att-disabled="state.data.instances === 0"
+                                t-on-click="() => this.openNewInstance()">
+                            <i class="fa fa-plus me-1"/>Add Store
+                        </button>
+                        <button type="button" class="btn o_woo_btn_brand"
+                                t-att-disabled="state.busyGlobal or state.data.active_instances === 0"
+                                t-on-click="() => this.runGlobalAction('sync_all')">
+                            <i t-att-class="state.busyGlobal ? 'fa fa-circle-o-notch fa-spin me-1' : 'fa fa-refresh me-1'"/>
+                            Sync All Stores
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Empty state / onboarding guide -->
+                <div class="o_woo_guide" t-if="state.showGuide or state.data.instances === 0">
+                    <div class="o_woo_guide_header">
+                        <h3>
+                            <t t-if="state.data.instances === 0">Get started in 5 steps</t>
+                            <t t-else="">Workflow Guide</t>
+                        </h3>
+                        <button type="button" class="btn btn-link btn-sm" t-if="state.data.instances > 0" t-on-click="() => this.toggleGuide()">
+                            Hide
+                        </button>
+                    </div>
+                    <div class="o_woo_steps">
+                        <div><span>1</span><strong>Configure Store</strong><p>Add URL, REST API key, company, warehouse, and pricelist.</p></div>
+                        <div><span>2</span><strong>Test Connection</strong><p>Validate WooCommerce REST access before running imports.</p></div>
+                        <div><span>3</span><strong>Import Masters</strong><p>Pull products and customers to create clean mappings.</p></div>
+                        <div><span>4</span><strong>Sync Orders</strong><p>Create sales orders and optionally confirm them automatically.</p></div>
+                        <div><span>5</span><strong>Review Logs</strong><p>Audit every operation from the synchronization log.</p></div>
+                    </div>
+                    <button type="button" class="btn o_woo_btn_brand mt-2" t-if="state.data.instances === 0" t-on-click="() => this.openNewInstance()">
+                        <i class="fa fa-plus me-1"/>Add Your First Store
+                    </button>
+                </div>
+                <div class="o_woo_guide_collapsed" t-if="!state.showGuide and state.data.instances > 0">
+                    <button type="button" class="btn btn-link btn-sm" t-on-click="() => this.toggleGuide()">
+                        <i class="fa fa-question-circle me-1"/>Show workflow guide
+                    </button>
+                </div>
+
+                <!-- KPI cards -->
+                <div class="o_woo_kpis">
+                    <div class="o_woo_kpi">
+                        <div class="o_woo_kpi_icon"><i class="fa fa-store"/></div>
+                        <div><span>Stores</span><strong><t t-esc="state.data.active_instances"/> / <t t-esc="state.data.instances"/></strong></div>
+                    </div>
+                    <div class="o_woo_kpi">
+                        <div class="o_woo_kpi_icon"><i class="fa fa-cubes"/></div>
+                        <div><span>Products</span><strong><t t-esc="state.data.products"/></strong></div>
+                    </div>
+                    <div class="o_woo_kpi">
+                        <div class="o_woo_kpi_icon"><i class="fa fa-users"/></div>
+                        <div><span>Customers</span><strong><t t-esc="state.data.customers"/></strong></div>
+                    </div>
+                    <div class="o_woo_kpi">
+                        <div class="o_woo_kpi_icon"><i class="fa fa-shopping-cart"/></div>
+                        <div><span>Orders</span><strong><t t-esc="state.data.orders"/></strong></div>
+                    </div>
+                    <div class="o_woo_kpi">
+                        <div class="o_woo_kpi_icon"><i class="fa fa-bolt"/></div>
+                        <div><span>Today's Syncs</span><strong><t t-esc="state.data.today_syncs"/></strong></div>
+                    </div>
+                    <div class="o_woo_kpi">
+                        <div class="o_woo_kpi_icon"><i class="fa fa-check-circle"/></div>
+                        <div><span>Success Rate</span><strong><t t-esc="state.data.success_rate"/>%</strong></div>
+                    </div>
+                    <div class="o_woo_kpi" t-att-class="{'o_woo_kpi_warn': hasFailures}">
+                        <div class="o_woo_kpi_icon"><i class="fa fa-exclamation-triangle"/></div>
+                        <div><span>Failed Logs</span><strong><t t-esc="state.data.failed_logs"/></strong></div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="o_woo_charts">
+                    <div class="o_woo_chart_card o_woo_chart_wide">
+                        <h3>Sync Activity — Last 14 Days</h3>
+                        <div class="o_woo_chart_canvas_wrap">
+                            <canvas t-ref="trendChart"/>
+                        </div>
+                    </div>
+                    <div class="o_woo_chart_card">
+                        <h3>Operations Breakdown</h3>
+                        <div class="o_woo_chart_canvas_wrap">
+                            <canvas t-ref="opsChart" t-if="state.data.operations.length"/>
+                            <div class="text-muted o_woo_chart_empty" t-if="!state.data.operations.length">No operations recorded yet.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instance health grid -->
+                <div class="o_woo_instances" t-if="state.data.instance_data.length">
+                    <h3>Connected Stores</h3>
+                    <div class="o_woo_instance_grid">
+                        <div class="o_woo_instance_card" t-foreach="state.data.instance_data" t-as="inst" t-key="inst.id">
+                            <div class="o_woo_instance_top">
+                                <div class="o_woo_instance_name" t-on-click="() => this.openInstance(inst.id)">
+                                    <strong><t t-esc="inst.name"/></strong>
+                                    <small><t t-esc="inst.store_url"/></small>
+                                </div>
+                                <span class="o_woo_health_badge" t-att-class="'o_woo_health_' + inst.health">
+                                    <t t-esc="healthLabel(inst.health)"/>
+                                </span>
+                            </div>
+                            <div class="o_woo_instance_stats">
+                                <div><i class="fa fa-cubes"/><span><t t-esc="inst.products"/></span></div>
+                                <div><i class="fa fa-users"/><span><t t-esc="inst.customers"/></span></div>
+                                <div><i class="fa fa-shopping-cart"/><span><t t-esc="inst.orders"/></span></div>
+                                <div t-if="inst.failed_logs" class="o_woo_instance_stat_warn"><i class="fa fa-exclamation-triangle"/><span><t t-esc="inst.failed_logs"/></span></div>
+                            </div>
+                            <div class="o_woo_instance_sync">
+                                <i class="fa fa-clock-o"/><t t-esc="formatDateTime(inst.last_sync)"/>
+                            </div>
+                            <div class="o_woo_instance_actions">
+                                <button type="button" class="btn btn-sm o_woo_btn_brand"
+                                        t-att-disabled="state.busyInstanceId === inst.id"
+                                        t-on-click="() => this.runInstanceAction(inst.id, 'sync_all')">
+                                    <i t-att-class="state.busyInstanceId === inst.id ? 'fa fa-circle-o-notch fa-spin' : 'fa fa-refresh'"/>
+                                    Sync Now
+                                </button>
+                                <div class="dropdown o_woo_instance_dropdown">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        More
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item" href="#" t-on-click.prevent="() => this.runInstanceAction(inst.id, 'test_connection')">Test Connection</a></li>
+                                        <li><a class="dropdown-item" href="#" t-on-click.prevent="() => this.runInstanceAction(inst.id, 'import_products')">Import Products</a></li>
+                                        <li><a class="dropdown-item" href="#" t-on-click.prevent="() => this.runInstanceAction(inst.id, 'import_customers')">Import Customers</a></li>
+                                        <li><a class="dropdown-item" href="#" t-on-click.prevent="() => this.runInstanceAction(inst.id, 'import_orders')">Import Orders</a></li>
+                                        <li><a class="dropdown-item" href="#" t-on-click.prevent="() => this.runInstanceAction(inst.id, 'export_products')">Export Products</a></li>
+                                        <li><hr class="dropdown-divider"/></li>
+                                        <li><a class="dropdown-item" href="#" t-on-click.prevent="() => this.openInstance(inst.id)">View Store</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent sync logs -->
+                <div class="o_woo_logs">
+                    <div class="o_woo_logs_header">
+                        <h3>Recent Sync Logs</h3>
+                        <div class="o_woo_log_filters">
+                            <button type="button" class="btn btn-sm" t-att-class="state.logFilter === 'all' ? 'btn-secondary' : 'btn-outline-secondary'" t-on-click="() => this.setLogFilter('all')">All</button>
+                            <button type="button" class="btn btn-sm" t-att-class="state.logFilter === 'success' ? 'btn-success' : 'btn-outline-secondary'" t-on-click="() => this.setLogFilter('success')">Success</button>
+                            <button type="button" class="btn btn-sm" t-att-class="state.logFilter === 'failed' ? 'btn-danger' : 'btn-outline-secondary'" t-on-click="() => this.setLogFilter('failed')">Failed</button>
+                        </div>
+                    </div>
+                    <table class="table table-sm o_woo_log_table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Store</th>
+                                <th>Operation</th>
+                                <th>Status</th>
+                                <th>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-if="!filteredLogs.length">
+                                <td colspan="5" class="text-muted text-center py-4">No synchronization logs match this filter.</td>
+                            </tr>
+                            <tr t-foreach="filteredLogs" t-as="log" t-key="log.id">
+                                <td><t t-esc="formatDateTime(log.date)"/></td>
+                                <td><t t-esc="log.instance"/></td>
+                                <td><t t-esc="log.operation_label"/></td>
+                                <td><span class="badge" t-att-class="log.state === 'success' ? 'text-bg-success' : 'text-bg-danger'"><t t-esc="log.state"/></span></td>
+                                <td class="o_woo_log_message" t-att-title="log.message"><t t-esc="log.message"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </Layout>
+    </t>
+</templates>

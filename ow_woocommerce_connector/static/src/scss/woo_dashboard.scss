@@ -1,0 +1,412 @@
+$woo-brand: #7f54b3;
+$woo-brand-dark: #6a4699;
+$woo-brand-soft: #f1ecfa;
+$woo-text-muted: #667085;
+$woo-border: #dde2e8;
+$woo-success: #1c9b5e;
+$woo-danger: #e35d6a;
+$woo-warning: #f0a85e;
+
+.o_woo_dashboard {
+    padding: 24px;
+    background: #f5f6f9;
+    min-height: 100%;
+
+    h2, h3 {
+        font-family: inherit;
+    }
+
+    .o_woo_btn_brand {
+        background: $woo-brand;
+        border-color: $woo-brand;
+        color: #fff;
+
+        &:hover:not(:disabled) {
+            background: $woo-brand-dark;
+            border-color: $woo-brand-dark;
+            color: #fff;
+        }
+
+        &:disabled {
+            opacity: 0.55;
+        }
+    }
+
+    /* ---------- Header ---------- */
+    .o_woo_dashboard_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        background: #fff;
+        border: 1px solid $woo-border;
+        border-radius: 10px;
+        padding: 20px 22px;
+        margin-bottom: 18px;
+    }
+
+    .o_woo_header_left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+
+        h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        p {
+            margin: 4px 0 0;
+            color: $woo-text-muted;
+            font-size: 13px;
+        }
+    }
+
+    .o_woo_brand {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, $woo-brand, $woo-brand-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 20px;
+        flex-shrink: 0;
+    }
+
+    .o_woo_header_right {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+    }
+
+    .o_woo_last_sync {
+        text-align: right;
+
+        span {
+            display: block;
+            color: $woo-text-muted;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        strong {
+            font-size: 14px;
+        }
+    }
+
+    /* ---------- Onboarding guide ---------- */
+    .o_woo_guide {
+        background: $woo-brand-soft;
+        border: 1px solid #e2d7f7;
+        border-radius: 10px;
+        padding: 18px 20px;
+        margin-bottom: 18px;
+    }
+
+    .o_woo_guide_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+            margin: 0 0 4px;
+            font-size: 16px;
+            color: $woo-brand-dark;
+        }
+    }
+
+    .o_woo_guide_collapsed {
+        margin-bottom: 18px;
+    }
+
+    .o_woo_steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 12px;
+        margin-top: 10px;
+
+        div {
+            background: #fff;
+            border: 1px solid #e9def8;
+            border-radius: 8px;
+            padding: 14px;
+        }
+
+        span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: $woo-brand;
+            color: #fff;
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        strong {
+            display: block;
+            font-size: 13.5px;
+        }
+
+        p {
+            color: $woo-text-muted;
+            margin: 4px 0 0;
+            font-size: 12.5px;
+            line-height: 1.4;
+        }
+    }
+
+    /* ---------- KPI cards ---------- */
+    .o_woo_kpis {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .o_woo_kpi {
+        background: #fff;
+        border: 1px solid $woo-border;
+        border-radius: 10px;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        span {
+            display: block;
+            color: $woo-text-muted;
+            font-size: 12px;
+        }
+
+        strong {
+            display: block;
+            margin-top: 2px;
+            font-size: 22px;
+        }
+    }
+
+    .o_woo_kpi_icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 9px;
+        background: $woo-brand-soft;
+        color: $woo-brand;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        flex-shrink: 0;
+    }
+
+    .o_woo_kpi_warn {
+        border-color: #f3b3b3;
+
+        .o_woo_kpi_icon {
+            background: #fdecec;
+            color: $woo-danger;
+        }
+    }
+
+    /* ---------- Charts ---------- */
+    .o_woo_charts {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 14px;
+        margin-bottom: 18px;
+
+        @media (max-width: 992px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .o_woo_chart_card {
+        background: #fff;
+        border: 1px solid $woo-border;
+        border-radius: 10px;
+        padding: 18px;
+
+        h3 {
+            margin: 0 0 12px;
+            font-size: 14px;
+            color: #344054;
+        }
+    }
+
+    .o_woo_chart_canvas_wrap {
+        position: relative;
+        height: 240px;
+    }
+
+    .o_woo_chart_empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        font-size: 13px;
+    }
+
+    /* ---------- Instance health grid ---------- */
+    .o_woo_instances {
+        margin-bottom: 18px;
+
+        h3 {
+            font-size: 15px;
+            margin: 0 0 12px;
+            color: #344054;
+        }
+    }
+
+    .o_woo_instance_grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 14px;
+    }
+
+    .o_woo_instance_card {
+        background: #fff;
+        border: 1px solid $woo-border;
+        border-radius: 10px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .o_woo_instance_top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .o_woo_instance_name {
+        cursor: pointer;
+
+        strong {
+            display: block;
+            font-size: 14.5px;
+        }
+
+        small {
+            display: block;
+            color: $woo-text-muted;
+            font-size: 11.5px;
+            word-break: break-all;
+        }
+
+        &:hover strong {
+            color: $woo-brand;
+            text-decoration: underline;
+        }
+    }
+
+    .o_woo_health_badge {
+        flex-shrink: 0;
+        font-size: 10.5px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .03em;
+        padding: 3px 8px;
+        border-radius: 20px;
+        white-space: nowrap;
+    }
+
+    .o_woo_health_good { background: #e6f6ee; color: $woo-success; }
+    .o_woo_health_error { background: #fdecec; color: $woo-danger; }
+    .o_woo_health_pending { background: #fef3e2; color: $woo-warning; }
+    .o_woo_health_inactive { background: #f1f2f4; color: $woo-text-muted; }
+
+    .o_woo_instance_stats {
+        display: flex;
+        gap: 16px;
+
+        div {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #344054;
+        }
+
+        i {
+            color: $woo-brand;
+        }
+    }
+
+    .o_woo_instance_stat_warn i,
+    .o_woo_instance_stat_warn span {
+        color: $woo-danger !important;
+    }
+
+    .o_woo_instance_sync {
+        font-size: 12px;
+        color: $woo-text-muted;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .o_woo_instance_actions {
+        display: flex;
+        gap: 8px;
+        margin-top: auto;
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+    }
+
+    .o_woo_instance_dropdown {
+        position: relative;
+    }
+
+    /* ---------- Logs ---------- */
+    .o_woo_logs {
+        background: #fff;
+        border: 1px solid $woo-border;
+        border-radius: 10px;
+        padding: 18px;
+    }
+
+    .o_woo_logs_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 12px;
+
+        h3 {
+            margin: 0;
+            font-size: 15px;
+            color: #344054;
+        }
+    }
+
+    .o_woo_log_filters {
+        display: flex;
+        gap: 6px;
+    }
+
+    .o_woo_log_table {
+        margin-bottom: 0;
+    }
+
+    .o_woo_log_message {
+        max-width: 320px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

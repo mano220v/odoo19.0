@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_woo_instance_user,woo.instance.user,model_woo_instance,base.group_user,1,1,1,1
+access_woo_product_mapping_user,woo.product.mapping.user,model_woo_product_mapping,base.group_user,1,1,1,1
+access_woo_partner_mapping_user,woo.partner.mapping.user,model_woo_partner_mapping,base.group_user,1,1,1,1
+access_woo_sale_order_mapping_user,woo.sale.order.mapping.user,model_woo_sale_order_mapping,base.group_user,1,1,1,1
+access_woo_sync_log_user,woo.sync.log.user,model_woo_sync_log,base.group_user,1,1,1,1
