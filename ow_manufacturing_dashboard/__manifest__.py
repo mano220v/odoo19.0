@@ -9,7 +9,7 @@ Manufacturing Dashboard
 A premium, fully clickable, colorful KPI dashboard for the Manufacturing app.
 
 Features
---------
+---------
 * Live counts for Manufacturing Orders and Job (Work) Orders, broken down by status
 * Click any KPI card to instantly open the underlying filtered records
 * Today / Week / Month / All time period filters
