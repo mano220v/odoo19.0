@@ -1,5 +1,5 @@
 {
-    "name": "WooCommerce Connector",
+    "name": "Woo Commerce Connector",
     "version": "19.0.1.0.0",
     "category": "Sales/eCommerce",
     "summary": "Connect WooCommerce with Odoo products, customers, and orders",
