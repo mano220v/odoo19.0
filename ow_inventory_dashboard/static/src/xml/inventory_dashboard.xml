@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="ow_inventory_dashboard.Dashboard" owl="1">
+    <Layout display="display" className="'h-100 overflow-auto'">
+      <div class="o_inv_dashboard">
+
+        <div class="o_inv_hero">
+          <div class="o_inv_hero_content">
+            <span class="o_inv_eyebrow"><i class="fa fa-cubes"/> Live inventory control</span>
+            <h2>Stock dashboard</h2>
+            <p>Stock levels, transfers, reordering and warehouse activity in one operational view.</p>
+            <div class="o_inv_hero_stats">
+              <button class="o_inv_hero_stat" t-on-click="() => this.openProducts(this.totalProductsDomain(), 'Products')">
+                <span>Products</span>
+                <strong><t t-esc="state.kpi.totalProducts"/></strong>
+              </button>
+              <button class="o_inv_hero_stat is-warning" t-on-click="() => this.openOrderpoints(this.lowStockDomain(), 'Low stock')">
+                <span>Low stock</span>
+                <strong><t t-esc="state.kpi.lowStock"/></strong>
+              </button>
+              <button class="o_inv_hero_stat is-info" t-on-click="() => this.openPickings(this.totalTransfersDomain(), 'Transfers')">
+                <span>Open transfers</span>
+                <strong><t t-esc="state.kpi.totalTransfers"/></strong>
+              </button>
+            </div>
+          </div>
+
+          <div class="o_inv_hero_actions">
+            <div class="o_inv_period_group" aria-label="Dashboard period">
+              <button t-attf-class="o_inv_period_btn {{ state.period === 'today' ? 'active' : '' }}" t-on-click="() => this.setPeriod('today')">Today</button>
+              <button t-attf-class="o_inv_period_btn {{ state.period === 'week' ? 'active' : '' }}" t-on-click="() => this.setPeriod('week')">Week</button>
+              <button t-attf-class="o_inv_period_btn {{ state.period === 'month' ? 'active' : '' }}" t-on-click="() => this.setPeriod('month')">Month</button>
+              <button t-attf-class="o_inv_period_btn {{ state.period === 'all' ? 'active' : '' }}" t-on-click="() => this.setPeriod('all')">All</button>
+            </div>
+            <div class="o_inv_action_row">
+              <button class="btn btn-light o_inv_icon_btn" title="Refresh dashboard" t-on-click="() => this.refreshAll()">
+                <i class="fa fa-refresh"/>
+              </button>
+              <button class="btn btn-primary o_inv_new_btn" t-on-click="() => this.createTransfer()">
+                <i class="fa fa-plus"/> New transfer
+              </button>
+            </div>
+            <div class="o_inv_lastrefresh" t-if="state.lastRefresh">
+              <i t-attf-class="fa {{ state.loading ? 'fa-circle-o-notch fa-spin' : 'fa-clock-o' }}"/>
+              <t t-if="state.loading">Refreshing</t>
+              <t t-else="">Updated <t t-esc="state.lastRefresh"/></t>
+            </div>
+          </div>
+        </div>
+
+        <div class="o_inv_section_bar">
+          <div>
+            <span>Stock levels</span>
+            <small>What's on hand, right now</small>
+          </div>
+        </div>
+        <div class="o_inv_kpi_grid">
+          <div class="o_inv_kpi o_inv_kpi_primary" style="--accent:#0d9488;--accent-bg:#effcf9"
+               t-on-click="() => this.openProducts(this.totalProductsDomain(), 'Products')">
+            <div class="o_inv_kpi_top">
+              <div class="o_inv_icon"><i class="fa fa-cubes"/></div>
+              <i class="fa fa-arrow-right o_inv_card_arrow"/>
+            </div>
+            <div class="o_inv_kpi_label">Products</div>
+            <div class="o_inv_kpi_value"><t t-esc="state.kpi.totalProducts"/></div>
+            <div class="o_inv_kpi_foot">Active storable products</div>
+          </div>
+
+          <div class="o_inv_kpi" style="--accent:#059669;--accent-bg:#ecfdf5"
+               t-on-click="() => this.openProducts(this.inStockDomain(), 'In stock products')">
+            <div class="o_inv_kpi_top">
+              <div class="o_inv_icon"><i class="fa fa-check-circle"/></div>
+              <i class="fa fa-arrow-right o_inv_card_arrow"/>
+            </div>
+            <div class="o_inv_kpi_label">In stock</div>
+            <div class="o_inv_kpi_value"><t t-esc="state.kpi.inStock"/></div>
+            <div class="o_inv_kpi_foot">Quantity on hand &gt; 0</div>
+          </div>
+
+          <div class="o_inv_kpi" style="--accent:#d97706;--accent-bg:#fff7ed"
+               t-on-click="() => this.openOrderpoints(this.lowStockDomain(), 'Low stock')">
+            <div class="o_inv_kpi_top">
+              <div class="o_inv_icon"><i class="fa fa-exclamation-triangle"/></div>
+              <i class="fa fa-arrow-right o_inv_card_arrow"/>
+            </div>
+            <div class="o_inv_kpi_label">Low stock</div>
+            <div class="o_inv_kpi_value"><t t-esc="state.kpi.lowStock"/></div>
+            <div class="o_inv_kpi_foot">Reordering rules triggered</div>
+          </div>
+
+          <div class="o_inv_kpi o_inv_kpi_danger" style="--accent:#dc2626;--accent-bg:#fff1f2"
+               t-on-click="() => this.openProducts(this.outOfStockDomain(), 'Out of stock products')">
+            <div class="o_inv_kpi_top">
+              <div class="o_inv_icon"><i class="fa fa-ban"/></div>
+              <i class="fa fa-arrow-right o_inv_card_arrow"/>
+            </div>
+            <div class="o_inv_kpi_label">Out of stock</div>
+            <div class="o_inv_kpi_value"><t t-esc="state.kpi.outOfStock"/></div>
+            <div class="o_inv_kpi_foot">Zero or negative on hand</div>
+          </div>
+        </div>
+
+        <div class="o_inv_section_bar">
+          <div>
+            <span>Transfers</span>
+            <small>Receipts, deliveries and internal moves</small>
+          </div>
+        </div>
+        <div class="o_inv_kpi_grid">
+          <div class="o_inv_kpi" style="--accent:#4f46e5;--accent-bg:#eef2ff"
+               t-on-click="() => this.openPickings(this.totalTransfersDomain(), 'Open transfers')">
+            <div class="o_inv_kpi_top">
+              <div class="o_inv_icon"><i class="fa fa-exchange"/></div>
+              <i class="fa fa-arrow-right o_inv_card_arrow"/>
+            </div>
+            <div class="o_inv_kpi_label">Open transfers</div>
+            <div class="o_inv_kpi_value"><t t-esc="state.kpi.totalTransfers"/></div>
+            <div class="o_inv_kpi_foot">Not yet done or cancelled</div>
+          </div>
+
+          <div class="o_inv_kpi" style="--accent:#0891b2;--accent-bg:#ecfeff"
+               t-on-click="() => this.openPickings(this.readyTransfersDomain(), 'Ready to process')">
+            <div class="o_inv_kpi_top">
+              <div class="o_inv_icon"><i class="fa fa-play-circle"/></div>
+              <i class="fa fa-arrow-right o_inv_card_arrow"/>
+            </div>
+            <div class="o_inv_kpi_label">Ready to process</div>
+            <div class="o_inv_kpi_value"><t t-esc="state.kpi.readyTransfers"/></div>
+            <div class="o_inv_kpi_foot">Fully reserved and waiting</div>
+          </div>
+
+          <div class="o_inv_kpi o_inv_kpi_danger" style="--accent:#dc2626;--accent-bg:#fff1f2"
+               t-on-click="() => this.openPickings(this.lateTransfersDomain(), 'Late transfers')">
+            <div class="o_inv_kpi_top">
+              <div class="o_inv_icon"><i class="fa fa-clock-o"/></div>
+              <i class="fa fa-arrow-right o_inv_card_arrow"/>
+            </div>
+            <div class="o_inv_kpi_label">Late</div>
+            <div class="o_inv_kpi_value"><t t-esc="state.kpi.lateTransfers"/></div>
+            <div class="o_inv_kpi_foot">Past scheduled date</div>
+          </div>
+
+          <div class="o_inv_kpi" style="--accent:#ea580c;--accent-bg:#fff7ed"
+               t-on-click="() => this.openPickings(this.backordersDomain(), 'Backorders')">
+            <div class="o_inv_kpi_top">
+              <div class="o_inv_icon"><i class="fa fa-history"/></div>
+              <i class="fa fa-arrow-right o_inv_card_arrow"/>
+            </div>
+            <div class="o_inv_kpi_label">Backorders</div>
+            <div class="o_inv_kpi_value"><t t-esc="state.kpi.backorders"/></div>
+            <div class="o_inv_kpi_foot">Split from a previous transfer</div>
+          </div>
+        </div>
+
+        <div class="o_inv_ops_strip">
+          <button class="o_inv_ops_item" style="--accent:#0d9488" t-if="state.extra.incoming !== null"
+                  t-on-click="() => this.openPickings(state.extra.incomingDomain, 'Incoming shipments')">
+            <span><i class="fa fa-arrow-down"/></span>
+            <strong><t t-esc="state.extra.incoming"/></strong>
+            <small>Incoming</small>
+          </button>
+          <button class="o_inv_ops_item" style="--accent:#6366f1" t-if="state.extra.outgoing !== null"
+                  t-on-click="() => this.openPickings(state.extra.outgoingDomain, 'Outgoing shipments')">
+            <span><i class="fa fa-arrow-up"/></span>
+            <strong><t t-esc="state.extra.outgoing"/></strong>
+            <small>Outgoing</small>
+          </button>
+          <button class="o_inv_ops_item" style="--accent:#0891b2" t-if="state.extra.internal !== null"
+                  t-on-click="() => this.openPickings(state.extra.internalDomain, 'Internal transfers')">
+            <span><i class="fa fa-random"/></span>
+            <strong><t t-esc="state.extra.internal"/></strong>
+            <small>Internal</small>
+          </button>
+          <button class="o_inv_ops_item" style="--accent:#be123c" t-if="state.extra.scrap !== null"
+                  t-on-click="() => this.openWindow('stock.scrap', state.extra.scrapDomain, 'Scrap')">
+            <span><i class="fa fa-recycle"/></span>
+            <strong><t t-esc="state.extra.scrap"/></strong>
+            <small>Scrap</small>
+          </button>
+          <button class="o_inv_ops_item" style="--accent:#047857" t-if="state.extra.onTimeRate !== null"
+                  t-on-click="() => this.openPickings(state.extra.onTimeDomain, 'Completed deliveries')">
+            <span><i class="fa fa-percent"/></span>
+            <strong><t t-esc="state.extra.onTimeRate"/>%</strong>
+            <small>On-time</small>
+          </button>
+          <button class="o_inv_ops_item" style="--accent:#a16207" t-if="state.extra.stockValue !== null"
+                  t-on-click="() => this.openWindow('stock.quant', [['location_id.usage','=','internal']], 'Stock valuation')">
+            <span><i class="fa fa-money"/></span>
+            <strong><t t-esc="state.extra.stockValue"/></strong>
+            <small>Stock value</small>
+          </button>
+          <button class="o_inv_ops_item" style="--accent:#475569" t-if="state.extra.reorderCount !== null"
+                  t-on-click="() => this.openOrderpoints(state.extra.reorderDomain, 'Reordering rules')">
+            <span><i class="fa fa-refresh"/></span>
+            <strong><t t-esc="state.extra.reorderCount"/></strong>
+            <small>To reorder</small>
+          </button>
+        </div>
+
+        <div class="o_inv_insights">
+          <div class="o_inv_panel">
+            <div class="o_inv_panel_title">
+              <span><i class="fa fa-map-marker"/> Stock by location</span>
+              <small>Quantity on hand</small>
+            </div>
+            <div t-if="!state.locations.length" class="o_inv_empty">
+              <i class="fa fa-check-circle"/>
+              <span>No stock in internal locations</span>
+            </div>
+            <button t-foreach="state.locations" t-as="loc" t-key="loc.id"
+                    class="o_inv_loc_row" t-on-click="() => this.openLocation(loc)">
+              <span class="o_inv_loc_name"><t t-esc="loc.name"/></span>
+              <span class="o_inv_loc_bar">
+                <span class="o_inv_loc_fill"
+                      t-attf-style="width: {{ Math.min(100, loc.count / (state.locations[0].count || 1) * 100) }}%"/>
+              </span>
+              <span class="o_inv_loc_count"><t t-esc="loc.count"/></span>
+            </button>
+          </div>
+
+          <div class="o_inv_panel">
+            <div class="o_inv_panel_title">
+              <span><i class="fa fa-warning"/> Top products to reorder</span>
+              <small>Highest quantity to order first</small>
+            </div>
+            <div class="o_inv_table_wrap" t-if="state.reorderList.length">
+              <table class="o_inv_table">
+                <thead>
+                  <tr><th>Product</th><th>Min qty</th><th>To order</th><th></th></tr>
+                </thead>
+                <tbody>
+                  <tr t-foreach="state.reorderList" t-as="rec" t-key="rec.id" t-on-click="() => this.openReorderProduct(rec)">
+                    <td><strong><t t-esc="rec.product_id[1]"/></strong></td>
+                    <td><t t-esc="rec.product_min_qty"/></td>
+                    <td><t t-esc="rec.qty_to_order"/></td>
+                    <td><span class="o_inv_badge o_inv_badge_warning">reorder</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div t-else="" class="o_inv_empty">
+              <i class="fa fa-check-circle"/>
+              <span>Nothing needs reordering</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="o_inv_panel o_inv_panel_chart">
+          <div class="o_inv_panel_title">
+            <span><i class="fa fa-bar-chart"/> Received vs delivered</span>
+            <small>Last 7 days</small>
+          </div>
+          <div class="o_inv_chart_wrap">
+            <canvas t-ref="chartCanvas" role="img" aria-label="Bar chart comparing received and delivered transfers over the last 7 days"/>
+            <div class="o_inv_css_chart">
+              <div t-foreach="state.trend.labels" t-as="label" t-key="label_index" class="o_inv_css_bar_group">
+                <div class="o_inv_css_bar_pair">
+                  <span class="o_inv_css_bar received" t-attf-style="height: {{ this.trendHeight(state.trend.received[label_index]) }}%" t-attf-title="Received: {{ state.trend.received[label_index] }}"/>
+                  <span class="o_inv_css_bar delivered" t-attf-style="height: {{ this.trendHeight(state.trend.delivered[label_index]) }}%" t-attf-title="Delivered: {{ state.trend.delivered[label_index] }}"/>
+                </div>
+                <small><t t-esc="label"/></small>
+              </div>
+            </div>
+          </div>
+          <div class="o_inv_chart_legend">
+            <span><i class="o_inv_dot" style="background-color:#0d9488"/> Received</span>
+            <span><i class="o_inv_dot" style="background-color:#6366f1"/> Delivered</span>
+          </div>
+        </div>
+
+      </div>
+    </Layout>
+  </t>
+</templates>
