@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="ow_manufacturing_dashboard.Dashboard" owl="1">
+    <Layout display="display" className="'h-100 overflow-auto'">
+      <div class="o_mfg_dashboard">
+
+        <div class="o_mfg_hero">
+          <div class="o_mfg_hero_content">
+            <span class="o_mfg_eyebrow"><i class="fa fa-industry"/> Manufacturing control room</span>
+            <h2>Production dashboard</h2>
+            <p>Live manufacturing orders, work orders, shortages and shop-floor pressure in one operational view.</p>
+            <div class="o_mfg_hero_stats">
+              <button class="o_mfg_hero_stat" t-on-click="() => this.openMO(this.totalMODomain(), 'Manufacturing orders')">
+                <span>Active MOs</span>
+                <strong><t t-esc="state.kpi.totalMO"/></strong>
+              </button>
+              <button class="o_mfg_hero_stat is-warning" t-on-click="() => this.openMO(this.lateMODomain(), 'Late orders')">
+                <span>Late MOs</span>
+                <strong><t t-esc="state.kpi.lateMO"/></strong>
+              </button>
+              <button class="o_mfg_hero_stat is-success" t-on-click="() => this.openMO(this.doneTodayMODomain(), 'Completed today')">
+                <span>Done today</span>
+                <strong><t t-esc="state.kpi.doneTodayMO"/></strong>
+              </button>
+            </div>
+          </div>
+
+          <div class="o_mfg_hero_actions">
+            <div class="o_mfg_period_group" aria-label="Dashboard period">
+              <button t-attf-class="o_mfg_period_btn {{ state.period === 'today' ? 'active' : '' }}" t-on-click="() => this.setPeriod('today')">Today</button>
+              <button t-attf-class="o_mfg_period_btn {{ state.period === 'week' ? 'active' : '' }}" t-on-click="() => this.setPeriod('week')">Week</button>
+              <button t-attf-class="o_mfg_period_btn {{ state.period === 'month' ? 'active' : '' }}" t-on-click="() => this.setPeriod('month')">Month</button>
+              <button t-attf-class="o_mfg_period_btn {{ state.period === 'all' ? 'active' : '' }}" t-on-click="() => this.setPeriod('all')">All</button>
+            </div>
+            <div class="o_mfg_action_row">
+              <button class="btn btn-light o_mfg_icon_btn" title="Refresh dashboard" t-on-click="() => this.refreshAll()">
+                <i class="fa fa-refresh"/>
+              </button>
+              <button class="btn btn-primary o_mfg_new_btn" t-on-click="() => this.createMO()">
+                <i class="fa fa-plus"/> New MO
+              </button>
+            </div>
+            <div class="o_mfg_lastrefresh" t-if="state.lastRefresh">
+              <i t-attf-class="fa {{ state.loading ? 'fa-circle-o-notch fa-spin' : 'fa-clock-o' }}"/>
+              <t t-if="state.loading">Refreshing</t>
+              <t t-else="">Updated <t t-esc="state.lastRefresh"/></t>
+            </div>
+          </div>
+        </div>
+
+        <div class="o_mfg_section_bar">
+          <div>
+            <span>Manufacturing orders</span>
+            <small>Planning, execution and exceptions</small>
+          </div>
+        </div>
+        <div class="o_mfg_kpi_grid">
+          <div class="o_mfg_kpi o_mfg_kpi_primary" style="--accent:#1f6feb;--accent-bg:#eef5ff"
+               t-on-click="() => this.openMO(this.totalMODomain(), 'Manufacturing orders')">
+            <div class="o_mfg_kpi_top">
+              <div class="o_mfg_icon"><i class="fa fa-industry"/></div>
+              <i class="fa fa-arrow-right o_mfg_card_arrow"/>
+            </div>
+            <div class="o_mfg_kpi_label">Manufacturing orders</div>
+            <div class="o_mfg_kpi_value"><t t-esc="state.kpi.totalMO"/></div>
+            <div class="o_mfg_kpi_foot">All active orders</div>
+          </div>
+
+          <div class="o_mfg_kpi" style="--accent:#d97706;--accent-bg:#fff7ed"
+               t-on-click="() => this.openMO(this.inProgressMODomain(), 'In progress orders')">
+            <div class="o_mfg_kpi_top">
+              <div class="o_mfg_icon"><i class="fa fa-cogs"/></div>
+              <i class="fa fa-arrow-right o_mfg_card_arrow"/>
+            </div>
+            <div class="o_mfg_kpi_label">In progress</div>
+            <div class="o_mfg_kpi_value"><t t-esc="state.kpi.inProgressMO"/></div>
+            <div class="o_mfg_kpi_foot">Currently on the floor</div>
+          </div>
+
+          <div class="o_mfg_kpi o_mfg_kpi_danger" style="--accent:#dc2626;--accent-bg:#fff1f2"
+               t-on-click="() => this.openMO(this.lateMODomain(), 'Late orders')">
+            <div class="o_mfg_kpi_top">
+              <div class="o_mfg_icon"><i class="fa fa-exclamation-triangle"/></div>
+              <i class="fa fa-arrow-right o_mfg_card_arrow"/>
+            </div>
+            <div class="o_mfg_kpi_label">Late orders</div>
+            <div class="o_mfg_kpi_value"><t t-esc="state.kpi.lateMO"/></div>
+            <div class="o_mfg_kpi_foot">Past planned start</div>
+          </div>
+
+          <div class="o_mfg_kpi" style="--accent:#059669;--accent-bg:#ecfdf5"
+               t-on-click="() => this.openMO(this.doneTodayMODomain(), 'Completed today')">
+            <div class="o_mfg_kpi_top">
+              <div class="o_mfg_icon"><i class="fa fa-check-circle"/></div>
+              <i class="fa fa-arrow-right o_mfg_card_arrow"/>
+            </div>
+            <div class="o_mfg_kpi_label">Completed today</div>
+            <div class="o_mfg_kpi_value"><t t-esc="state.kpi.doneTodayMO"/></div>
+            <div class="o_mfg_kpi_foot">Finished manufacturing orders</div>
+          </div>
+        </div>
+
+        <div class="o_mfg_section_bar">
+          <div>
+            <span>Job orders</span>
+            <small>Work center queue and execution flow</small>
+          </div>
+        </div>
+        <div class="o_mfg_kpi_grid">
+          <div class="o_mfg_kpi" style="--accent:#2563eb;--accent-bg:#eff6ff"
+               t-on-click="() => this.openWO(this.totalWODomain(), 'Job orders')">
+            <div class="o_mfg_kpi_top">
+              <div class="o_mfg_icon"><i class="fa fa-list-alt"/></div>
+              <i class="fa fa-arrow-right o_mfg_card_arrow"/>
+            </div>
+            <div class="o_mfg_kpi_label">Job orders</div>
+            <div class="o_mfg_kpi_value"><t t-esc="state.kpi.totalWO"/></div>
+            <div class="o_mfg_kpi_foot">Active work orders</div>
+          </div>
+
+          <div class="o_mfg_kpi" style="--accent:#ea580c;--accent-bg:#fff7ed"
+               t-on-click="() => this.openWO(this.progressWODomain(), 'Job orders in progress')">
+            <div class="o_mfg_kpi_top">
+              <div class="o_mfg_icon"><i class="fa fa-play-circle"/></div>
+              <i class="fa fa-arrow-right o_mfg_card_arrow"/>
+            </div>
+            <div class="o_mfg_kpi_label">In progress</div>
+            <div class="o_mfg_kpi_value"><t t-esc="state.kpi.progressWO"/></div>
+            <div class="o_mfg_kpi_foot">Being worked on now</div>
+          </div>
+
+          <div class="o_mfg_kpi" style="--accent:#0891b2;--accent-bg:#ecfeff"
+               t-on-click="() => this.openWO(this.pendingWODomain(), 'Pending job orders')">
+            <div class="o_mfg_kpi_top">
+              <div class="o_mfg_icon"><i class="fa fa-hourglass-half"/></div>
+              <i class="fa fa-arrow-right o_mfg_card_arrow"/>
+            </div>
+            <div class="o_mfg_kpi_label">Pending</div>
+            <div class="o_mfg_kpi_value"><t t-esc="state.kpi.pendingWO"/></div>
+            <div class="o_mfg_kpi_foot">Waiting to start</div>
+          </div>
+
+          <div class="o_mfg_kpi o_mfg_kpi_danger" style="--accent:#dc2626;--accent-bg:#fff1f2"
+               t-on-click="() => this.openWO(this.lateWODomain(), 'Late job orders')">
+            <div class="o_mfg_kpi_top">
+              <div class="o_mfg_icon"><i class="fa fa-clock-o"/></div>
+              <i class="fa fa-arrow-right o_mfg_card_arrow"/>
+            </div>
+            <div class="o_mfg_kpi_label">Late</div>
+            <div class="o_mfg_kpi_value"><t t-esc="state.kpi.lateWO"/></div>
+            <div class="o_mfg_kpi_foot">Past planned start</div>
+          </div>
+        </div>
+
+        <div class="o_mfg_ops_strip">
+          <button class="o_mfg_ops_item" style="--accent:#7c3aed" t-if="state.extra.shortage !== null"
+                  t-on-click="() => this.openMO(state.extra.shortageDomain, 'Material shortages')">
+            <span><i class="fa fa-truck"/></span>
+            <strong><t t-esc="state.extra.shortage"/></strong>
+            <small>Shortages</small>
+          </button>
+          <button class="o_mfg_ops_item" style="--accent:#be123c" t-if="state.extra.scrap !== null"
+                  t-on-click="() => this.openWindow('stock.scrap', state.extra.scrapDomain, 'Scrap')">
+            <span><i class="fa fa-recycle"/></span>
+            <strong><t t-esc="state.extra.scrap"/></strong>
+            <small>Scrap</small>
+          </button>
+          <button class="o_mfg_ops_item" style="--accent:#047857" t-if="state.extra.onTimeRate !== null"
+                  t-on-click="() => this.openMO(state.extra.onTimeDomain, 'Completed orders')">
+            <span><i class="fa fa-percent"/></span>
+            <strong><t t-esc="state.extra.onTimeRate"/>%</strong>
+            <small>On-time</small>
+          </button>
+          <button class="o_mfg_ops_item" style="--accent:#475569" t-if="state.extra.bomCount !== null"
+                  t-on-click="() => this.openWindow('mrp.bom', [], 'Bills of materials')">
+            <span><i class="fa fa-cubes"/></span>
+            <strong><t t-esc="state.extra.bomCount"/></strong>
+            <small>BoMs</small>
+          </button>
+          <button class="o_mfg_ops_item" style="--accent:#db2777" t-if="state.extra.quality !== null"
+                  t-on-click="() => this.openWindow('quality.check', state.extra.qualityDomain, 'Quality checks')">
+            <span><i class="fa fa-flask"/></span>
+            <strong><t t-esc="state.extra.quality"/></strong>
+            <small>Quality</small>
+          </button>
+          <button class="o_mfg_ops_item" style="--accent:#b45309" t-if="state.extra.maintenance !== null"
+                  t-on-click="() => this.openWindow('maintenance.request', state.extra.maintenanceDomain, 'Maintenance requests')">
+            <span><i class="fa fa-wrench"/></span>
+            <strong><t t-esc="state.extra.maintenance"/></strong>
+            <small>Maintenance</small>
+          </button>
+        </div>
+
+        <div class="o_mfg_insights">
+          <div class="o_mfg_panel">
+            <div class="o_mfg_panel_title">
+              <span><i class="fa fa-sliders"/> Work center workload</span>
+              <small>Open job orders</small>
+            </div>
+            <div t-if="!state.workcenters.length" class="o_mfg_empty">
+              <i class="fa fa-check-circle"/>
+              <span>No active job orders</span>
+            </div>
+            <button t-foreach="state.workcenters" t-as="wc" t-key="wc.id"
+                    class="o_mfg_wc_row" t-on-click="() => this.openWorkcenter(wc)">
+              <span class="o_mfg_wc_name"><t t-esc="wc.name"/></span>
+              <span class="o_mfg_wc_bar">
+                <span class="o_mfg_wc_fill"
+                      t-attf-style="width: {{ Math.min(100, wc.count / (state.workcenters[0].count || 1) * 100) }}%"/>
+              </span>
+              <span class="o_mfg_wc_count"><t t-esc="wc.count"/></span>
+            </button>
+          </div>
+
+          <div class="o_mfg_panel">
+            <div class="o_mfg_panel_title">
+              <span><i class="fa fa-warning"/> Top delayed orders</span>
+              <small>Oldest planned start first</small>
+            </div>
+            <div class="o_mfg_table_wrap" t-if="state.delayed.length">
+              <table class="o_mfg_table">
+                <thead>
+                  <tr><th>Order</th><th>Product</th><th>Planned start</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                  <tr t-foreach="state.delayed" t-as="rec" t-key="rec.id" t-on-click="() => this.openRecord(rec)">
+                    <td><strong><t t-esc="rec.name"/></strong></td>
+                    <td><t t-esc="rec.product_id[1]"/></td>
+                    <td><t t-esc="rec.date_start"/></td>
+                    <td><span t-attf-class="o_mfg_badge o_mfg_badge_{{ rec.state }}"><t t-esc="rec.state"/></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div t-else="" class="o_mfg_empty">
+              <i class="fa fa-check-circle"/>
+              <span>No delayed orders</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="o_mfg_panel o_mfg_panel_chart">
+          <div class="o_mfg_panel_title">
+            <span><i class="fa fa-bar-chart"/> Completed orders</span>
+            <small>Last 7 days</small>
+          </div>
+          <div class="o_mfg_chart_wrap">
+            <canvas t-ref="chartCanvas" role="img" aria-label="Bar chart of completed manufacturing orders over the last 7 days"/>
+            <div class="o_mfg_css_chart">
+              <div t-foreach="state.trend.labels" t-as="label" t-key="label_index" class="o_mfg_css_bar">
+                <span class="o_mfg_css_bar_fill"
+                      t-attf-style="height: {{ this.trendHeight(state.trend.counts[label_index]) }}%"/>
+                <strong><t t-esc="state.trend.counts[label_index] || 0"/></strong>
+                <small><t t-esc="label"/></small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </Layout>
+  </t>
+</templates>
