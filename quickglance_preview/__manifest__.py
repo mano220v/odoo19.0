@@ -36,6 +36,10 @@ Stop downloading files just to see what's inside.
             "quickglance_preview/static/src/xml/*.xml",
         ],
     },
+    'images': [
+        'static/description/banner.png',
+        'static/description/icon.png',
+    ],
     "installable": True,
     "application": False,
     "auto_install": False,
