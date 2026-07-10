@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="quickglance_view_attachment_list" model="ir.ui.view">
+        <field name="name">ir.attachment.list.quickglance.preview</field>
+        <field name="model">ir.attachment</field>
+        <field name="inherit_id" ref="base.view_attachment_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <button name="action_qg_open_preview"
+                        type="object"
+                        icon="fa-eye"
+                        title="Preview"
+                        invisible="not qg_is_previewable"/>
+                <field name="qg_is_previewable" invisible="1"/>
+                <field name="qg_preview_kind" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="quickglance_view_attachment_form" model="ir.ui.view">
+        <field name="name">ir.attachment.form.quickglance.preview</field>
+        <field name="model">ir.attachment</field>
+        <field name="inherit_id" ref="base.view_attachment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='datas']" position="after">
+                <button name="action_qg_open_preview"
+                        type="object"
+                        string="Preview"
+                        class="btn-secondary mt-1"
+                        icon="fa-eye"
+                        invisible="not qg_is_previewable"/>
+                <field name="qg_is_previewable" invisible="1"/>
+                <field name="qg_preview_kind" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

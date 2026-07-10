@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="quickglance_preview.PreviewDialog">
+        <Dialog title="props.title or 'Preview'" size="'xl'" contentClass="'o_qg_preview_dialog'">
+            <t t-if="isPdf">
+                <iframe class="o_qg_pdf_frame" t-att-src="props.pdfViewerUrl"/>
+            </t>
+            <t t-else="">
+                <div t-if="state.loading" class="o_qg_state d-flex align-items-center justify-content-center">
+                    <i class="fa fa-circle-o-notch fa-spin fa-2x me-2"/>
+                    <span>Loading preview...</span>
+                </div>
+                <div t-elif="state.error" class="o_qg_state o_qg_error d-flex align-items-center justify-content-center">
+                    <i class="fa fa-exclamation-triangle me-2"/>
+                    <span t-esc="state.error"/>
+                </div>
+                <t t-else="">
+                    <div class="o_qg_sheet_tabs" t-if="state.sheetNames.length > 1">
+                        <button t-foreach="state.sheetNames" t-as="sheetName" t-key="sheetName_index"
+                                type="button"
+                                class="btn btn-sm o_qg_sheet_tab"
+                                t-att-class="{ 'active btn-primary': sheetName_index === state.activeSheetIndex, 'btn-light': sheetName_index !== state.activeSheetIndex }"
+                                t-on-click="() => this.selectSheet(sheetName_index)">
+                            <t t-esc="sheetName"/>
+                        </button>
+                    </div>
+                    <div class="o_qg_table_wrap">
+                        <table class="o_qg_table table table-sm table-bordered table-striped">
+                            <tbody>
+                                <tr t-foreach="state.rows" t-as="row" t-key="row_index">
+                                    <td t-foreach="row" t-as="cell" t-key="cell_index" t-esc="cell"/>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div t-if="state.truncatedRows or state.truncatedCols" class="o_qg_truncated_notice text-muted small">
+                            Showing a partial preview of this file. Download it to see the full content.
+                        </div>
+                    </div>
+                </t>
+            </t>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="onClickDownload">
+                    <i class="fa fa-download me-1"/>Download
+                </button>
+                <button class="btn btn-secondary" t-on-click="onClickClose">Close</button>
+            </t>
+        </Dialog>
+    </t>
+
+</templates>

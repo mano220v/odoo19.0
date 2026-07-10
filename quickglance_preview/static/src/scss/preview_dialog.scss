@@ -1,0 +1,63 @@
+.o_qg_preview_dialog {
+    .modal-body {
+        padding: 0;
+        height: 75vh;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.o_qg_pdf_frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    flex: 1 1 auto;
+}
+
+.o_qg_state {
+    flex: 1 1 auto;
+    height: 100%;
+    font-size: 1.1rem;
+}
+
+.o_qg_error {
+    color: var(--bs-danger, #dc3545);
+}
+
+.o_qg_sheet_tabs {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-color, #dee2e6);
+    background: var(--bs-light, #f8f9fa);
+    flex: 0 0 auto;
+}
+
+.o_qg_table_wrap {
+    flex: 1 1 auto;
+    overflow: auto;
+    padding: 8px;
+}
+
+.o_qg_table {
+    font-size: 0.85rem;
+    white-space: nowrap;
+
+    td {
+        padding: 2px 8px;
+        border: 1px solid var(--border-color, #dee2e6);
+    }
+}
+
+.o_qg_truncated_notice {
+    padding: 8px;
+}
+
+.o_qg_preview_button {
+    opacity: 0.85;
+
+    &:hover {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!--
+        t-inherit-mode="primary" creates a brand-new, separate template
+        (used only by QuickGlanceBinaryField) instead of mutating the
+        original "web.BinaryField" template that every other Binary field
+        in Odoo relies on. This means standard Binary fields elsewhere in
+        the database are completely unaffected by this module.
+    -->
+    <t t-name="quickglance_preview.BinaryFieldPreview" t-inherit="web.BinaryField" t-inherit-mode="primary">
+        <xpath expr="//button[hasclass('o_select_file_button')]" position="after">
+            <button t-if="qgIsPreviewable"
+                    class="btn btn-link btn-sm lh-1 fa fa-eye o_qg_preview_button"
+                    data-tooltip="Preview"
+                    aria-label="Preview"
+                    t-on-click.stop="onClickQgPreview">
+            </button>
+        </xpath>
+        <xpath expr="//a[hasclass('o_form_uri')]" position="after">
+            <button t-if="qgIsPreviewable"
+                    class="btn btn-link btn-sm lh-1 fa fa-eye ms-1 o_qg_preview_button"
+                    data-tooltip="Preview"
+                    aria-label="Preview"
+                    t-on-click.stop="onClickQgPreview">
+            </button>
+        </xpath>
+    </t>
+
+</templates>
