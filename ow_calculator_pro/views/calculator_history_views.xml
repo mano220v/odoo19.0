@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_calculator_history_tree" model="ir.ui.view">
+        <field name="name">calculator.history.list</field>
+        <field name="model">calculator.history</field>
+        <field name="arch" type="xml">
+            <list string="Calculator History" default_order="create_date desc" create="false" edit="false">
+                <field name="create_date" string="Date"/>
+                <field name="category"/>
+                <field name="expression"/>
+                <field name="result"/>
+                <field name="user_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_calculator_history_search" model="ir.ui.view">
+        <field name="name">calculator.history.search</field>
+        <field name="model">calculator.history</field>
+        <field name="arch" type="xml">
+            <search string="Search History">
+                <field name="expression"/>
+                <field name="result"/>
+                <field name="user_id"/>
+                <field name="category"/>
+                <filter string="My History" name="my_history" domain="[('user_id', '=', uid)]"/>
+                <!-- <group expand="0" string="Group By">
+                    <filter string="Calculator Type" name="group_category" context="{'group_by': 'category'}"/>
+                    <filter string="User" name="group_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by': 'create_date:day'}"/>
+                </group> -->
+            </search>
+        </field>
+    </record>
+
+    <record id="action_calculator_history" model="ir.actions.act_window">
+        <field name="name">Calculation History</field>
+        <field name="res_model">calculator.history</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="view_calculator_history_search"/>
+        <field name="context">{'search_default_my_history': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No calculations recorded yet.
+            </p>
+            <p>
+                Every calculation you run in Calculator Pro is logged here automatically.
+            </p>
+        </field>
+    </record>
+
+</odoo>

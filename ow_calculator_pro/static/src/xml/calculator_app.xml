@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<t t-name="ow_calculator_pro.CalculatorApp" owl="1">
+  <div class="o_calculator_pro" t-att-class="state.theme === 'dark' ? 'calc-dark' : 'calc-light'">
+
+    <div class="calc-header">
+      <div class="calc-header-title">
+        <span class="calc-logo">🧮</span>
+        <span>Calculator Pro</span>
+      </div>
+      <button class="calc-theme-toggle" t-on-click="toggleTheme" title="Toggle theme">
+        <t t-if="state.theme === 'light'">🌙</t>
+        <t t-else="">☀️</t>
+      </button>
+    </div>
+
+    <div class="calc-body">
+
+      <div class="calc-sidebar">
+        <t t-foreach="tools" t-as="tool" t-key="tool.id">
+          <button type="button"
+                  t-att-class="state.activeTool === tool.id ? 'calc-nav-btn active' : 'calc-nav-btn'"
+                  t-on-click="() => this.switchTool(tool.id)">
+            <span class="calc-nav-icon" t-esc="tool.icon"/>
+            <span class="calc-nav-label" t-esc="tool.label"/>
+          </button>
+        </t>
+      </div>
+
+      <div class="calc-main">
+
+        <t t-if="state.errorMsg">
+          <div class="calc-error">⚠️ <t t-esc="state.errorMsg"/></div>
+        </t>
+
+        <!-- ============================= DASHBOARD ============================= -->
+        <t t-if="state.activeTool === 'dashboard'">
+          <div class="calc-panel">
+            <h3>Usage Dashboard</h3>
+            <div class="calc-kpi-grid">
+              <div class="calc-kpi-card">
+                <div class="calc-kpi-value" t-esc="state.dashboardTotals.today"/>
+                <div class="calc-kpi-label">Today</div>
+              </div>
+              <div class="calc-kpi-card">
+                <div class="calc-kpi-value" t-esc="state.dashboardTotals.week"/>
+                <div class="calc-kpi-label">Last 7 Days</div>
+              </div>
+              <div class="calc-kpi-card">
+                <div class="calc-kpi-value" t-esc="state.dashboardTotals.month"/>
+                <div class="calc-kpi-label">This Month</div>
+              </div>
+              <div class="calc-kpi-card calc-kpi-accent">
+                <div class="calc-kpi-value" t-esc="state.dashboardTotals.total"/>
+                <div class="calc-kpi-label">All Time</div>
+              </div>
+            </div>
+
+            <div class="calc-dashboard-columns">
+              <div class="calc-card">
+                <div class="calc-card-title">14-Day Activity</div>
+                <div class="calc-trend-chart">
+                  <t t-foreach="state.dashboardTrend" t-as="day" t-key="day.label">
+                    <div class="calc-trend-bar-wrap" t-att-title="day.label + ': ' + day.count">
+                      <div class="calc-trend-bar"
+                           t-attf-style="height: {{ (day.count / maxTrendCount) * 100 }}%"/>
+                      <div class="calc-trend-label" t-esc="day.label"/>
+                    </div>
+                  </t>
+                </div>
+              </div>
+
+              <div class="calc-card">
+                <div class="calc-card-title">By Calculator Type</div>
+                <t t-if="!state.dashboardByCategory.length">
+                  <div class="calc-empty">No calculations yet. Try a tool from the left!</div>
+                </t>
+                <t t-foreach="state.dashboardByCategory" t-as="cat" t-key="cat.category">
+                  <div class="calc-category-row">
+                    <span class="calc-category-name" t-esc="cat.category"/>
+                    <div class="calc-category-bar-wrap">
+                      <div class="calc-category-bar"
+                           t-attf-style="width: {{ (cat.count / (state.dashboardTotals.total || 1)) * 100 }}%"/>
+                    </div>
+                    <span class="calc-category-count" t-esc="cat.count"/>
+                  </div>
+                </t>
+              </div>
+            </div>
+          </div>
+        </t>
+
+        <!-- ============================= STANDARD ============================= -->
+        <t t-if="state.activeTool === 'standard'">
+          <div class="calc-panel">
+            <h3>Standard Calculator</h3>
+            <div class="calc-display">
+              <div class="calc-memory" t-if="state.memory">M = <t t-esc="state.memory"/></div>
+              <div class="calc-display-value" t-esc="state.display"/>
+            </div>
+            <div class="calc-keypad">
+              <t t-foreach="standardKeys" t-as="row" t-key="row_index">
+                <div class="calc-key-row">
+                  <t t-foreach="row" t-as="key" t-key="key">
+                    <button type="button"
+                            t-att-class="isOperatorKey(key) ? 'calc-key calc-key-op' : 'calc-key'"
+                            t-on-click="() => this.pressKey(key)"
+                            t-esc="key"/>
+                  </t>
+                </div>
+              </t>
+            </div>
+            <div class="calc-action-row">
+              <button class="calc-equals" t-on-click="calculate">=</button>
+              <button class="calc-icon-btn" title="Save as favorite"
+                      t-on-click="() => this.saveFavorite('standard', state.expression)">⭐</button>
+              <button class="calc-icon-btn" title="Copy result"
+                      t-on-click="() => this.copyToClipboard(state.display)">📋</button>
+            </div>
+          </div>
+        </t>
+
+        <!-- ============================= SCIENTIFIC ============================= -->
+        <t t-if="state.activeTool === 'scientific'">
+          <div class="calc-panel">
+            <h3>Scientific Calculator</h3>
+            <div class="calc-display">
+              <div class="calc-display-value" t-esc="state.display"/>
+            </div>
+            <div class="calc-keypad calc-keypad-scientific">
+              <t t-foreach="scientificKeys" t-as="row" t-key="row_index">
+                <div class="calc-key-row">
+                  <t t-foreach="row" t-as="key" t-key="key">
+                    <button type="button"
+                            t-att-class="isOperatorKey(key) ? 'calc-key calc-key-op' : 'calc-key'"
+                            t-on-click="() => this.pressKey(key)"
+                            t-esc="key"/>
+                  </t>
+                </div>
+              </t>
+            </div>
+            <div class="calc-action-row">
+              <button class="calc-equals" t-on-click="calculate">=</button>
+              <button class="calc-icon-btn" title="Save as favorite"
+                      t-on-click="() => this.saveFavorite('scientific', state.expression)">⭐</button>
+              <button class="calc-icon-btn" title="Copy result"
+                      t-on-click="() => this.copyToClipboard(state.display)">📋</button>
+            </div>
+          </div>
+        </t>
+
+        <!-- ============================= CURRENCY ============================= -->
+        <t t-if="state.activeTool === 'currency'">
+          <div class="calc-panel">
+            <h3>Currency Converter</h3>
+            <div class="calc-form-grid">
+              <div class="calc-form-row">
+                <label>Amount</label>
+                <input type="number" step="any" t-model.number="state.currencyAmount"/>
+              </div>
+              <div class="calc-form-row">
+                <label>From</label>
+                <select t-model.number="state.currencyFromId">
+                  <t t-foreach="state.currencies" t-as="cur" t-key="cur.id">
+                    <option t-att-value="cur.id" t-esc="cur.name"/>
+                  </t>
+                </select>
+              </div>
+              <div class="calc-form-row">
+                <label>To</label>
+                <select t-model.number="state.currencyToId">
+                  <t t-foreach="state.currencies" t-as="cur" t-key="cur.id">
+                    <option t-att-value="cur.id" t-esc="cur.name"/>
+                  </t>
+                </select>
+              </div>
+            </div>
+            <button class="calc-primary-btn" t-on-click="convertCurrency">Convert</button>
+            <t t-if="state.currencyResult !== null">
+              <div class="calc-result-box">
+                <span t-esc="state.currencyAmount"/>&#160;<span t-esc="currencyName(state.currencyFromId)"/>
+                =
+                <strong t-esc="state.currencyResult"/>&#160;<span t-esc="currencyName(state.currencyToId)"/>
+                <button class="calc-icon-btn" t-on-click="() => this.copyToClipboard(state.currencyResult)">📋</button>
+              	<t t-if="state.currencySource === 'live'">
+                  <span class="calc-badge calc-badge-live" title="Fetched today from a live exchange-rate service">🟢 Live rate</span>
+                </t>
+                <t t-elif="state.currencySource === 'odoo'">
+                  <span class="calc-badge calc-badge-fallback" title="Live rate service unreachable - used Odoo's stored currency rate instead">🟡 Odoo rate (offline)</span>
+                </t>
+              </div>
+            </t>
+          </div>
+        </t>
+
+        <!-- ============================= UNIT CONVERTER ============================= -->
+        <t t-if="state.activeTool === 'unit'">
+          <div class="calc-panel">
+            <h3>Unit Converter</h3>
+            <div class="calc-form-grid">
+              <div class="calc-form-row">
+                <label>Category</label>
+                <select t-on-change="(ev) => this.onUnitCategoryChange(ev.target.value)">
+                  <option value="length">Length</option>
+                  <option value="weight">Weight</option>
+                  <option value="temperature">Temperature</option>
+                  <option value="area">Area</option>
+                  <option value="volume">Volume</option>
+                  <option value="speed">Speed</option>
+                  <option value="time">Time</option>
+                  <option value="data">Digital Storage</option>
+                </select>
+              </div>
+              <div class="calc-form-row">
+                <label>Value</label>
+                <input type="number" step="any" t-model.number="state.unitValue"/>
+              </div>
+              <div class="calc-form-row">
+                <label>From</label>
+                <select t-model="state.unitFrom">
+                  <t t-foreach="unitOptions" t-as="u" t-key="u">
+                    <option t-att-value="u" t-esc="u"/>
+                  </t>
+                </select>
+              </div>
+              <div class="calc-form-row">
+                <label>To</label>
+                <select t-model="state.unitTo">
+                  <t t-foreach="unitOptions" t-as="u" t-key="u">
+                    <option t-att-value="u" t-esc="u"/>
+                  </t>
+                </select>
+              </div>
+            </div>
+            <button class="calc-primary-btn" t-on-click="doUnitConvert">Convert</button>
+            <t t-if="state.unitResult !== null">
+              <div class="calc-result-box">
+                <span t-esc="state.unitValue"/>&#160;<span t-esc="state.unitFrom"/>
+                =
+                <strong t-esc="state.unitResult"/>&#160;<span t-esc="state.unitTo"/>
+                <button class="calc-icon-btn" t-on-click="() => this.copyToClipboard(state.unitResult)">📋</button>
+              </div>
+            </t>
+          </div>
+        </t>
+
+        <!-- ============================= LOAN / EMI ============================= -->
+        <t t-if="state.activeTool === 'loan'">
+          <div class="calc-panel">
+            <h3>Loan / EMI Calculator</h3>
+            <div class="calc-form-grid">
+              <div class="calc-form-row">
+                <label>Loan Amount</label>
+                <input type="number" step="any" t-model.number="state.loanPrincipal"/>
+              </div>
+              <div class="calc-form-row">
+                <label>Annual Interest Rate (%)</label>
+                <input type="number" step="any" t-model.number="state.loanRate"/>
+              </div>
+              <div class="calc-form-row">
+                <label>Tenure (years)</label>
+                <input type="number" step="any" t-model.number="state.loanTenureYears"/>
+              </div>
+            </div>
+            <button class="calc-primary-btn" t-on-click="calculateLoan">Calculate EMI</button>
+            <t t-if="state.loanEmi !== null">
+              <div class="calc-kpi-grid calc-kpi-grid-3">
+                <div class="calc-kpi-card">
+                  <div class="calc-kpi-value" t-esc="state.loanEmi"/>
+                  <div class="calc-kpi-label">Monthly EMI</div>
+                </div>
+                <div class="calc-kpi-card">
+                  <div class="calc-kpi-value" t-esc="state.loanTotalInterest"/>
+                  <div class="calc-kpi-label">Total Interest</div>
+                </div>
+                <div class="calc-kpi-card calc-kpi-accent">
+                  <div class="calc-kpi-value" t-esc="state.loanTotalPayment"/>
+                  <div class="calc-kpi-label">Total Payment</div>
+                </div>
+              </div>
+              <div class="calc-card">
+                <div class="calc-card-title">First 12 Months</div>
+                <table class="calc-table">
+                  <thead>
+                    <tr><th>Month</th><th>Principal</th><th>Interest</th><th>Balance</th></tr>
+                  </thead>
+                  <tbody>
+                    <t t-foreach="state.loanSchedule" t-as="row" t-key="row.month">
+                      <tr>
+                        <td t-esc="row.month"/>
+                        <td t-esc="row.principalPortion"/>
+                        <td t-esc="row.interestPortion"/>
+                        <td t-esc="row.balance"/>
+                      </tr>
+                    </t>
+                  </tbody>
+                </table>
+              </div>
+            </t>
+          </div>
+        </t>
+
+        <!-- ============================= DATE CALCULATOR ============================= -->
+        <t t-if="state.activeTool === 'date'">
+          <div class="calc-panel">
+            <h3>Date Calculator</h3>
+            <div class="calc-form-grid">
+              <div class="calc-form-row">
+                <label>From</label>
+                <input type="date" t-model="state.dateFrom"/>
+              </div>
+              <div class="calc-form-row">
+                <label>To</label>
+                <input type="date" t-model="state.dateTo"/>
+              </div>
+            </div>
+            <button class="calc-primary-btn" t-on-click="calculateDateDiff">Calculate Difference</button>
+            <t t-if="state.dateResult">
+              <div class="calc-result-box calc-result-box-large">
+                <strong t-esc="state.dateResult.totalDays"/> days total
+                <div class="calc-result-sub">
+                  (<t t-esc="state.dateResult.years"/> years,
+                  <t t-esc="state.dateResult.months"/> months,
+                  <t t-esc="state.dateResult.days"/> days)
+                </div>
+              </div>
+            </t>
+          </div>
+        </t>
+
+        <!-- ============================= BMI ============================= -->
+        <t t-if="state.activeTool === 'bmi'">
+          <div class="calc-panel">
+            <h3>BMI Calculator</h3>
+            <div class="calc-form-row">
+              <label>Units</label>
+              <select t-model="state.bmiUnit">
+                <option value="metric">Metric (kg / cm)</option>
+                <option value="imperial">Imperial (lb / in)</option>
+              </select>
+            </div>
+            <div class="calc-form-grid">
+              <div class="calc-form-row">
+                <label>Weight</label>
+                <input type="number" step="any" t-model.number="state.bmiWeight"/>
+              </div>
+              <div class="calc-form-row">
+                <label>Height</label>
+                <input type="number" step="any" t-model.number="state.bmiHeight"/>
+              </div>
+            </div>
+            <button class="calc-primary-btn" t-on-click="calculateBmi">Calculate BMI</button>
+            <t t-if="state.bmiValue !== null">
+              <div class="calc-result-box calc-result-box-large">
+                BMI: <strong t-esc="state.bmiValue"/>
+                <div class="calc-result-sub" t-esc="state.bmiCategory"/>
+              </div>
+            </t>
+          </div>
+        </t>
+
+        <!-- ============================= DISCOUNT / TAX ============================= -->
+        <t t-if="state.activeTool === 'discount'">
+          <div class="calc-panel">
+            <h3>Discount &amp; Tax Calculator</h3>
+            <div class="calc-form-grid">
+              <div class="calc-form-row">
+                <label>Original Price</label>
+                <input type="number" step="any" t-model.number="state.discountPrice"/>
+              </div>
+              <div class="calc-form-row">
+                <label>Discount (%)</label>
+                <input type="number" step="any" t-model.number="state.discountPercent"/>
+              </div>
+              <div class="calc-form-row">
+                <label>Tax (%)</label>
+                <input type="number" step="any" t-model.number="state.taxPercent"/>
+              </div>
+            </div>
+            <button class="calc-primary-btn" t-on-click="calculateDiscount">Calculate</button>
+            <t t-if="state.discountResult">
+              <div class="calc-kpi-grid calc-kpi-grid-3">
+                <div class="calc-kpi-card">
+                  <div class="calc-kpi-value" t-esc="state.discountResult.discountedPrice"/>
+                  <div class="calc-kpi-label">After Discount</div>
+                </div>
+                <div class="calc-kpi-card">
+                  <div class="calc-kpi-value" t-esc="state.discountResult.taxAmount"/>
+                  <div class="calc-kpi-label">Tax Amount</div>
+                </div>
+                <div class="calc-kpi-card calc-kpi-accent">
+                  <div class="calc-kpi-value" t-esc="state.discountResult.finalPrice"/>
+                  <div class="calc-kpi-label">Final Price</div>
+                </div>
+              </div>
+              <div class="calc-result-sub">You save <t t-esc="state.discountResult.youSave"/></div>
+            </t>
+          </div>
+        </t>
+
+        <!-- ============================= HISTORY ============================= -->
+        <t t-if="state.activeTool === 'history'">
+          <div class="calc-panel">
+            <div class="calc-panel-header">
+              <h3>Calculation History</h3>
+              <button class="calc-secondary-btn" t-on-click="clearHistory">Clear My History</button>
+            </div>
+            <t t-if="!state.history.length">
+              <div class="calc-empty">No calculations yet.</div>
+            </t>
+            <div class="calc-list">
+              <t t-foreach="state.history" t-as="entry" t-key="entry.id">
+                <div class="calc-list-row">
+                  <span class="calc-list-badge" t-esc="entry.category"/>
+                  <span class="calc-list-expr" t-esc="entry.expression"/>
+                  <span class="calc-list-arrow">→</span>
+                  <span class="calc-list-result" t-esc="entry.result"/>
+                  <span class="calc-list-date" t-esc="entry.create_date"/>
+                </div>
+              </t>
+            </div>
+          </div>
+        </t>
+
+        <!-- ============================= FAVORITES ============================= -->
+        <t t-if="state.activeTool === 'favorites'">
+          <div class="calc-panel">
+            <h3>Favorites</h3>
+            <t t-if="!state.favorites.length">
+              <div class="calc-empty">
+                No favorites yet. Star an expression from Standard or Scientific to save it here.
+              </div>
+            </t>
+            <div class="calc-list">
+              <t t-foreach="state.favorites" t-as="fav" t-key="fav.id">
+                <div class="calc-list-row calc-list-row-clickable" t-on-click="() => this.useFavorite(fav)">
+                  <span class="calc-list-badge" t-esc="fav.category"/>
+                  <span class="calc-list-expr" t-esc="fav.expression"/>
+                  <button class="calc-icon-btn"
+                          t-on-click.stop="() => this.deleteFavorite(fav.id)">🗑️</button>
+                </div>
+              </t>
+            </div>
+          </div>
+        </t>
+
+      </div>
+    </div>
+  </div>
+</t>
+
+</templates>

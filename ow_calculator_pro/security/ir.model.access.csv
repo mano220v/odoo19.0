@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_calculator_history_user,calculator.history.user,model_calculator_history,base.group_user,1,1,1,1
+access_calculator_favorite_user,calculator.favorite.user,model_calculator_favorite,base.group_user,1,1,1,1
+access_calculator_rate_cache_user,calculator.rate.cache.user,model_calculator_rate_cache,base.group_user,1,1,1,1
