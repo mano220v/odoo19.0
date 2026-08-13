@@ -50,6 +50,10 @@ Optional Python dependencies (install only what you need)
         'wizard/restore_wizard_views.xml',
         'views/menu_views.xml',
     ],
+     "images": [
+        "static/description/banner.png",
+        "static/description/icon.png",
+    ],
     'installable': True,
     'application': True,
     'auto_install': False,
