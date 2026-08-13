@@ -1,0 +1,9 @@
+<odoo>
+    <menuitem id="menu_db_backup_root" name="DB Backup Pro" sequence="90"/>
+    <menuitem id="menu_db_backup_config" name="Configurations" parent="menu_db_backup_root"
+              action="action_db_backup_config" sequence="10"/>
+    <menuitem id="menu_db_backup_history" name="Backup History" parent="menu_db_backup_root"
+              action="action_db_backup_history" sequence="20"/>
+    <menuitem id="menu_db_backup_now" name="Instant Backup" parent="menu_db_backup_root"
+              action="action_db_backup_now_wizard" sequence="30"/>
+</odoo>

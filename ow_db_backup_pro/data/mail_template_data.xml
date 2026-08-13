@@ -1,0 +1,30 @@
+<odoo>
+    <record id="mail_template_backup_success" model="mail.template">
+        <field name="name">Backup Success Notification</field>
+        <field name="model_id" ref="model_db_backup_history"/>
+        <field name="subject">✅ Backup succeeded: {{ object.database_name }}</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>The scheduled backup for database <strong t-out="object.database_name"/> completed successfully.</p>
+                <ul>
+                    <li>File: <span t-out="object.backup_filename"/></li>
+                    <li>Size: <span t-out="object.file_size_human"/></li>
+                    <li>Duration: <span t-out="'%.1f' % object.duration"/> seconds</li>
+                    <li>Destination: <span t-out="object.storage_type"/></li>
+                </ul>
+            </div>
+        </field>
+    </record>
+
+    <record id="mail_template_backup_failure" model="mail.template">
+        <field name="name">Backup Failure Notification</field>
+        <field name="model_id" ref="model_db_backup_history"/>
+        <field name="subject">⚠ Backup FAILED: {{ object.database_name }}</field>
+        <field name="body_html" type="html">
+            <div>
+                <p style="color:#a00;">The scheduled backup for database <strong t-out="object.database_name"/> FAILED.</p>
+                <pre t-out="object.error_message"/>
+            </div>
+        </field>
+    </record>
+</odoo>

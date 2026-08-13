@@ -1,0 +1,155 @@
+<odoo>
+    <record id="view_db_backup_config_form" model="ir.ui.view">
+        <field name="name">db.backup.config.form</field>
+        <field name="model">db.backup.config</field>
+        <field name="arch" type="xml">
+            <form string="Backup Configuration">
+                <header>
+                    <button name="action_backup_now" type="object" string="Backup Now" class="btn-primary"/>
+                    <button name="action_test_connection" type="object" string="Test Connection" class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_history" type="object" class="oe_stat_button" icon="fa-history">
+                            <field name="history_count" widget="statinfo" string="Backups"/>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-check-circle text-success" disabled="1">
+                            <field name="success_count" widget="statinfo" string="Succeeded"/>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-times-circle text-danger" disabled="1">
+                            <field name="failure_count" widget="statinfo" string="Failed"/>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-database" disabled="1">
+                            <field name="total_storage_used" widget="statinfo" string="MB Used"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Last Run Failed" bg_color="text-bg-danger"
+                            invisible="last_backup_status != 'failed'"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="active"/>
+                            <field name="database_name"/>
+                            <field name="additional_databases" placeholder="db2, db3"/>
+                            <field name="backup_format"/>
+                        </group>
+                        <group>
+                            <field name="last_backup_status"/>
+                            <field name="last_backup_date"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Schedule">
+                            <group>
+                                <field name="schedule_active"/>
+                                <field name="interval_number"/>
+                                <field name="interval_type"/>
+                                <field name="nextcall"/>
+                                <field name="cron_id" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Storage Destination">
+                            <group>
+                                <field name="storage_type" widget="radio"/>
+                            </group>
+                            <group string="Local Disk" invisible="storage_type != 'local'">
+                                <field name="local_folder"/>
+                            </group>
+                            <group string="FTP / SFTP" invisible="storage_type not in ('ftp', 'sftp')">
+                                <field name="ftp_host"/>
+                                <field name="ftp_port"/>
+                                <field name="ftp_username"/>
+                                <field name="ftp_password" password="True"/>
+                                <field name="ftp_directory"/>
+                                <field name="sftp_private_key" invisible="storage_type != 'sftp'"/>
+                            </group>
+                            <group string="Amazon S3 / Compatible" invisible="storage_type != 's3'">
+                                <field name="s3_access_key"/>
+                                <field name="s3_secret_key" password="True"/>
+                                <field name="s3_bucket"/>
+                                <field name="s3_region"/>
+                                <field name="s3_endpoint_url"/>
+                                <field name="s3_path_prefix"/>
+                            </group>
+                            <group string="Google Drive" invisible="storage_type != 'gdrive'">
+                                <field name="gdrive_service_account_file" filename="gdrive_service_account_filename"/>
+                                <field name="gdrive_service_account_filename" invisible="1"/>
+                                <field name="gdrive_folder_id"/>
+                            </group>
+                            <group string="Dropbox" invisible="storage_type != 'dropbox'">
+                                <field name="dropbox_access_token" password="True"/>
+                                <field name="dropbox_folder"/>
+                            </group>
+                        </page>
+                        <page string="Retention &amp; Security">
+                            <group>
+                                <group string="Retention Policy">
+                                    <field name="retention_policy"/>
+                                    <field name="retention_count" invisible="retention_policy != 'count'"/>
+                                    <field name="retention_days" invisible="retention_policy != 'days'"/>
+                                </group>
+                                <group string="Encryption">
+                                    <field name="encrypt_backup"/>
+                                    <field name="backup_password" password="True"
+                                           invisible="not encrypt_backup" required="encrypt_backup"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Notifications">
+                            <group>
+                                <field name="notify_on_success"/>
+                                <field name="notify_on_failure"/>
+                                <field name="notify_user_ids" widget="many2many_tags"/>
+                                <field name="notify_extra_emails" placeholder="alerts@example.com, ops@example.com"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_db_backup_config_list" model="ir.ui.view">
+        <field name="name">db.backup.config.list</field>
+        <field name="model">db.backup.config</field>
+        <field name="arch" type="xml">
+            <list string="Backup Configurations" decoration-danger="last_backup_status == 'failed'">
+                <field name="name"/>
+                <field name="database_name"/>
+                <field name="storage_type"/>
+                <field name="interval_number"/>
+                <field name="interval_type"/>
+                <field name="last_backup_status" widget="badge"
+                       decoration-success="last_backup_status == 'success'"
+                       decoration-danger="last_backup_status == 'failed'"/>
+                <field name="last_backup_date"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_db_backup_config_search" model="ir.ui.view">
+        <field name="name">db.backup.config.search</field>
+        <field name="model">db.backup.config</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="database_name"/>
+                <filter name="active" string="Active" domain="[('active','=',True)]"/>
+                <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
+                
+            </search>
+        </field>
+    </record>
+
+    <record id="action_db_backup_config" model="ir.actions.act_window">
+        <field name="name">Backup Configurations</field>
+        <field name="res_model">db.backup.config</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

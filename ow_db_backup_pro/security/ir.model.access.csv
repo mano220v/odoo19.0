@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_db_backup_config,db.backup.config,model_db_backup_config,group_backup_manager,1,1,1,1
+access_db_backup_history,db.backup.history,model_db_backup_history,group_backup_manager,1,1,1,1
+access_db_backup_history_readonly,db.backup.history readonly,model_db_backup_history,base.group_system,1,0,0,0
+access_db_backup_now_wizard,db.backup.now.wizard,model_db_backup_now_wizard,group_backup_manager,1,1,1,1
+access_db_backup_restore_wizard,db.backup.restore.wizard,model_db_backup_restore_wizard,group_backup_manager,1,1,1,1

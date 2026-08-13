@@ -1,0 +1,101 @@
+<odoo>
+    <record id="view_db_backup_history_list" model="ir.ui.view">
+        <field name="name">db.backup.history.list</field>
+        <field name="model">db.backup.history</field>
+        <field name="arch" type="xml">
+            <list string="Backup History" default_order="create_date desc"
+                  decoration-success="status == 'success'" decoration-danger="status == 'failed'"
+                  decoration-muted="status == 'deleted'">
+                <field name="create_date" string="Date"/>
+                <field name="config_id"/>
+                <field name="database_name"/>
+                <field name="backup_filename"/>
+                <field name="storage_type"/>
+                <field name="file_size_human"/>
+                <field name="duration"/>
+                <field name="status" widget="badge"/>
+                <button name="action_download" type="object" string="Download" icon="fa-download"
+                        invisible="storage_type != 'local' or status != 'success'"/>
+                <button name="action_restore" type="object" string="Restore" icon="fa-undo"
+                        invisible="status != 'success'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_db_backup_history_form" model="ir.ui.view">
+        <field name="name">db.backup.history.form</field>
+        <field name="model">db.backup.history</field>
+        <field name="arch" type="xml">
+            <form string="Backup Record">
+                <header>
+                    <button name="action_download" type="object" string="Download" class="btn-primary"
+                            invisible="storage_type != 'local' or status != 'success'"/>
+                    <button name="action_restore" type="object" string="Restore" class="btn-secondary"
+                            invisible="status != 'success'"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="config_id"/>
+                            <field name="database_name"/>
+                            <field name="backup_filename"/>
+                            <field name="storage_type"/>
+                        </group>
+                        <group>
+                            <field name="status" widget="badge"/>
+                            <field name="file_size_human"/>
+                            <field name="duration"/>
+                            <field name="file_location"/>
+                        </group>
+                    </group>
+                    <group string="Error Details" invisible="not error_message">
+                        <field name="error_message" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_db_backup_history_graph" model="ir.ui.view">
+        <field name="name">db.backup.history.graph</field>
+        <field name="model">db.backup.history</field>
+        <field name="arch" type="xml">
+            <graph string="Backup Size Trend" type="line">
+                <field name="create_date" type="row" interval="day"/>
+                <field name="file_size" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_db_backup_history_pivot" model="ir.ui.view">
+        <field name="name">db.backup.history.pivot</field>
+        <field name="model">db.backup.history</field>
+        <field name="arch" type="xml">
+            <pivot string="Backup Analytics">
+                <field name="config_id" type="row"/>
+                <field name="status" type="col"/>
+                <field name="file_size" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_db_backup_history_search" model="ir.ui.view">
+        <field name="name">db.backup.history.search</field>
+        <field name="model">db.backup.history</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="database_name"/>
+                <field name="config_id"/>
+                <filter name="success" string="Success" domain="[('status','=','success')]"/>
+                <filter name="failed" string="Failed" domain="[('status','=','failed')]"/>
+                
+            </search>
+        </field>
+    </record>
+
+    <record id="action_db_backup_history" model="ir.actions.act_window">
+        <field name="name">Backup History</field>
+        <field name="res_model">db.backup.history</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+    </record>
+</odoo>
