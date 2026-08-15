@@ -44,6 +44,10 @@ IMPORTANT NOTES
             'ow_link_restriction_config/static/src/js/restrict_many2one_link.js',
         ],
     },
+    "images": [
+        "static/description/banner.png",
+        "static/description/icon.png",
+    ],
     'installable': True,
     'application': False,
     'license': 'LGPL-3',
