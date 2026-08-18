@@ -38,8 +38,10 @@ actually going.
             'ow_cache_manager/static/src/scss/cache_dashboard.scss',
         ],
     },
-    'images': ['static/description/icon.png',
-              "static/description/banner.png"],
+    'images': [
+        'static/description/banner.png',
+        'static/description/icon.png',
+    ],
     'license': 'LGPL-3',
     'installable': True,
     'application': True,

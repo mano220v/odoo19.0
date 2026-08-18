@@ -36,7 +36,7 @@ cleanup, and gives a full storage breakdown on top.
     "website": "https://apps.odoo.com/apps/modules/browse?author=Odoo%20Wings",
     "support": "vsmanoj144@gmail.com",
     "license": "OPL-1",
-    'price': 5.00,
+    'price': 3.80,
     'currency': 'USD',
     'depends': ['base', 'web'],
     'data': [
@@ -56,8 +56,10 @@ cleanup, and gives a full storage breakdown on top.
             'ow_cache_manager_pro/static/src/scss/cache_dashboard.scss',
         ],
     },
-    'images': ['static/description/icon.png',
-             "static/description/banner.png"],
+    'images': [
+        'static/description/banner.png',
+        'static/description/icon.png',
+    ],
     'installable': True,
     'application': True,
 }
