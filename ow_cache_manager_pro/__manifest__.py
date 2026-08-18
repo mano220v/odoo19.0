@@ -56,7 +56,8 @@ cleanup, and gives a full storage breakdown on top.
             'ow_cache_manager_pro/static/src/scss/cache_dashboard.scss',
         ],
     },
-    'images': ['static/description/icon.png'],
+    'images': ['static/description/icon.png',
+             "static/description/banner.png"],
     'installable': True,
     'application': True,
 }
