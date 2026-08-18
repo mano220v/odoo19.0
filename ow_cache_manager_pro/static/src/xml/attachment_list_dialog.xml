@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="ow_cache_manager_pro.AttachmentListDialog" owl="1">
+    <Dialog title="props.title" size="'lg'">
+      <div class="o_tcm_dialog">
+        <div class="o_tcm_dialog_filters">
+          <input type="text" class="form-control form-control-sm" placeholder="Search by file name..."
+                 t-model="state.search"/>
+          <select class="form-select form-select-sm" t-model.number="state.ageFilter">
+            <option value="0">All ages</option>
+            <option value="30">Older than 30 days</option>
+            <option value="90">Older than 90 days</option>
+            <option value="180">Older than 180 days</option>
+            <option value="365">Older than 1 year</option>
+          </select>
+        </div>
+
+        <div class="o_tcm_dialog_toolbar">
+          <label class="o_tcm_select_all">
+            <input type="checkbox" t-on-change="toggleAll"/> Select all shown
+          </label>
+          <button class="btn btn-sm btn-outline-warning" t-on-click="selectJunkOnly">
+            Select Junk Only
+          </button>
+          <button class="btn btn-sm btn-danger" t-on-click="deleteSelected"
+                  t-att-disabled="state.deleting or state.selected.size === 0">
+            <t t-if="state.deleting">Deleting...</t>
+            <t t-else="">Delete Selected (<t t-esc="state.selected.size"/>)</t>
+          </button>
+        </div>
+
+        <table class="table table-sm o_tcm_dialog_table" t-if="filteredList().length">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Linked To</th>
+              <th>Created</th>
+              <th class="text-end">Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr t-foreach="filteredList()" t-as="att" t-key="att.id">
+              <td>
+                <input type="checkbox" t-att-checked="state.selected.has(att.id)"
+                       t-on-change="() => this.toggle(att.id)"/>
+              </td>
+              <td t-esc="att.name"/>
+              <td>
+                <span t-if="att.is_junk" class="badge text-bg-warning">Junk / Orphaned</span>
+                <span t-else="" class="badge text-bg-secondary">Live data</span>
+              </td>
+              <td t-esc="att.res_model"/>
+              <td t-esc="att.create_date"/>
+              <td class="text-end" t-esc="fmt(att.size_mb)"/>
+            </tr>
+          </tbody>
+        </table>
+        <p t-else="">No files match the current filters.</p>
+      </div>
+      <t t-set-slot="footer">
+        <button class="btn btn-secondary" t-on-click="() => this.props.close()">Close</button>
+      </t>
+    </Dialog>
+  </t>
+</templates>

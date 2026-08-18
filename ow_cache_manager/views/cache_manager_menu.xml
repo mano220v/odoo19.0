@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_ow_cache_manager" model="ir.actions.client">
+        <field name="name">Cache &amp; Storage Manager</field>
+        <field name="tag">ow_cache_manager_dashboard</field>
+    </record>
+
+    <menuitem id="menu_ow_cache_manager_root"
+              name="Cache Manager"
+              sequence="5"
+              groups="base.group_system"
+              web_icon="ow_cache_manager,static/description/icon.png"/>
+
+    <menuitem id="menu_ow_cache_manager_main"
+              name="Dashboard"
+              parent="menu_ow_cache_manager_root"
+              action="action_ow_cache_manager"
+              sequence="1"/>
+</odoo>
