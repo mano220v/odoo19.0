@@ -23,7 +23,7 @@ Features
     'website': 'https://apps.odoo.com/apps/modules/browse?author=Odoo%20Wings',
     'support': 'vsmanoj144@gmail.com',
     'maintainer': 'Odoo Wings',
-    'license': 'LGPL-3',
+    "license": "OPL-1",
     'price': 1.00,
     'currency': 'USD',
     'depends': [
