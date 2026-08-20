@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_module_usage_log_list" model="ir.ui.view">
+        <field name="name">module.usage.log.list</field>
+        <field name="model">module.usage.log</field>
+        <field name="arch" type="xml">
+            <list string="Module Usage Logs" create="0" edit="0">
+                <field name="start_datetime"/>
+                <field name="user_id"/>
+                <field name="module_name"/>
+                <field name="duration_display" string="Duration"/>
+                <field name="duration_seconds" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="module_xmlid" optional="hide"/>
+                <field name="menu_id" optional="hide"/>
+                <field name="action_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_module_usage_log_form" model="ir.ui.view">
+        <field name="name">module.usage.log.form</field>
+        <field name="model">module.usage.log</field>
+        <field name="arch" type="xml">
+            <form string="Module Usage Log" create="0" edit="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="company_id"/>
+                            <field name="module_name"/>
+                            <field name="duration_display"/>
+                            <field name="duration_seconds"/>
+                        </group>
+                        <group>
+                            <field name="start_datetime"/>
+                            <field name="end_datetime"/>
+                            <field name="module_xmlid"/>
+                            <field name="menu_id"/>
+                            <field name="action_id"/>
+                            <field name="tab_uuid"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_module_usage_log_pivot" model="ir.ui.view">
+        <field name="name">module.usage.log.pivot</field>
+        <field name="model">module.usage.log</field>
+        <field name="arch" type="xml">
+            <pivot string="Module Usage Analysis">
+                <field name="module_name" type="row"/>
+                <field name="user_id" type="col"/>
+                <field name="duration_seconds" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_module_usage_log_graph" model="ir.ui.view">
+        <field name="name">module.usage.log.graph</field>
+        <field name="model">module.usage.log</field>
+        <field name="arch" type="xml">
+            <graph string="Module Usage Time" type="bar">
+                <field name="module_name"/>
+                <field name="duration_seconds" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_module_usage_log_search" model="ir.ui.view">
+        <field name="name">module.usage.log.search</field>
+        <field name="model">module.usage.log</field>
+        <field name="arch" type="xml">
+            <search string="Module Usage Logs">
+                <field name="module_name"/>
+                <field name="user_id"/>
+                <filter name="today" string="Today"
+                        domain="[('start_datetime', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0, 0, 0)).to_utc().strftime('%Y-%m-%d %H:%M:%S'))]"/>
+                <filter name="my_usage" string="My Usage" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="group_module" string="Group by Module" context="{'group_by': 'module_name'}"/>
+                <filter name="group_user" string="Group by User" context="{'group_by': 'user_id'}"/>
+                <filter name="group_day" string="Group by Day" context="{'group_by': 'start_datetime:day'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_module_usage_dashboard" model="ir.actions.client">
+        <field name="name">Module Usage Dashboard</field>
+        <field name="tag">module_usage_tracker_dashboard</field>
+    </record>
+
+    <record id="action_module_usage_logs" model="ir.actions.act_window">
+        <field name="name">Usage Logs</field>
+        <field name="res_model">module.usage.log</field>
+        <field name="view_mode">list,graph,pivot,form</field>
+        <field name="search_view_id" ref="view_module_usage_log_search"/>
+        <field name="domain">[('module_name', 'not in', ['Module Usage', 'Module Usage Dashboard']), ('module_xmlid', 'not in', ['module_usage_tracker.menu_module_usage_root', 'module_usage_tracker.menu_module_usage_dashboard', 'module_usage_tracker.menu_module_usage_logs'])]</field>
+    </record>
+
+    <menuitem id="menu_module_usage_root"
+              name="Module Usage"
+              sequence="75"/>
+    <menuitem id="menu_module_usage_dashboard"
+              name="Dashboard"
+              parent="menu_module_usage_root"
+              action="action_module_usage_dashboard"
+              sequence="1"/>
+    <menuitem id="menu_module_usage_logs"
+              name="Usage Logs"
+              parent="menu_module_usage_root"
+              action="action_module_usage_logs"
+              sequence="2"/>
+</odoo>
