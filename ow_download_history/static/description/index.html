@@ -1,0 +1,203 @@
+<section class="oe_container">
+  <style>
+    #ow-dh { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #22283b; }
+    #ow-dh a { text-decoration: none; }
+    #ow-dh .ow-hero {
+      background: linear-gradient(135deg, #182140 0%, #3a3fb0 55%, #24bfad 100%);
+      border-radius: 18px;
+      padding: 48px 40px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    #ow-dh .ow-hero-text { max-width: 620px; }
+    #ow-dh .ow-hero h1 { font-size: 34px; font-weight: 800; margin: 0 0 8px 0; line-height: 1.15; }
+    #ow-dh .ow-hero h1 span { color: #59e6d3; }
+    #ow-dh .ow-hero p { font-size: 17px; color: #dfe3fa; margin: 0 0 4px 0; }
+    #ow-dh .ow-badge-row { margin-top: 18px; }
+    #ow-dh .ow-badge {
+      display: inline-block; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 20px; padding: 6px 14px; font-size: 13px; margin-right: 8px; margin-bottom: 8px;
+    }
+    #ow-dh .ow-hero-icon { width: 128px; height: 128px; border-radius: 26px; box-shadow: 0 12px 30px rgba(0,0,0,0.35); flex-shrink: 0; }
+    #ow-dh .ow-section-title { font-size: 26px; font-weight: 800; text-align: center; margin: 8px 0 6px 0; }
+    #ow-dh .ow-section-sub { font-size: 15px; text-align: center; color: #626a86; max-width: 640px; margin: 0 auto 32px auto; }
+    #ow-dh .ow-grid { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 48px; }
+    #ow-dh .ow-card {
+      flex: 1 1 260px; background: #f6f7fc; border: 1px solid #eceefa; border-radius: 14px; padding: 24px;
+    }
+    #ow-dh .ow-card .ow-icon {
+      width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #3a3fb0, #24bfad); color: #fff; font-size: 20px; font-weight: 800; margin-bottom: 14px;
+    }
+    #ow-dh .ow-card h3 { font-size: 17px; font-weight: 700; margin: 0 0 8px 0; }
+    #ow-dh .ow-card p { font-size: 14px; color: #5b6178; margin: 0; line-height: 1.5; }
+    #ow-dh .ow-flow { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 52px; border-radius: 14px; overflow: hidden; border: 1px solid #eceefa; }
+    #ow-dh .ow-flow-step { flex: 1 1 220px; padding: 26px 22px; background: #ffffff; border-right: 1px solid #eceefa; }
+    #ow-dh .ow-flow-step:last-child { border-right: none; }
+    #ow-dh .ow-flow-step .ow-step-num {
+      width: 30px; height: 30px; border-radius: 50%; background: #182140; color: #fff; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; font-size: 14px; margin-bottom: 12px;
+    }
+    #ow-dh .ow-flow-step h4 { font-size: 15px; font-weight: 700; margin: 0 0 6px 0; }
+    #ow-dh .ow-flow-step p { font-size: 13px; color: #5b6178; margin: 0; line-height: 1.5; }
+    #ow-dh .ow-table-wrap { border: 1px solid #eceefa; border-radius: 14px; overflow: hidden; margin-bottom: 52px; }
+    #ow-dh table.ow-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    #ow-dh table.ow-table th {
+      background: #182140; color: #fff; text-align: left; padding: 12px 16px; font-weight: 700; font-size: 13px;
+    }
+    #ow-dh table.ow-table td { padding: 11px 16px; border-top: 1px solid #eceefa; color: #3a3f57; }
+    #ow-dh table.ow-table tr:nth-child(even) td { background: #f9f9fd; }
+    #ow-dh .ow-two-col { display: flex; gap: 28px; flex-wrap: wrap; margin-bottom: 52px; }
+    #ow-dh .ow-two-col .ow-col { flex: 1 1 300px; }
+    #ow-dh .ow-two-col h3 { font-size: 19px; font-weight: 800; margin: 0 0 14px 0; }
+    #ow-dh .ow-two-col ul { margin: 0; padding-left: 20px; }
+    #ow-dh .ow-two-col li { font-size: 14px; color: #3a3f57; margin-bottom: 10px; line-height: 1.5; }
+    #ow-dh .ow-cta {
+      background: #f6f7fc; border-radius: 14px; padding: 34px; text-align: center; margin-bottom: 24px;
+    }
+    #ow-dh .ow-cta h3 { font-size: 20px; font-weight: 800; margin: 0 0 8px 0; }
+    #ow-dh .ow-cta p { font-size: 14px; color: #5b6178; margin: 0 0 4px 0; }
+    #ow-dh .ow-footer { text-align: center; font-size: 12px; color: #9aa0b4; margin-top: 12px; }
+  </style>
+
+  <div id="ow-dh">
+
+    <!-- HERO -->
+    <div class="ow-hero">
+      <div class="ow-hero-text">
+        <h1>Download History <span>Manager</span></h1>
+        <p>Know exactly who downloaded which file, from which record, and when — automatically, with zero setup.</p>
+        <div class="ow-badge-row">
+          <span class="ow-badge">✔ Works out of the box</span>
+          <span class="ow-badge">✔ Attachments · Reports · Exports</span>
+          <span class="ow-badge">✔ Odoo 19</span>
+          <span class="ow-badge">✔ By Odoo Wings</span>
+        </div>
+      </div>
+      <img class="ow-hero-icon" src="icon.png" alt="Download History Manager icon"/>
+    </div>
+
+    <!-- INTRO -->
+    <div class="ow-section-title">A complete audit trail for every file that leaves your database</div>
+    <div class="ow-section-sub">
+      Compliance teams, IT admins and managers often need to answer one simple question:
+      "who downloaded this?" Download History Manager answers it automatically, for every
+      attachment, report and data export — without touching a single existing workflow.
+    </div>
+
+    <!-- FEATURE GRID -->
+    <div class="ow-grid">
+      <div class="ow-card">
+        <div class="ow-icon">⬇</div>
+        <h3>Fully Automatic Logging</h3>
+        <p>No buttons to click, no workflow to change. Every real download is captured silently in the background the moment it happens.</p>
+      </div>
+      <div class="ow-card">
+        <div class="ow-icon">📄</div>
+        <h3>Every Download Channel</h3>
+        <p>Tracks attachments, chatter documents, printed/downloaded PDF &amp; XLSX reports, and spreadsheet data exports from list views.</p>
+      </div>
+      <div class="ow-card">
+        <div class="ow-icon">👤</div>
+        <h3>Who, What &amp; When</h3>
+        <p>Every entry records the user, exact timestamp, file name, size, mime type, IP address, and a link back to the source record.</p>
+      </div>
+      <div class="ow-card">
+        <div class="ow-icon">📊</div>
+        <h3>Dashboard &amp; Analytics</h3>
+        <p>Pivot and graph views let you spot download trends by user, by day, or by file type in a couple of clicks.</p>
+      </div>
+      <div class="ow-card">
+        <div class="ow-icon">🔒</div>
+        <h3>Privacy-Aware Access</h3>
+        <p>Two access levels: regular users can optionally see only their own downloads, while managers see the complete company-wide log.</p>
+      </div>
+      <div class="ow-card">
+        <div class="ow-icon">🧹</div>
+        <h3>Configurable Retention</h3>
+        <p>Set an automatic cleanup policy in days, or clear old records manually at any time with a one-click wizard.</p>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="ow-section-title">How it works</div>
+    <div class="ow-section-sub">Install it, and it just works. There is nothing to configure to get started.</div>
+    <div class="ow-flow">
+      <div class="ow-flow-step">
+        <div class="ow-step-num">1</div>
+        <h4>Install the app</h4>
+        <p>Add Download History Manager from the Apps menu. No configuration is required.</p>
+      </div>
+      <div class="ow-flow-step">
+        <div class="ow-step-num">2</div>
+        <h4>Users work as usual</h4>
+        <p>Anyone downloads an attachment, prints/downloads a report, or exports a list to XLSX/CSV — exactly as before.</p>
+      </div>
+      <div class="ow-flow-step">
+        <div class="ow-step-num">3</div>
+        <h4>It's logged instantly</h4>
+        <p>The download is recorded in the background with the user, file, source record and timestamp.</p>
+      </div>
+      <div class="ow-flow-step">
+        <div class="ow-step-num">4</div>
+        <h4>Review anytime</h4>
+        <p>Open the Download History menu to search, filter, group, or analyze the full history on a dashboard.</p>
+      </div>
+    </div>
+
+    <!-- WHAT GETS TRACKED -->
+    <div class="ow-section-title">What gets tracked, per download</div>
+    <div class="ow-table-wrap">
+      <table class="ow-table">
+        <tr>
+          <th style="width:22%">Field</th>
+          <th>Description</th>
+        </tr>
+        <tr><td>Downloaded By</td><td>The Odoo user who triggered the download.</td></tr>
+        <tr><td>Download Date</td><td>Exact date and time the file was downloaded.</td></tr>
+        <tr><td>File Name &amp; Type</td><td>Original file name, and whether it's an attachment, image, report, or data export.</td></tr>
+        <tr><td>File Size &amp; Mime Type</td><td>Size in a human-readable format (KB/MB) and the file's mime type.</td></tr>
+        <tr><td>Source Record</td><td>The model and record the file belongs to (e.g. an invoice, a project task), with a one-click link back to it.</td></tr>
+        <tr><td>IP Address</td><td>The IP address the download request came from.</td></tr>
+      </table>
+    </div>
+
+    <!-- WHO IS THIS FOR -->
+    <div class="ow-two-col">
+      <div class="ow-col">
+        <h3>Perfect for</h3>
+        <ul>
+          <li>Compliance &amp; security audits that need proof of who accessed which document.</li>
+          <li>Finance and legal teams tracking access to sensitive contracts or invoices.</li>
+          <li>HR departments monitoring payslip and confidential document downloads.</li>
+          <li>IT admins investigating a data leak or unusual export activity.</li>
+          <li>Any company that simply wants visibility into how its documents are used.</li>
+        </ul>
+      </div>
+      <div class="ow-col">
+        <h3>Highlights</h3>
+        <ul>
+          <li>Zero configuration — install and it starts logging immediately.</li>
+          <li>No changes to existing download links, buttons, or reports.</li>
+          <li>Lightweight: a single, indexed log table with automatic cleanup.</li>
+          <li>Built-in record rules keep the log itself access-controlled.</li>
+          <li>Clean list, pivot and graph views for fast investigation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SUPPORT / CTA -->
+    <div class="ow-cta">
+      <h3>Need a custom tweak?</h3>
+      <p>We're happy to help with configuration, custom fields, or integrating this with your own audit workflow.</p>
+      <p><strong>Support:</strong> vsmanoj144@gmail.com</p>
+    </div>
+
+    <div class="ow-footer">Download History Manager — by Odoo Wings, a Tefugen Technologies Pvt Ltd brand.</div>
+
+  </div>
+</section>

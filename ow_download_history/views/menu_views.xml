@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_ow_download_history_root"
+              name="Download History"
+              sequence="95"
+              web_icon="ow_download_history,static/description/icon.png"
+              groups="ow_download_history.group_ow_download_history_user"/>
+
+    <menuitem id="menu_ow_download_history_main"
+              name="Download History"
+              parent="menu_ow_download_history_root"
+              action="action_ow_download_history"
+              sequence="10"/>
+
+    <menuitem id="menu_ow_download_history_dashboard"
+              name="Dashboard"
+              parent="menu_ow_download_history_root"
+              action="action_ow_download_history_dashboard"
+              groups="ow_download_history.group_ow_download_history_manager"
+              sequence="20"/>
+
+    <menuitem id="menu_ow_download_history_config_root"
+              name="Configuration"
+              parent="menu_ow_download_history_root"
+              groups="ow_download_history.group_ow_download_history_manager"
+              sequence="90"/>
+
+    <menuitem id="menu_ow_download_history_clear_wizard"
+              name="Clear Old History"
+              parent="menu_ow_download_history_config_root"
+              action="action_ow_clear_download_history_wizard"
+              sequence="10"/>
+
+    <menuitem id="menu_ow_download_history_settings"
+              name="Settings"
+              parent="menu_ow_download_history_config_root"
+              action="base_setup.action_general_configuration"
+              sequence="20"/>
+</odoo>

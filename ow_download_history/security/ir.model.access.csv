@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ow_download_history_user,ow.download.history.user,model_ow_download_history,group_ow_download_history_user,1,0,0,0
+access_ow_download_history_manager,ow.download.history.manager,model_ow_download_history,group_ow_download_history_manager,1,1,1,1
+access_ow_clear_download_history_wizard,ow.clear.download.history.wizard,model_ow_clear_download_history_wizard,group_ow_download_history_manager,1,1,1,1

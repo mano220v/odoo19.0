@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_ow_download_history" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.ow.download.history</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <div class="app_settings_block" data-string="Download History" string="Download History"
+                     data-key="ow_download_history" groups="ow_download_history.group_ow_download_history_manager">
+                    <h2>Download History</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="ow_download_history_retention_days" string="Retention Period"/>
+                                <div class="text-muted">
+                                    Automatically delete download history older than this many days.
+                                    Set to 0 to keep records forever.
+                                </div>
+                                <div class="mt8">
+                                    <field name="ow_download_history_retention_days" class="o_light_label" style="width: 80px;"/> days
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
