@@ -37,12 +37,10 @@ Key Features
 Perfect for compliance, security audits, and understanding how your
 documents and reports are actually being used.
 """,
-    'author': 'Tefugen Technologies Pvt Ltd',
-    'company': 'Tefugen Technologies Pvt Ltd',
-    'maintainer': 'Tefugen Technologies Pvt Ltd',
-    'website': 'https://www.tefugen.com',
+    'author': 'Odoo Wings',
+    "website": "https://apps.odoo.com/apps/modules/browse?author=Odoo%20Wings",
     'support': 'vsmanoj144@gmail.com',
-    'license': 'OPL-1',
+    'license': 'LGPL-3',
     'depends': ['base', 'web'],
     'data': [
         'security/download_history_security.xml',
@@ -57,6 +55,4 @@ documents and reports are actually being used.
     'installable': True,
     'application': True,
     'auto_install': False,
-    'price': 49.00,
-    'currency': 'USD',
 }
