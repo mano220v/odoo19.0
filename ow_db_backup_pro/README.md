@@ -1,7 +1,7 @@
 # Automatic Database Backup Pro (Odoo 19)
 
 ## Install
-1. Drop `tefugen_db_backup_pro` into your addons path.
+1. Drop `ow_db_backup_pro` into your addons path.
 2. Update Apps List, install **Automatic Database Backup Pro**.
 3. Assign yourself to the **Backup Manager** group
    (Settings > Users, under "Database Backup Pro" category).
