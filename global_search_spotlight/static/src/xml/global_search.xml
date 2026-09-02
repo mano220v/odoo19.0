@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- ================================================================
+         Systray icon (magnifying glass) + conditionally-mounted modal
+         ================================================================ -->
+    <t t-name="global_search_spotlight.SpotlightSystray">
+        <div class="o_spotlight_systray">
+            <button class="o_spotlight_systray_icon"
+                    t-on-click="toggle"
+                    title="Global Search (Ctrl+K)">
+                <i class="fa fa-search"/>
+            </button>
+        </div>
+
+        <!-- Mounted/unmounted on open/close: gives us a fresh component
+             (and therefore fresh state) every single time it's opened. -->
+        <SpotlightModal t-if="state.isOpen" onClose.bind="close"/>
+    </t>
+
+    <!-- ================================================================
+         The Spotlight overlay itself
+         ================================================================ -->
+    <t t-name="global_search_spotlight.SpotlightModal">
+        <div class="o_spotlight_backdrop"
+             t-on-click="onBackdropClick"
+             t-on-keydown="onKeydown"
+             tabindex="-1">
+
+            <div class="o_spotlight_modal" role="dialog" aria-modal="true">
+
+                <!-- Search input row -->
+                <div class="o_spotlight_input_wrapper">
+                    <i class="fa fa-search o_spotlight_search_icon"/>
+                    <input type="text"
+                           t-ref="spotlightInput"
+                           class="o_spotlight_input"
+                           placeholder="Search contacts, sales orders, products…"
+                           t-att-value="state.query"
+                           t-on-input="onInput"/>
+                    <span class="o_spotlight_loading" t-if="state.isLoading">
+                        <i class="fa fa-circle-o-notch fa-spin"/>
+                    </span>
+                    <button class="o_spotlight_close"
+                            t-on-click="() => this.props.onClose()"
+                            aria-label="Close">
+                        <i class="fa fa-times"/>
+                    </button>
+                </div>
+
+                <!-- Results -->
+                <div class="o_spotlight_results">
+
+                    <t t-if="state.hasSearched and !state.isLoading and state.flatResults.length === 0">
+                        <div class="o_spotlight_empty">
+                            No results found for “<t t-esc="state.query"/>”
+                        </div>
+                    </t>
+
+                    <t t-foreach="categoryOrder" t-as="cat" t-key="cat">
+                        <div class="o_spotlight_group">
+                            <div class="o_spotlight_group_title" t-esc="cat"/>
+                            <t t-foreach="state.groupedResults[cat]" t-as="item"
+                               t-key="item.model + '_' + item.id">
+                                <div t-attf-class="o_spotlight_result_item {{ state.flatResults.indexOf(item) === state.activeIndex ? 'o_spotlight_result_active' : '' }}"
+                                     t-on-click="() => this.openRecord(item)"
+                                     t-on-mouseenter="() => state.activeIndex = state.flatResults.indexOf(item)">
+                                    <i t-attf-class="fa {{item.icon}} o_spotlight_result_icon"/>
+                                    <span class="o_spotlight_result_name" t-esc="item.name"/>
+                                    <span class="o_spotlight_result_category" t-esc="item.category"/>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+
+                    <div class="o_spotlight_footer">
+                        <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+                        <span><kbd>Enter</kbd> open</span>
+                        <span><kbd>Esc</kbd> close</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>
