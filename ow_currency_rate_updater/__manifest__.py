@@ -47,6 +47,6 @@ Key Features
     'application': True,
     'installable': True,
     'auto_install': False,
-    'price': 1.10,
+    'price': 0.50,
     'currency': 'EUR',
 }
