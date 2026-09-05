@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<t t-name="ow_currency_rate_updater.CurrencyDashboard" owl="1">
+    <div class="o_ow_currency_dashboard">
+
+        <div class="ow_cd_header">
+            <div class="ow_cd_header_left">
+                <h1><i class="fa fa-line-chart me-2"/>Live Currency Rates</h1>
+                <div class="ow_cd_subline" t-if="state.company">
+                    Base currency <span class="ow_cd_pill"><t t-esc="baseCurrencyCode"/></span>
+                    &#183; Provider <span class="ow_cd_pill"><t t-esc="providerLabel"/></span>
+                    &#183; <span t-att-class="state.company.ow_currency_last_sync_state === 'failed' ? 'text-danger' : ''">
+                        Updated <t t-esc="lastSyncLabel"/>
+                    </span>
+                    <span t-if="state.company.ow_currency_auto_update" class="ow_cd_badge_auto">
+                        <i class="fa fa-refresh"/> Auto every <t t-esc="state.company.ow_currency_update_interval"/>h
+                    </span>
+                    &#183; <t t-esc="state.rows.length"/> active currenc<t t-esc="state.rows.length === 1 ? 'y' : 'ies'"/> shown
+                    (<a href="#" t-on-click.prevent="openCurrencies">enable more</a>)
+                </div>
+            </div>
+            <div class="ow_cd_header_right">
+                <button class="btn btn-outline-secondary" t-on-click="openCurrencies" title="Enable/disable currencies">
+                    <i class="fa fa-list-ul"/> Currencies
+                </button>
+                <button class="btn btn-outline-secondary" t-on-click="openLog" title="Sync History">
+                    <i class="fa fa-history"/> Log
+                </button>
+                <button class="btn btn-outline-secondary" t-on-click="openSettings" title="Settings">
+                    <i class="fa fa-cog"/> Settings
+                </button>
+                <button class="btn btn-primary ow_cd_sync_btn" t-on-click="syncNow" t-att-disabled="state.syncing">
+                    <i t-att-class="state.syncing ? 'fa fa-refresh fa-spin' : 'fa fa-refresh'"/>
+                    <t t-esc="state.syncing ? 'Syncing…' : 'Sync Now'"/>
+                </button>
+            </div>
+        </div>
+
+        <div t-if="state.loading" class="ow_cd_loading">
+            <i class="fa fa-circle-o-notch fa-spin fa-2x"/>
+            <div>Loading live rates…</div>
+        </div>
+
+        <div t-else="" class="ow_cd_body">
+
+            <div class="ow_cd_toolbar">
+                <div class="ow_cd_search">
+                    <i class="fa fa-search"/>
+                    <input type="text" placeholder="Search currency…" t-on-input="onSearchInput" t-att-value="state.search"/>
+                </div>
+                <div class="ow_cd_view_toggle">
+                    <button t-att-class="'btn btn-sm ' + (state.view === 'cards' ? 'btn-primary' : 'btn-outline-secondary')" t-on-click="() => this.setView('cards')">
+                        <i class="fa fa-th-large"/> Cards
+                    </button>
+                    <button t-att-class="'btn btn-sm ' + (state.view === 'table' ? 'btn-primary' : 'btn-outline-secondary')" t-on-click="() => this.setView('table')">
+                        <i class="fa fa-table"/> Table
+                    </button>
+                </div>
+            </div>
+
+            <div t-if="!filteredRows.length" class="ow_cd_empty">
+                <i class="fa fa-inbox fa-3x"/>
+                <p t-if="state.company and state.company.ow_currency_last_sync_state === 'none'">
+                    No rates yet — click <strong>Sync Now</strong> to pull live rates for the first time.
+                </p>
+                <p t-else="">No currencies match your search.</p>
+            </div>
+
+            <div t-if="state.view === 'cards' and filteredRows.length" class="ow_cd_grid">
+                <div t-foreach="filteredRows" t-as="row" t-key="row.id" class="ow_cd_card">
+                    <div class="ow_cd_card_top">
+                        <div class="ow_cd_code"><t t-esc="row.code"/> <span class="ow_cd_symbol" t-esc="row.symbol"/></div>
+                        <div t-att-class="'ow_cd_trend ow_cd_trend_' + row.trend">
+                            <i t-if="row.trend === 'up'" class="fa fa-arrow-up"/>
+                            <i t-if="row.trend === 'down'" class="fa fa-arrow-down"/>
+                            <i t-if="row.trend === 'flat'" class="fa fa-minus"/>
+                            <t t-if="row.changePct !== null" t-esc="Math.abs(row.changePct).toFixed(2) + '%'"/>
+                        </div>
+                    </div>
+                    <div class="ow_cd_name" t-esc="row.fullName"/>
+                    <div class="ow_cd_rate">
+                        <t t-if="row.rate !== null" t-esc="row.rate.toFixed(4)"/>
+                        <t t-else="">—</t>
+                    </div>
+                    <svg t-if="row.sparkline" class="ow_cd_spark" viewBox="0 0 96 28" preserveAspectRatio="none">
+                        <polyline t-att-points="row.sparkline" t-att-class="'ow_cd_spark_line ow_cd_spark_' + row.trend"/>
+                    </svg>
+                    <div class="ow_cd_updated" t-if="row.lastDate">as of <t t-esc="row.lastDate"/></div>
+                </div>
+            </div>
+
+            <table t-if="state.view === 'table' and filteredRows.length" class="ow_cd_table table table-sm">
+                <thead>
+                    <tr>
+                        <th t-on-click="() => this.setSort('code')">Code</th>
+                        <th t-on-click="() => this.setSort('fullName')">Currency</th>
+                        <th class="text-end" t-on-click="() => this.setSort('rate')">Rate</th>
+                        <th class="text-end" t-on-click="() => this.setSort('changePct')">Change</th>
+                        <th>Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="filteredRows" t-as="row" t-key="row.id">
+                        <td><strong t-esc="row.code"/></td>
+                        <td t-esc="row.fullName"/>
+                        <td class="text-end"><t t-if="row.rate !== null" t-esc="row.rate.toFixed(4)"/><t t-else="">—</t></td>
+                        <td t-att-class="'text-end ow_cd_trend_' + row.trend">
+                            <t t-if="row.changePct !== null" t-esc="(row.changePct > 0 ? '+' : '') + row.changePct.toFixed(2) + '%'"/>
+                            <t t-else="">—</t>
+                        </td>
+                        <td t-esc="row.lastDate or '—'"/>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</t>
+
+</templates>

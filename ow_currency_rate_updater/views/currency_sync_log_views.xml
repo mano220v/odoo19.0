@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_currency_rate_sync_log_list" model="ir.ui.view">
+        <field name="name">currency.rate.sync.log.list</field>
+        <field name="model">currency.rate.sync.log</field>
+        <field name="arch" type="xml">
+            <list string="Sync Log" create="false" edit="false" default_order="create_date desc">
+                <field name="create_date" string="When"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="provider"/>
+                <field name="state" decoration-success="state == 'success'" decoration-danger="state == 'failed'" widget="badge"/>
+                <field name="rate_count"/>
+                <field name="duration" widget="float_time"/>
+                <field name="manual"/>
+                <field name="message"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_currency_rate_sync_log" model="ir.actions.act_window">
+        <field name="name">Sync Log</field>
+        <field name="res_model">currency.rate.sync.log</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <menuitem id="menu_ow_currency_sync_log"
+              name="Sync Log"
+              parent="menu_ow_currency_root"
+              action="action_currency_rate_sync_log"
+              sequence="2"
+              groups="group_ow_currency_manager"/>
+
+    <menuitem id="menu_ow_currency_config"
+              name="Configuration"
+              parent="menu_ow_currency_root"
+              sequence="3"
+              groups="group_ow_currency_manager"/>
+
+    <record id="action_ow_currency_settings" model="ir.actions.act_window">
+        <field name="name">Currency Rate Updater Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'module': 'ow_currency_rate_updater'}</field>
+    </record>
+
+    <menuitem id="menu_ow_currency_settings"
+              name="Settings"
+              parent="menu_ow_currency_config"
+              action="action_ow_currency_settings"
+              sequence="1"
+              groups="group_ow_currency_manager"/>
+
+    <menuitem id="menu_ow_currency_manage_currencies"
+              name="Currencies"
+              parent="menu_ow_currency_config"
+              action="base.action_currency_form"
+              sequence="2"
+              groups="group_ow_currency_manager"/>
+</odoo>
