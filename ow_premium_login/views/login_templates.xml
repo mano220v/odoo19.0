@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="premium_login_layout" inherit_id="web.login_layout" name="Premium Login Layout">
+        <xpath expr="//div[hasclass('container')]" position="attributes">
+            <attribute name="class" add="ow_premium_login_shell" separator=" "/>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class, 'o_database_list')]" position="attributes">
+            <attribute name="class" add="ow_premium_login_card" separator=" "/>
+            <attribute name="style" remove="max-width: 300px;"/>
+        </xpath>
+    </template>
+
+    <template id="premium_login" inherit_id="web.login" name="Premium User Login">
+        <xpath expr="//form[contains(@t-attf-class, 'oe_login_form')]" position="attributes">
+            <attribute name="class" add="ow_premium_login_form" separator=" "/>
+        </xpath>
+
+        <xpath expr="//div[@id='oe_structure_login_top']" position="after">
+            <div class="ow_premium_login_intro">
+                <div class="ow_premium_eyebrow">
+                    <span class="ow_premium_eyebrow_icon"><i class="fa fa-shield" role="img" aria-label="Secure"/></span>
+                    <span>Secure workspace access</span>
+                </div>
+                <h1>Welcome back</h1>
+                <p>Sign in with the method that feels natural to you.</p>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[hasclass('field-login')]/label" position="inside">
+            <span class="ow_login_label_hint">Your workspace account</span>
+        </xpath>
+
+        <xpath expr="//div[hasclass('o_caps_lock_warning')]" position="replace">
+            <div class="ow_premium_authentication o_caps_lock_warning" data-login-mode="password">
+                <div class="ow_login_methods" role="tablist" aria-label="Sign-in method">
+                    <button type="button" class="ow_login_method is-active" data-login-mode-button="password" role="tab" aria-selected="true">
+                        <i class="fa fa-key" role="presentation"/>
+                        <span>Password</span>
+                    </button>
+                    <button type="button" class="ow_login_method" data-login-mode-button="pin" role="tab" aria-selected="false">
+                        <i class="fa fa-th" role="presentation"/>
+                        <span>PIN</span>
+                    </button>
+                    <button type="button" class="ow_login_method" data-login-mode-button="pattern" role="tab" aria-selected="false">
+                        <i class="fa fa-connectdevelop" role="presentation"/>
+                        <span>Pattern</span>
+                    </button>
+                    <button type="button" class="ow_login_method" data-login-mode-button="text_lock" role="tab" aria-selected="false">
+                        <i class="fa fa-commenting-o" role="presentation"/>
+                        <span>Text lock</span>
+                    </button>
+                </div>
+
+                <div class="ow_login_panel is-active" data-login-panel="password" role="tabpanel">
+                    <div class="ow_login_panel_heading">
+                        <label for="password" class="form-label">Password</label>
+                        <a t-if="reset_password_enabled" class="ow_login_reset" tabindex="1" t-attf-href="/web/reset_password?{{ keep_query() }}">Reset Password</a>
+                    </div>
+                    <div class="ow_premium_input_group">
+                        <input type="password" placeholder="Enter your password" name="password" id="password" class="form-control" required="required" autocomplete="current-password" t-att-autofocus="'autofocus' if login else None" maxlength="4096"/>
+                        <button type="button" class="ow_input_action" data-toggle-secret="password" aria-label="Show password">
+                            <i class="fa fa-eye" role="presentation"/>
+                        </button>
+                    </div>
+                    <p class="ow_panel_hint"><i class="fa fa-lock" role="presentation"/> Your regular workspace password</p>
+                </div>
+
+                <div class="ow_login_panel" data-login-panel="pin" role="tabpanel" hidden="hidden">
+                    <div class="ow_login_panel_heading">
+                        <label for="login_pin" class="form-label">Quick PIN</label>
+                        <span class="ow_panel_badge">4–8 digits</span>
+                    </div>
+                    <div class="ow_premium_input_group">
+                        <input type="password" placeholder="Enter your PIN" id="login_pin" class="form-control ow_pin_field" inputmode="numeric" pattern="[0-9]*" maxlength="8" autocomplete="one-time-code"/>
+                        <button type="button" class="ow_input_action" data-toggle-secret="login_pin" aria-label="Show PIN">
+                            <i class="fa fa-eye" role="presentation"/>
+                        </button>
+                    </div>
+                    <div class="ow_pin_pad" aria-label="PIN keypad">
+                        <button type="button" data-pin-key="1">1</button>
+                        <button type="button" data-pin-key="2">2</button>
+                        <button type="button" data-pin-key="3">3</button>
+                        <button type="button" data-pin-key="4">4</button>
+                        <button type="button" data-pin-key="5">5</button>
+                        <button type="button" data-pin-key="6">6</button>
+                        <button type="button" data-pin-key="7">7</button>
+                        <button type="button" data-pin-key="8">8</button>
+                        <button type="button" data-pin-key="9">9</button>
+                        <span class="ow_pin_pad_spacer" aria-hidden="true"/>
+                        <button type="button" data-pin-key="0">0</button>
+                        <button type="button" class="ow_pin_backspace" data-pin-action="backspace" aria-label="Delete last digit"><i class="fa fa-long-arrow-left"/></button>
+                    </div>
+                    <p class="ow_panel_hint"><i class="fa fa-mobile" role="presentation"/> A private quick unlock for this account</p>
+                </div>
+
+                <div class="ow_login_panel" data-login-panel="pattern" role="tabpanel" hidden="hidden">
+                    <div class="ow_login_panel_heading">
+                        <label for="login_pattern" class="form-label">Unlock pattern</label>
+                        <button type="button" class="ow_login_reset_pattern" data-pattern-reset="1">Clear</button>
+                    </div>
+                    <div class="ow_pattern_lock" aria-label="Draw your unlock pattern">
+                        <div class="ow_pattern_trace" data-pattern-trace="1">Connect 4 or more dots</div>
+                        <div class="ow_pattern_grid">
+                            <svg class="ow_pattern_lines" aria-hidden="true" focusable="false">
+                                <polyline data-pattern-line="1" points=""/>
+                            </svg>
+                            <button type="button" data-pattern-node="0" aria-label="Pattern dot 1"/>
+                            <button type="button" data-pattern-node="1" aria-label="Pattern dot 2"/>
+                            <button type="button" data-pattern-node="2" aria-label="Pattern dot 3"/>
+                            <button type="button" data-pattern-node="3" aria-label="Pattern dot 4"/>
+                            <button type="button" data-pattern-node="4" aria-label="Pattern dot 5"/>
+                            <button type="button" data-pattern-node="5" aria-label="Pattern dot 6"/>
+                            <button type="button" data-pattern-node="6" aria-label="Pattern dot 7"/>
+                            <button type="button" data-pattern-node="7" aria-label="Pattern dot 8"/>
+                            <button type="button" data-pattern-node="8" aria-label="Pattern dot 9"/>
+                        </div>
+                    </div>
+                    <input type="hidden" id="login_pattern" autocomplete="off"/>
+                    <p class="ow_panel_hint"><i class="fa fa-hand-pointer-o" role="presentation"/> Draw the pattern you set for this account</p>
+                </div>
+
+                <div class="ow_login_panel" data-login-panel="text_lock" role="tabpanel" hidden="hidden">
+                    <div class="ow_login_panel_heading">
+                        <label for="login_text_lock" class="form-label">Text lock</label>
+                        <span class="ow_panel_badge">Private phrase</span>
+                    </div>
+                    <div class="ow_premium_input_group">
+                        <input type="password" placeholder="Enter your private phrase" id="login_text_lock" class="form-control" autocomplete="current-password" maxlength="4096"/>
+                        <button type="button" class="ow_input_action" data-toggle-secret="login_text_lock" aria-label="Show text lock">
+                            <i class="fa fa-eye" role="presentation"/>
+                        </button>
+                    </div>
+                    <p class="ow_panel_hint"><i class="fa fa-commenting-o" role="presentation"/> Use the private phrase configured for this account</p>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//input[@name='type']" position="attributes">
+            <attribute name="id">login_type</attribute>
+        </xpath>
+
+        <xpath expr="//div[hasclass('oe_login_buttons')]" position="attributes">
+            <attribute name="class" add="ow_premium_login_actions" separator=" "/>
+        </xpath>
+
+        <xpath expr="//div[@id='oe_structure_login_bottom']" position="before">
+            <div class="ow_premium_login_trust">
+                <span><i class="fa fa-shield" role="presentation"/> Encrypted sign in</span>
+                <span><i class="fa fa-bolt" role="presentation"/> Fast workspace access</span>
+            </div>
+        </xpath>
+    </template>
+</odoo>

@@ -70,7 +70,7 @@
         id="menu_attendance_dashboard_root"
         name="Attendance Dashboard"
         action="action_attendance_dashboard"
-        sequence="15"
-    />
+        sequence="15" web_icon="hr_dashboard_odoo_wings,static/description/icon.png"/>
 
 </odoo>
+

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_users_form_premium_login_security" model="ir.ui.view">
+        <field name="name">res.users.form.premium.login.security</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='page_security']/div[@name='auth']" position="after">
+                <div class="ow_premium_login_security mt-4" groups="base.group_system">
+                    <div class="d-flex flex-column flex-lg-row gap-3 align-items-lg-start">
+                        <div class="col-lg-4 px-0">
+                            <span class="o_form_label">Premium login method</span>
+                            <span class="text-muted d-block">
+                                Choose the credential this user can use at the sign-in screen.
+                            </span>
+                        </div>
+                        <div class="flex-grow-1">
+                            <field name="login_auth_method" widget="radio" options="{'horizontal': true}"/>
+                            <div class="alert alert-info mt-3 mb-0">
+                                Password remains available as the recovery credential. PINs and patterns are convenience credentials and are stored as secure hashes.
+                            </div>
+                        </div>
+                    </div>
+                    <separator string="Set a convenience credential" class="mt-4"/>
+                    <div class="row g-3">
+                        <div class="col-lg-4">
+                            <label for="new_login_pin" class="o_form_label">Quick PIN</label>
+                            <field name="new_login_pin" password="True" placeholder="4–8 digits"/>
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="new_login_pattern" class="o_form_label">Unlock pattern</label>
+                            <field name="new_login_pattern" widget="premium_pattern"/>
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="new_login_text_lock" class="o_form_label">Text lock</label>
+                            <field name="new_login_text_lock" password="True" placeholder="At least 4 characters"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
