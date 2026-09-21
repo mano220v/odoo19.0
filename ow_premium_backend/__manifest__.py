@@ -2,7 +2,7 @@
     "name": "Premium Backend Theme | Forms, Lists & Kanban",
     "summary": "Custom gradients, saved themes, refined views and premium motion controls",
     "version": "19.0.1.2.0",
-    "category": "Themes/Backend",
+    "category": "Productivity",
     "author": "Odoo Wings",
     "website": "https://apps.odoo.com/apps/modules/browse?author=Odoo%20Wings",
     "support": "vsmanoj144@gmail.com",
