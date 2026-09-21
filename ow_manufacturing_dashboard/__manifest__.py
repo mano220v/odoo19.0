@@ -29,7 +29,7 @@ Features
     "website": "https://apps.odoo.com/apps/modules/browse?author=Odoo%20Wings",
     "support": "vsmanoj144@gmail.com",
     "license": "OPL-1",
-    'price': 3.50,
+    'price': 2.50,
     'currency': 'USD',
     'depends': ['mrp'],
     'data': [

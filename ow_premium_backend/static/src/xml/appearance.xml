@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ow_premium_backend.AppearanceSystray">
+        <div class="ow-appearance-systray">
+            <button type="button" class="btn ow-appearance-trigger" t-att-title="title" t-att-aria-label="title" t-on-click="open">
+                <i class="fa fa-paint-brush" aria-hidden="true"/>
+            </button>
+            <button type="button" class="btn ow-appearance-trigger" title="Toggle light / dark appearance" aria-label="Toggle light / dark appearance" t-on-click="toggleMode"><i class="fa fa-adjust" aria-hidden="true"/></button>
+        </div>
+    </t>
+    <t t-name="ow_premium_backend.AppearanceDialog">
+        <Dialog title="'Appearance Studio'" size="'xl'" bodyClass="'ow-appearance-dialog'">
+            <AppearancePanel/>
+            <t t-set-slot="footer"><button type="button" class="btn btn-primary" t-on-click="props.close">Done</button></t>
+        </Dialog>
+    </t>
+    <t t-name="ow_premium_backend.AppearanceAction">
+        <div class="ow-studio-action"><AppearancePanel/></div>
+    </t>
+    <t t-name="ow_premium_backend.AppearancePanel">
+        <div class="ow-studio">
+            <header class="ow-studio-hero">
+                <div><span class="ow-eyebrow">ODOO WINGS / PREMIUM BACKEND</span>
+                    <h1>A workspace<br/>with presence.</h1>
+                    <p>Sculpt the color, depth and rhythm of your day. Every detail is yours.</p>
+                </div>
+                <div class="ow-hero-mark" aria-hidden="true"><i class="fa fa-paint-brush"/></div>
+            </header>
+            <div class="ow-studio-layout">
+                <section class="ow-studio-settings" aria-label="Appearance settings">
+                    <div class="ow-setting-header"><div><h2>Make it yours</h2><p>Saved for your user in this browser.</p></div><span class="ow-live-label">Live</span></div>
+                    <label class="ow-toggle-line"><span><strong>Premium styling</strong><small>Switch off to use the standard appearance</small></span><input type="checkbox" role="switch" t-att-checked="state.enabled" t-on-change="ev => this.set('enabled', ev.target.checked)"/></label>
+                    <div class="ow-studio-nav" role="group" aria-label="Appearance categories">
+                        <button type="button" t-att-class="editor.section === 'design' ? 'is-selected' : ''" t-att-aria-pressed="editor.section === 'design'" t-on-click="() => editor.section = 'design'"><i class="fa fa-paint-brush" aria-hidden="true"/> Design</button>
+                        <button type="button" t-att-class="editor.section === 'layout' ? 'is-selected' : ''" t-att-aria-pressed="editor.section === 'layout'" t-on-click="() => editor.section = 'layout'"><i class="fa fa-th-large" aria-hidden="true"/> Layout</button>
+                        <button type="button" t-att-class="editor.section === 'effects' ? 'is-selected' : ''" t-att-aria-pressed="editor.section === 'effects'" t-on-click="() => editor.section = 'effects'"><i class="fa fa-magic" aria-hidden="true"/> Effects</button>
+                        <button type="button" t-att-class="editor.section === 'library' ? 'is-selected' : ''" t-att-aria-pressed="editor.section === 'library'" t-on-click="() => editor.section = 'library'"><i class="fa fa-bookmark-o" aria-hidden="true"/> Library</button>
+                    </div>
+                    <div t-if="editor.section === 'design'" class="ow-settings-section">
+                    <fieldset class="ow-setting"><legend>Signature collections</legend><div class="ow-preset-grid">
+                        <button t-foreach="presets" t-as="preset" t-key="preset.id" type="button" t-att-class="'ow-preset ' + (this.isPreset(preset) ? 'is-selected' : '')" t-att-aria-pressed="this.isPreset(preset)" t-on-click="() => this.applyPreset(preset)"><span t-att-class="'ow-preset-art ow-preset-' + preset.id" aria-hidden="true"/><span><strong t-esc="preset.name"/><small t-esc="preset.description"/></span><i t-if="this.isPreset(preset)" class="fa fa-check" aria-hidden="true"/></button>
+                    </div></fieldset>
+                    <fieldset class="ow-setting"><legend>Color palette</legend><div class="ow-palette-grid">
+                        <button t-foreach="palettes" t-as="palette" t-key="palette.id" type="button" t-att-class="'ow-palette ' + (!state.customColors &amp;&amp; state.palette === palette.id ? 'is-selected' : '')" t-att-aria-pressed="!state.customColors &amp;&amp; state.palette === palette.id" t-on-click="() => this.set('palette', palette.id)">
+                            <span class="ow-swatch" t-att-style="'background:linear-gradient(135deg,' + palette.color + ',' + palette.secondary + ')'"><i t-if="!state.customColors &amp;&amp; state.palette === palette.id" class="fa fa-check" aria-hidden="true"/></span><span t-esc="palette.name"/>
+                        </button>
+                    </div></fieldset>
+                    <fieldset class="ow-setting"><legend>Appearance</legend><div class="ow-segment">
+                        <button t-foreach="['light', 'dark', 'system']" t-as="mode" t-key="mode" type="button" t-att-aria-pressed="state.mode === mode" t-att-class="state.mode === mode ? 'is-selected' : ''" t-on-click="() => this.set('mode', mode)"><i t-att-class="'fa ' + ({light: 'fa-sun-o', dark: 'fa-moon-o', system: 'fa-desktop'}[mode])" aria-hidden="true"/><span t-if="mode === 'light'">Light</span><span t-elif="mode === 'dark'">Dark</span><span t-else="">System</span></button>
+                    </div></fieldset>
+                    <div class="ow-studio-divider"><span>YOUR BRAND COLORS</span></div>
+                    <label class="ow-toggle-line"><span><strong>Custom gradient</strong><small>Choose a personal pair of accent colors</small></span><input type="checkbox" role="switch" t-att-checked="state.customColors" t-on-change="ev => this.set('customColors', ev.target.checked)"/></label>
+                    <div t-if="state.customColors" class="ow-custom-colors">
+                        <label>Primary<input type="color" t-att-value="state.customPrimary" t-on-change="ev => this.set('customPrimary', ev.target.value)"/><code t-esc="state.customPrimary"/></label>
+                        <label>Secondary<input type="color" t-att-value="state.customSecondary" t-on-change="ev => this.set('customSecondary', ev.target.value)"/><code t-esc="state.customSecondary"/></label>
+                        <p>Bright accents are deepened automatically to keep white button text readable.</p>
+                    </div>
+                    </div>
+                    <div t-if="editor.section === 'layout'" class="ow-settings-section">
+                    <div class="ow-setting-pair">
+                        <label class="ow-setting">Density<select class="form-select" t-on-change="ev => this.set('density', ev.target.value)"><option value="comfortable" t-att-selected="state.density === 'comfortable'">Comfortable</option><option value="compact" t-att-selected="state.density === 'compact'">Compact</option></select></label>
+                        <label class="ow-setting">Corners<select class="form-select" t-on-change="ev => this.set('corners', ev.target.value)"><option value="rounded" t-att-selected="state.corners === 'rounded'">Rounded</option><option value="square" t-att-selected="state.corners === 'square'">Square</option></select></label>
+                    </div>
+                    <div class="ow-setting-pair">
+                        <label class="ow-setting">Surface finish<select class="form-select" t-on-change="ev => this.set('surface', ev.target.value)"><option value="glass" t-att-selected="state.surface === 'glass'">Glass</option><option value="elevated" t-att-selected="state.surface === 'elevated'">Elevated</option><option value="clean" t-att-selected="state.surface === 'clean'">Clean</option></select></label>
+                        <label class="ow-setting">Navigation<select class="form-select" t-on-change="ev => this.set('navbar', ev.target.value)"><option value="gradient" t-att-selected="state.navbar === 'gradient'">Gradient</option><option value="midnight" t-att-selected="state.navbar === 'midnight'">Midnight</option><option value="light" t-att-selected="state.navbar === 'light'">Surface</option></select></label>
+                    </div>
+                    <div class="ow-setting-pair">
+                        <label class="ow-setting">Workspace backdrop<select class="form-select" t-on-change="ev => this.set('backdrop', ev.target.value)"><option value="aurora" t-att-selected="state.backdrop === 'aurora'">Aurora</option><option value="mesh" t-att-selected="state.backdrop === 'mesh'">Mesh</option><option value="plain" t-att-selected="state.backdrop === 'plain'">Plain</option></select></label>
+                        <label class="ow-setting">Text size<select class="form-select" t-on-change="ev => this.set('fontScale', ev.target.value)"><option value="standard" t-att-selected="state.fontScale === 'standard'">Standard</option><option value="large" t-att-selected="state.fontScale === 'large'">Large</option></select></label>
+                    </div>
+                    <div class="ow-setting-pair">
+                        <label class="ow-setting">Typography<select class="form-select" t-on-change="ev => this.set('fontFamily', ev.target.value)"><option value="system" t-att-selected="state.fontFamily === 'system'">System</option><option value="humanist" t-att-selected="state.fontFamily === 'humanist'">Humanist</option><option value="geometric" t-att-selected="state.fontFamily === 'geometric'">Geometric</option></select></label>
+                        <label class="ow-setting">Form canvas<select class="form-select" t-on-change="ev => this.set('formWidth', ev.target.value)"><option value="standard" t-att-selected="state.formWidth === 'standard'">Standard</option><option value="wide" t-att-selected="state.formWidth === 'wide'">Wide</option></select></label>
+                    </div>
+                    <div class="ow-setting-pair">
+                        <label class="ow-setting">Field finish<select class="form-select" t-on-change="ev => this.set('inputStyle', ev.target.value)"><option value="soft" t-att-selected="state.inputStyle === 'soft'">Soft fill</option><option value="outlined" t-att-selected="state.inputStyle === 'outlined'">Outlined</option><option value="minimal" t-att-selected="state.inputStyle === 'minimal'">Underline</option></select></label>
+                        <label class="ow-setting">Table headers<select class="form-select" t-on-change="ev => this.set('tableStyle', ev.target.value)"><option value="classic" t-att-selected="state.tableStyle === 'classic'">Classic</option><option value="tinted" t-att-selected="state.tableStyle === 'tinted'">Accent tint</option></select></label>
+                    </div>
+                    <label class="ow-setting">Card accent<select class="form-select" t-on-change="ev => this.set('cardAccent', ev.target.value)"><option value="top" t-att-selected="state.cardAccent === 'top'">Top border</option><option value="edge" t-att-selected="state.cardAccent === 'edge'">Side edge</option><option value="none" t-att-selected="state.cardAccent === 'none'">Neutral</option></select></label>
+                    </div>
+                    <div t-if="editor.section === 'effects'" class="ow-settings-section">
+                    <label class="ow-toggle-line"><span><strong>Striped list rows</strong><small>Alternate row surfaces for easier scanning</small></span><input type="checkbox" role="switch" t-att-checked="state.stripedRows" t-on-change="ev => this.set('stripedRows', ev.target.checked)"/></label>
+                    <label class="ow-toggle-line"><span><strong>Glowing field focus</strong><small>A soft accent halo while editing</small></span><input type="checkbox" role="switch" t-att-checked="state.fieldGlow" t-on-change="ev => this.set('fieldGlow', ev.target.checked)"/></label>
+                    <label class="ow-toggle-line"><span><strong>Lift cards on hover</strong><small>Depth for kanban and preview cards</small></span><input type="checkbox" role="switch" t-att-checked="state.hoverLift" t-on-change="ev => this.set('hoverLift', ev.target.checked)"/></label>
+                    <label class="ow-setting">Animation character<select class="form-select" t-on-change="ev => this.set('animation', ev.target.value)"><option value="subtle" t-att-selected="state.animation === 'subtle'">Subtle</option><option value="expressive" t-att-selected="state.animation === 'expressive'">Expressive</option></select></label>
+                    <label class="ow-toggle-line"><span><strong>Animations &amp; transitions</strong><small>Respects your device's reduced motion setting</small></span><input type="checkbox" role="switch" t-att-checked="state.motion" t-on-change="ev => this.set('motion', ev.target.checked)"/></label>
+                    <label class="ow-setting ow-range-label"><span>Surface depth <output t-esc="state.depth + '%'"/></span><input type="range" min="0" max="100" step="5" t-att-value="state.depth" t-on-change="ev => this.set('depth', Number(ev.target.value))"/></label>
+                    <label class="ow-setting ow-range-label"><span>Focus glow <output t-esc="state.glow + '%'"/></span><input type="range" min="0" max="100" step="5" t-att-value="state.glow" t-on-change="ev => this.set('glow', Number(ev.target.value))"/></label>
+                    <label class="ow-toggle-line"><span><strong>Button light sweep</strong><small>A brief sheen on primary button hover</small></span><input type="checkbox" role="switch" t-att-checked="state.buttonShine" t-on-change="ev => this.set('buttonShine', ev.target.checked)"/></label>
+                    <label class="ow-toggle-line"><span><strong>Accent ribbon</strong><small>A gradient edge across form sheets</small></span><input type="checkbox" role="switch" t-att-checked="state.accentLine" t-on-change="ev => this.set('accentLine', ev.target.checked)"/></label>
+                    </div>
+                    <div t-if="editor.section === 'library'" class="ow-settings-section">
+                    <div class="ow-library-intro"><i class="fa fa-bookmark-o" aria-hidden="true"/><h3>Your theme library</h3><p>Save up to eight complete looks for this user and browser. Export settings to carry a theme to another browser.</p></div>
+                    <form class="ow-profile-form" t-on-submit.prevent="saveProfile"><label>Theme name<input class="form-control" maxlength="40" placeholder="e.g. My evening workspace" t-model="editor.profileName"/></label><button type="submit" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"/> Save theme</button></form>
+                    <p t-if="!library.profiles.length" class="ow-empty-library">Your saved themes will appear here.</p>
+                    <div class="ow-saved-themes">
+                        <div t-foreach="library.profiles" t-as="profile" t-key="profile.id" class="ow-saved-theme"><button type="button" t-on-click="() => this.loadProfile(profile)"><i class="fa fa-bookmark" aria-hidden="true"/><span t-esc="profile.name"/></button><button type="button" class="ow-remove-theme" t-att-aria-label="'Remove ' + profile.name" title="Remove saved theme" t-on-click="() => this.appearance.removeProfile(profile.id)"><i class="fa fa-trash-o" aria-hidden="true"/></button></div>
+                    </div>
+                    <div class="ow-studio-divider"><span>TRANSFER A THEME</span></div>
+                    <button type="button" class="btn btn-outline-secondary w-100" t-on-click="exportTheme"><i class="fa fa-share-square-o" aria-hidden="true"/> Export current settings</button>
+                    <label class="ow-setting">Theme settings<textarea class="form-control ow-transfer" rows="7" maxlength="20000" t-model="editor.transfer" placeholder="Export your settings or paste a theme export here."/></label>
+                    <button type="button" class="btn btn-primary w-100" t-att-disabled="!editor.transfer.trim()" t-on-click="importTheme"><i class="fa fa-download" aria-hidden="true"/> Import and apply</button>
+                    <p t-if="editor.message" t-att-class="'ow-studio-message ' + (editor.error ? 'is-error' : '')" role="status" t-esc="editor.message"/>
+                    </div>
+                    <p t-if="!library.persistent" role="status" class="ow-studio-message">Browser storage is unavailable. Keep this tab open or export your theme to retain your settings.</p>
+                    <div class="ow-studio-actions"><button type="button" class="btn btn-outline-secondary" t-att-disabled="!library.undoCount" t-on-click="() => this.appearance.undo()"><i class="fa fa-undo" aria-hidden="true"/> Undo change</button><button type="button" class="btn btn-outline-secondary" t-on-click="reset">Reset defaults</button></div>
+                </section>
+                <section class="ow-studio-preview" aria-label="Illustrative style preview">
+                    <div class="ow-preview-stats"><div><i class="fa fa-diamond" aria-hidden="true"/><strong>12</strong><span>Rich palettes</span></div><div><i class="fa fa-magic" aria-hidden="true"/><strong>5</strong><span>Signature collections</span></div><div><i class="fa fa-sliders" aria-hidden="true"/><strong>8</strong><span>Personal theme slots</span></div></div>
+                    <div class="ow-preview-heading"><span class="ow-eyebrow">THE DETAILS MAKE THE DIFFERENCE</span><h2>A calmer way to work.</h2><p>Preview illustrations. Open your apps to see the styling on real records.</p></div>
+                    <div class="ow-preview-tabs" role="group" aria-label="Preview type">
+                        <button t-foreach="['form', 'list', 'kanban']" t-as="tab" t-key="tab" type="button" t-att-aria-pressed="preview.tab === tab" t-att-class="preview.tab === tab ? 'is-selected' : ''" t-on-click="() => preview.tab = tab"><span t-if="tab === 'form'">Form &amp; fields</span><span t-elif="tab === 'list'">List &amp; one2many</span><span t-else="">Kanban</span></button>
+                    </div>
+                    <div class="ow-preview-window">
+                        <div class="ow-preview-toolbar"><div class="ow-preview-dots"><span/><span/><span/></div><span>Workspace preview</span><i class="fa fa-ellipsis-h" aria-hidden="true"/></div>
+                        <div t-if="preview.tab === 'form'" class="ow-preview-form">
+                            <div class="ow-preview-record-head"><div><span class="ow-eyebrow">CUSTOMER</span><h3>Azure Design Studio</h3><span class="ow-demo-tag">Active customer</span></div><span class="ow-demo-avatar">AD</span></div>
+                            <div class="ow-demo-fields"><label>Contact name<input class="ow-demo-input" t-model="preview.contact"/></label><label>Email address<input type="email" class="ow-demo-input" t-model="preview.email"/></label><label>Company<div class="ow-demo-input">Azure Design Studio <i class="fa fa-angle-down"/></div></label><label>Tags<div class="ow-demo-input"><span class="ow-demo-tag">Design</span><span class="ow-demo-tag">Partner</span></div></label></div>
+                            <div class="ow-demo-notebook"><span class="is-selected">Details</span><span>Notes</span><span>Activity</span></div>
+                            <p class="ow-demo-note">Try the inputs and button below. These preview values stay in this panel.</p>
+                            <button type="button" class="btn btn-primary" t-on-click="() => preview.clicked = !preview.clicked"><i class="fa fa-check me-2" aria-hidden="true"/>Try button effect</button><span t-if="preview.clicked" class="ow-preview-feedback" role="status">Preview interaction complete</span>
+                        </div>
+                        <div t-elif="preview.tab === 'list'" class="ow-preview-list">
+                            <div class="ow-demo-list-title"><h3>Order lines</h3><span class="ow-demo-tag">3 items</span></div>
+                            <div class="ow-demo-table-scroll"><table class="ow-demo-table"><thead><tr><th scope="col">Product</th><th scope="col">Qty</th><th scope="col">Unit price</th><th scope="col">Subtotal</th></tr></thead><tbody><tr><td><strong>Brand identity</strong><small>Design services</small></td><td>1</td><td>$1,200.00</td><td>$1,200.00</td></tr><tr><td><strong>Web experience</strong><small>Digital services</small></td><td>1</td><td>$2,400.00</td><td>$2,400.00</td></tr><tr><td><strong>Support package</strong><small>Monthly retainer</small></td><td>2</td><td>$150.00</td><td>$300.00</td></tr></tbody><tfoot><tr><td colspan="3">Total</td><td>$3,900.00</td></tr></tfoot></table></div>
+                            <p class="ow-demo-note">Refined table headers, clear totals and comfortable row spacing.</p>
+                        </div>
+                        <div t-else="" class="ow-preview-kanban">
+                            <div t-foreach="['In progress', 'Ready']" t-as="column" t-key="column" class="ow-demo-column"><h3><span t-esc="column"/><span class="ow-demo-count">2</span></h3>
+                                <div t-foreach="(column === 'In progress' ? ['Website redesign', 'Brand guidelines'] : ['Customer portal', 'Product launch'])" t-as="card" t-key="card" class="ow-demo-card"><span class="ow-demo-tag" t-esc="column"/><h4 t-esc="card"/><p>Azure Design Studio</p><div><span class="ow-demo-avatar">AM</span><small><i class="fa fa-clock-o" aria-hidden="true"/> Today</small></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ow-detail-showcase"><div><span class="ow-eyebrow">THE FINISHING TOUCHES</span><h3>Small details. Lasting polish.</h3></div><div class="ow-showcase-controls"><span class="ow-showcase-status"><i class="fa fa-circle" aria-hidden="true"/> Ready to work</span><span class="ow-showcase-avatar">OW</span><div class="ow-showcase-progress" role="img" aria-label="Decorative progress bar at seventy percent"><span/></div></div></div>
+                    <div class="ow-preview-benefits"><span><i class="fa fa-check"/> Native Odoo widgets</span><span><i class="fa fa-check"/> Responsive layout</span><span><i class="fa fa-check"/> No external libraries</span></div>
+                </section>
+            </div>
+        </div>
+    </t>
+</templates>

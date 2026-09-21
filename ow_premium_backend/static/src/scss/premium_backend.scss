@@ -1,0 +1,464 @@
+// Runtime tokens keep user preferences independent from Odoo's compiled theme.
+:root {
+    --ow-accent: #4f46e5;
+    --ow-accent-strong: #4338ca;
+    --ow-accent-soft: var(--ow-palette-soft, #eef2ff);
+    --ow-accent-ink: var(--ow-accent);
+    --ow-bg: #f4f6fb;
+    --ow-surface: #fff;
+    --ow-subtle: #f8fafc;
+    --ow-text: #1e293b;
+    --ow-muted: #64748b;
+    --ow-border: #e2e8f0;
+    --ow-radius: 14px;
+    --ow-small-radius: 8px;
+    --ow-row-pad: 12px;
+    --ow-shadow: 0 5px 24px rgba(15, 23, 42, .045);
+}
+html.ow-premium {
+    &[data-ow-mode="dark"] {
+        color-scheme: dark;
+        --ow-accent-ink: color-mix(in srgb, var(--ow-accent) 45%, white);
+        --ow-bg: #111827;
+        --ow-surface: #1e293b;
+        --ow-subtle: #243247;
+        --ow-text: #e5edf8;
+        --ow-muted: #acbcd0;
+        --ow-border: #3a4b63;
+        --ow-accent-soft: color-mix(in srgb, var(--ow-accent) 22%, var(--ow-surface));
+        --ow-shadow: 0 5px 24px rgba(0, 0, 0, .12);
+        // Rebind the CSS variables used by Bootstrap and Odoo's web components.
+        --body-bg: var(--ow-bg);
+        --body-color: var(--ow-text);
+        --emphasis-color: var(--ow-text);
+        --secondary-color: var(--ow-muted);
+        --secondary-bg: var(--ow-subtle);
+        --tertiary-bg: var(--ow-subtle);
+        --border-color: var(--ow-border);
+        --light: var(--ow-subtle);
+        .o_control_panel, .o_form_view, .o_list_view, .o_kanban_view,
+        .o_search_panel, .o_form_sheet_bg, .o-mail-Chatter {
+            background-color: var(--ow-bg) !important;
+            color: var(--ow-text);
+        }
+        .o_field_widget, .o_form_label, .o_horizontal_separator,
+        .o-mail-Chatter .text-muted { color: var(--ow-text); }
+        .o_form_view .o_group, .o_form_view .o_inner_group { background: transparent; }
+        .o_searchview, .o_input, .form-control, .form-select,
+        .dropdown-menu, .modal-content, .popover, .o_field_many2one_selection {
+            background-color: var(--ow-surface);
+            color: var(--ow-text);
+            border-color: var(--ow-border);
+        }
+        .dropdown-item { color: var(--ow-text); }
+        .dropdown-item:hover, .dropdown-item:focus { background-color: var(--ow-subtle); }
+        .modal-header, .modal-footer, .popover-header { border-color: var(--ow-border); }
+        .o_notebook .nav-link:not(.active), .o_breadcrumb .breadcrumb-item { color: var(--ow-muted); }
+        .o_kanban_group { background-color: var(--ow-subtle); }
+        .o_list_table .o_data_row .o_data_cell { color: inherit; }
+        .o-mail-Message, .o-mail-Composer, .o-mail-Activity {
+            background-color: var(--ow-surface);
+            color: var(--ow-text);
+        }
+        .o-mail-Composer-input { background-color: var(--ow-surface); color: var(--ow-text); }
+    }
+    &[data-ow-density="compact"] { --ow-row-pad: 7px; }
+    &[data-ow-corners="square"] { --ow-radius: 3px; --ow-small-radius: 3px; }
+    .o_web_client {
+        background: var(--ow-bg);
+        color: var(--ow-text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        .o_main_navbar {
+            background: #182238;
+            border-bottom: 1px solid rgba(255, 255, 255, .09);
+            box-shadow: 0 3px 16px rgba(15, 23, 42, .12);
+            --NavBar-entry-backgroundColor: transparent;
+            --NavBar-entry-backgroundColor--hover: rgba(255, 255, 255, .1);
+            --NavBar-entry-backgroundColor--active: rgba(255, 255, 255, .15);
+            --NavBar-entry-color: #f1f5f9;
+            .o_menu_brand { font-weight: 650; letter-spacing: -.3px; }
+            .o_menu_sections > button, .o_menu_sections > a,
+            .o_menu_systray > div > button { border-radius: var(--ow-small-radius); }
+            .ow-appearance-trigger { color: #fff; }
+        }
+        .o_control_panel {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--ow-border);
+            background: var(--ow-surface);
+            .breadcrumb { font-weight: 600; }
+            .o_cp_searchview { border-radius: var(--ow-small-radius); }
+        }
+        .o_searchview {
+            border: 1px solid var(--ow-border);
+            border-radius: var(--ow-small-radius);
+            padding: 6px 10px;
+            background: var(--ow-surface);
+            .o_searchview_facet {
+                border-radius: 5px;
+                overflow: hidden;
+                border-color: var(--ow-border);
+                .o_searchview_facet_label { background: var(--ow-accent); color: #fff; }
+            }
+        }
+        .btn { border-radius: var(--ow-small-radius); font-weight: 600; }
+        .btn-primary {
+            background-color: var(--ow-accent-ink);
+            border-color: var(--ow-accent-ink);
+            color: #fff;
+            &:hover, &:active { background-color: var(--ow-accent-strong); border-color: var(--ow-accent-strong); }
+        }
+        .btn-secondary, .btn-outline-secondary {
+            background-color: var(--ow-surface);
+            border-color: var(--ow-border);
+            color: var(--ow-text);
+            &:hover { background-color: var(--ow-subtle); }
+        }
+        .btn-link, a:not(.btn):not(.dropdown-item):not(.nav-link):not(.o_menu_brand):not(.o_menu_toggle):not(.o_nav_entry) {
+            color: var(--ow-accent-ink);
+        }
+        .btn:focus-visible, .o_input:focus-visible, .form-control:focus-visible,
+        .form-select:focus-visible, a:focus-visible, button:focus-visible {
+            outline: 3px solid color-mix(in srgb, var(--ow-accent) 50%, transparent);
+            outline-offset: 2px;
+        }
+        .dropdown-menu, .popover {
+            border: 1px solid var(--ow-border);
+            border-radius: var(--ow-radius);
+            box-shadow: 0 14px 40px rgba(15, 23, 42, .15);
+            padding: 8px;
+            .dropdown-item { border-radius: var(--ow-small-radius); padding: 8px 12px; }
+        }
+        .modal-content { border: 1px solid var(--ow-border); border-radius: var(--ow-radius); box-shadow: var(--ow-shadow); }
+        .modal-header { padding: 18px 22px; }
+        .modal-title { font-weight: 650; }
+        .o_form_sheet_bg { background: var(--ow-bg); padding: 20px; }
+        .o_form_sheet {
+            background: var(--ow-surface);
+            border: 1px solid var(--ow-border);
+            border-radius: var(--ow-radius);
+            box-shadow: var(--ow-shadow);
+            padding: 28px;
+        }
+        .o_form_view {
+            .oe_title h1 { font-weight: 650; letter-spacing: -.7px; }
+            .o_form_label { font-weight: 600; }
+            .o_horizontal_separator {
+                color: var(--ow-accent-ink);
+                border-bottom: 1px solid var(--ow-border);
+                padding-bottom: 10px;
+                margin-bottom: 16px;
+                font-weight: 650;
+            }
+            .o_field_widget:not(.o_field_boolean):not(.o_field_image):not(.o_field_x2many) .o_input {
+                background-color: var(--ow-subtle);
+                border: 1px solid var(--ow-border);
+                border-radius: var(--ow-small-radius);
+                padding: 7px 10px;
+                min-height: 34px;
+                &:focus { border-color: var(--ow-accent-ink); background-color: var(--ow-surface); }
+            }
+            // Keep monetary amounts and their currency sign on one line.
+            .o_field_monetary .o_input { min-width: 0; }
+            .o_field_widget.o_required_modifier .o_input {
+                border-inline-start: 3px solid var(--ow-accent);
+            }
+            .o_field_widget.o_field_invalid .o_input { border-color: #dc3545; }
+            .o_field_text textarea { line-height: 1.65; }
+            .o_field_many2many_tags .badge { border-radius: 5px; padding: 5px 8px; }
+            .o_field_boolean input { accent-color: var(--ow-accent-ink); }
+            .o_notebook {
+                .nav { gap: 6px; border-bottom: 1px solid var(--ow-border); }
+                .nav-link {
+                    border: 0;
+                    border-bottom: 2px solid transparent;
+                    border-radius: var(--ow-small-radius) var(--ow-small-radius) 0 0;
+                    padding: 11px 16px;
+                    font-weight: 600;
+                    &.active { background: var(--ow-accent-soft); border-bottom-color: var(--ow-accent-ink); color: var(--ow-accent-ink); }
+                }
+                .tab-pane { padding-top: 18px; }
+            }
+            .o_form_statusbar { border-bottom: 1px solid var(--ow-border); background: var(--ow-surface); padding: 6px 12px; }
+            .oe_button_box .oe_stat_button { border-color: var(--ow-border); border-radius: var(--ow-small-radius); }
+            .oe_button_box .o_stat_value { color: var(--ow-accent-ink); font-weight: 700; }
+        }
+        .o_list_renderer {
+            background: var(--ow-surface);
+            .o_list_table {
+                --table-bg: var(--ow-surface);
+                --table-color: var(--ow-text);
+                --table-border-color: var(--ow-border);
+                --table-hover-bg: var(--ow-subtle);
+                --table-hover-color: var(--ow-text);
+                border-color: var(--ow-border);
+                thead {
+                    background: var(--ow-subtle);
+                    color: var(--ow-muted);
+                    th { padding-block: 12px; font-size: 12px; font-weight: 650; border-bottom: 1px solid var(--ow-border); }
+                }
+                tbody > tr > td { padding-block: var(--ow-row-pad); border-bottom: 1px solid var(--ow-border); }
+                .o_data_row:hover { background-color: var(--ow-subtle); }
+                .o_data_row.o_selected_row > td { background-color: var(--ow-accent-soft); }
+                tfoot { background: var(--ow-subtle); font-weight: 700; color: var(--ow-text); }
+                .o_group_header { background: var(--ow-subtle); }
+                .o_list_record_selector input { accent-color: var(--ow-accent-ink); }
+            }
+        }
+        .o_field_one2many, .o_field_many2many {
+            .o_list_renderer { border: 1px solid var(--ow-border); border-radius: var(--ow-small-radius); overflow-x: auto; }
+            .o_list_table { margin-bottom: 0; }
+            .o_field_x2many_list_row_add a { font-weight: 600; }
+        }
+        .o_kanban_renderer {
+            background: var(--ow-bg);
+            padding: 16px;
+            gap: 16px;
+            .o_kanban_record:not(.o_kanban_ghost) {
+                background: var(--ow-surface);
+                border: 1px solid var(--ow-border);
+                border-radius: var(--ow-radius);
+                box-shadow: var(--ow-shadow);
+                color: var(--ow-text);
+                &:hover { border-color: color-mix(in srgb, var(--ow-accent) 45%, var(--ow-border)); box-shadow: 0 8px 24px rgba(15, 23, 42, .09); }
+                .o_kanban_record_title { font-weight: 650; }
+            }
+            .o_kanban_group { border-radius: var(--ow-radius); padding: 10px; }
+            .o_kanban_header_title { font-weight: 650; color: var(--ow-text); }
+            .o_kanban_quick_create { background: var(--ow-surface); border: 1px solid var(--ow-border); border-radius: var(--ow-small-radius); }
+        }
+        .o_search_panel { border-inline-end: 1px solid var(--ow-border); }
+        .o_search_panel .list-group-item { border-radius: var(--ow-small-radius); margin-block: 2px; }
+        .o_search_panel .list-group-item.active { background: var(--ow-accent-soft); color: var(--ow-accent-ink); }
+    }
+    &[data-ow-density="compact"] .o_web_client {
+        .o_control_panel { padding: 10px 16px; }
+        .o_form_sheet { padding: 18px; }
+        .o_form_view .o_notebook .nav-link { padding: 8px 12px; }
+        .o_form_view .o_field_widget .o_input { padding-block: 4px; min-height: 28px; }
+        .o_kanban_renderer { padding: 10px; gap: 10px; }
+    }
+    &[data-ow-motion="true"] .o_web_client {
+        .btn, .o_input, .o_kanban_record { transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease; }
+    }
+}
+
+// The studio remains usable even while the premium theme is switched off.
+.ow-appearance-trigger { height: 100%; border: 0; background: transparent; }
+.ow-studio-action { height: 100%; overflow: auto; background: var(--ow-bg); }
+.ow-appearance-dialog { padding: 0 !important; background: var(--ow-bg); }
+.ow-studio {
+    padding: 28px;
+    max-width: 1440px;
+    margin: auto;
+    color: var(--ow-text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    .ow-eyebrow { font-size: 10px; letter-spacing: 1.9px; font-weight: 750; }
+    h1, h2, h3, h4, p { margin: 0; }
+    button { cursor: pointer; }
+    .ow-studio-hero {
+        display: flex; align-items: center; justify-content: space-between; gap: 20px;
+        background: #182238; color: #fff; padding: 32px 38px; border-radius: var(--ow-radius);
+        position: relative; overflow: hidden;
+        background-image: radial-gradient(ellipse at 100% 0, rgba(129, 140, 248, .32), transparent 65%);
+        .ow-eyebrow { color: #c7d2fe; }
+        h1 { font-size: clamp(26px, 3vw, 40px); font-weight: 650; line-height: 1.12; letter-spacing: -1.3px; margin-block: 12px; color: #fff; }
+        p { color: #cbd5e1; font-size: 13px; line-height: 1.7; }
+    }
+    .ow-hero-mark { display: grid; place-items: center; width: 94px; height: 94px; flex-shrink: 0; border: 1px solid #64748b; background: rgba(255, 255, 255, .08); border-radius: 24px; transform: rotate(-9deg); font-size: 32px; color: #c7d2fe; }
+    .ow-studio-layout { display: grid; grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); gap: 26px; margin-top: 26px; align-items: start; }
+    .ow-studio-settings { background: var(--ow-surface); border: 1px solid var(--ow-border); border-radius: var(--ow-radius); padding: 24px; box-shadow: var(--ow-shadow); }
+    .ow-setting-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; h2 { font-size: 20px; font-weight: 650; } p { font-size: 11px; color: var(--ow-muted); margin-top: 5px; } }
+    .ow-live-label { background: var(--ow-accent-soft); color: var(--ow-accent-ink); padding: 4px 9px; border-radius: 20px; font-size: 10px; font-weight: 700; }
+    .ow-toggle-line { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding-block: 14px; border-block: 1px solid var(--ow-border); strong { font-size: 12px; } small { display: block; color: var(--ow-muted); font-size: 10px; margin-top: 5px; line-height: 1.5; } input { width: 18px; height: 18px; accent-color: var(--ow-accent-ink); flex-shrink: 0; } }
+    .ow-setting { display: block; margin: 20px 0; padding: 0; border: 0; font-size: 12px; font-weight: 600; legend { font-size: 12px; font-weight: 600; float: none; width: auto; margin-bottom: 12px; } }
+    .ow-palette-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+    .ow-palette { background: transparent; border: 1px solid transparent; border-radius: var(--ow-small-radius); padding: 6px 2px; color: var(--ow-muted); font-size: 9px; display: flex; flex-direction: column; align-items: center; gap: 6px; &.is-selected { background: var(--ow-subtle); border-color: var(--ow-border); color: var(--ow-text); } }
+    .ow-swatch { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 11px; }
+    .ow-segment { display: flex; gap: 4px; padding: 4px; background: var(--ow-subtle); border: 1px solid var(--ow-border); border-radius: var(--ow-small-radius); button { flex: 1; border: 0; background: transparent; border-radius: 5px; padding: 9px 4px; color: var(--ow-muted); font-size: 11px; i { margin-inline-end: 6px; } &.is-selected { background: var(--ow-surface); box-shadow: var(--ow-shadow); color: var(--ow-accent-ink); } } }
+    .ow-setting-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; .ow-setting { margin-top: 0; } select { margin-top: 10px; font-size: 11px; background-color: var(--ow-surface); color: var(--ow-text); border-color: var(--ow-border); } }
+    .ow-reset { margin-top: 18px; font-size: 11px; width: 100%; }
+    .ow-preview-heading { margin: 6px 0 20px; .ow-eyebrow { color: var(--ow-accent-ink); } h2 { font-size: 26px; font-weight: 650; letter-spacing: -.6px; margin: 9px 0; } p { color: var(--ow-muted); font-size: 12px; line-height: 1.6; } }
+    .ow-preview-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; button { border: 1px solid var(--ow-border); background: var(--ow-surface); color: var(--ow-muted); padding: 9px 14px; border-radius: var(--ow-small-radius); font-size: 11px; font-weight: 600; &.is-selected { color: var(--ow-accent-ink); background: var(--ow-accent-soft); border-color: var(--ow-accent-ink); } } }
+    .ow-preview-window { background: var(--ow-surface); border: 1px solid var(--ow-border); border-radius: var(--ow-radius); overflow: hidden; box-shadow: var(--ow-shadow); }
+    .ow-preview-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: var(--ow-subtle); border-bottom: 1px solid var(--ow-border); font-size: 10px; color: var(--ow-muted); }
+    .ow-preview-dots { display: flex; gap: 5px; span { width: 7px; height: 7px; border-radius: 50%; background: var(--ow-border); } }
+    .ow-preview-form, .ow-preview-list { padding: 24px; }
+    .ow-preview-record-head { display: flex; justify-content: space-between; align-items: center; h3 { font-size: 21px; font-weight: 650; margin: 8px 0 10px; letter-spacing: -.5px; } .ow-eyebrow { color: var(--ow-muted); } }
+    .ow-demo-avatar { display: inline-grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: var(--ow-accent-soft); color: var(--ow-accent-ink); font-size: 12px; font-weight: 700; }
+    .ow-demo-tag { display: inline-block; padding: 4px 8px; border-radius: 5px; color: var(--ow-accent-ink); background: var(--ow-accent-soft); font-size: 9px; font-weight: 650; }
+    .ow-demo-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 26px; label { font-size: 11px; font-weight: 600; } }
+    .ow-demo-input { display: flex; align-items: center; justify-content: space-between; gap: 5px; border: 1px solid var(--ow-border); border-radius: var(--ow-small-radius); padding: 10px; margin-top: 8px; background: var(--ow-subtle); color: var(--ow-muted); font-size: 11px; font-weight: 400; min-height: 38px; overflow-wrap: anywhere; }
+    .ow-demo-notebook { display: flex; gap: 22px; border-bottom: 1px solid var(--ow-border); margin-top: 26px; color: var(--ow-muted); font-size: 11px; span { padding-block: 10px; } .is-selected { border-bottom: 2px solid var(--ow-accent); color: var(--ow-accent-ink); font-weight: 600; } }
+    .ow-demo-note { color: var(--ow-muted); font-size: 11px; line-height: 1.7; margin: 18px 0; }
+    .ow-preview-form .btn { font-size: 11px; }
+    .ow-demo-list-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; h3 { font-size: 18px; } }
+    .ow-demo-table-scroll { overflow-x: auto; }
+    .ow-demo-table { width: 100%; border-collapse: collapse; min-width: 370px; font-size: 11px; th, td { text-align: start; padding: var(--ow-row-pad) 10px; border-bottom: 1px solid var(--ow-border); } th { background: var(--ow-subtle); color: var(--ow-muted); font-size: 10px; } small { display: block; color: var(--ow-muted); margin-top: 4px; font-size: 9px; } tfoot { font-weight: 700; background: var(--ow-subtle); } }
+    .ow-preview-kanban { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 20px; background: var(--ow-bg); }
+    .ow-demo-column > h3 { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 14px; align-items: center; }
+    .ow-demo-count { border-radius: 5px; background: var(--ow-border); padding: 3px 6px; font-size: 10px; }
+    .ow-demo-card { border: 1px solid var(--ow-border); border-radius: var(--ow-radius); padding: 16px; background: var(--ow-surface); margin-bottom: 12px; box-shadow: var(--ow-shadow); h4 { font-size: 13px; font-weight: 650; margin: 13px 0 7px; } p { font-size: 10px; color: var(--ow-muted); } > div { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; } .ow-demo-avatar { width: 25px; height: 25px; font-size: 8px; border-radius: 50%; } small { font-size: 9px; color: var(--ow-muted); } }
+    .ow-preview-benefits { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 18px; font-size: 10px; color: var(--ow-muted); i { margin-inline-end: 5px; color: var(--ow-accent-ink); } }
+    button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--ow-accent); outline-offset: 2px; }
+}
+@media (max-width: 900px) {
+    .ow-studio { padding: 16px; .ow-studio-layout { grid-template-columns: 1fr; } .ow-studio-hero { padding: 24px; } }
+}
+@media (max-width: 575px) {
+    html.ow-premium .o_web_client { .o_control_panel { padding: 10px; } .o_form_sheet_bg { padding: 8px; } .o_form_sheet { padding: 16px; } }
+    .ow-studio { .ow-hero-mark { display: none; } .ow-demo-fields { grid-template-columns: 1fr; } .ow-preview-kanban { grid-template-columns: 1fr; } .ow-studio-settings { padding: 18px; } .ow-preview-form, .ow-preview-list { padding: 16px; } }
+}
+@media (prefers-reduced-motion: reduce) {
+    html.ow-premium .o_web_client .btn, html.ow-premium .o_web_client .o_input,
+    html.ow-premium .o_web_client .o_kanban_record { transition: none; }
+}
+@media print {
+    html.ow-premium .o_web_client { color: #000; background: #fff; .o_form_sheet_bg { background: #fff !important; padding: 0; } .o_form_sheet { background: #fff; box-shadow: none; border: 0; color: #000; } }
+}
+
+// Signature finishes: all effects stay inside the backend and its studio.
+:root {
+    --ow-secondary: #9333ea;
+    --ow-gradient: linear-gradient(120deg, var(--ow-accent), var(--ow-secondary));
+    --ow-duration: 280ms;
+    --ow-ease: cubic-bezier(.2, .75, .25, 1);
+}
+html.ow-premium {
+    &[data-ow-animation="expressive"] { --ow-duration: 480ms; }
+    &[data-ow-backdrop="aurora"] {
+        --ow-workspace-art: radial-gradient(ellipse at 0% 0%, color-mix(in srgb, var(--ow-accent) 13%, transparent), transparent 55%), radial-gradient(ellipse at 100% 40%, color-mix(in srgb, var(--ow-secondary) 10%, transparent), transparent 60%);
+    }
+    &[data-ow-backdrop="mesh"] {
+        --ow-workspace-art: radial-gradient(circle at 15% 20%, color-mix(in srgb, var(--ow-secondary) 10%, transparent), transparent 35%), radial-gradient(circle at 85% 80%, color-mix(in srgb, var(--ow-accent) 12%, transparent), transparent 40%), linear-gradient(135deg, transparent, color-mix(in srgb, var(--ow-accent) 4%, transparent));
+    }
+    &[data-ow-backdrop="plain"] { --ow-workspace-art: none; }
+    .o_web_client {
+        background-image: var(--ow-workspace-art);
+        .o_form_sheet_bg, .o_kanban_renderer, .ow-studio-action { background-image: var(--ow-workspace-art); }
+        .o_form_sheet { border-top: 3px solid var(--ow-accent); }
+        .btn-primary {
+            background-image: var(--ow-gradient);
+            box-shadow: 0 4px 12px color-mix(in srgb, var(--ow-accent) 24%, transparent);
+            &:hover { background-image: linear-gradient(120deg, var(--ow-accent-strong), var(--ow-secondary)); box-shadow: 0 6px 18px color-mix(in srgb, var(--ow-accent) 32%, transparent); }
+        }
+        .o_form_view .o_horizontal_separator {
+            border-inline-start: 3px solid var(--ow-accent);
+            padding-inline-start: 12px;
+            background: linear-gradient(90deg, var(--ow-accent-soft), transparent);
+            padding-top: 9px;
+            border-radius: var(--ow-small-radius);
+        }
+        .o_form_view .oe_button_box .oe_stat_button:hover { background: var(--ow-accent-soft); }
+        .o_notebook .nav-link.active { box-shadow: inset 0 -1px var(--ow-accent); }
+        .o_searchview:focus-within { border-color: var(--ow-accent); }
+        .o_list_renderer .o_list_table thead th {
+            background: var(--ow-subtle);
+            border-bottom: 2px solid color-mix(in srgb, var(--ow-accent) 25%, var(--ow-border));
+        }
+        .o_kanban_renderer .o_kanban_header_title { border-inline-start: 3px solid var(--ow-accent); padding-inline-start: 10px; }
+        .o_kanban_renderer .o_kanban_record:not(.o_kanban_ghost) { border-top-color: color-mix(in srgb, var(--ow-accent) 38%, var(--ow-border)); }
+        .o_field_one2many .o_list_renderer, .o_field_many2many .o_list_renderer { box-shadow: 0 3px 12px rgba(15, 23, 42, .035); }
+    }
+    &[data-ow-navbar="gradient"] .o_web_client .o_main_navbar { background: var(--ow-gradient); }
+    &[data-ow-navbar="light"] .o_web_client .o_main_navbar {
+        background: var(--ow-surface); border-color: var(--ow-border);
+        --NavBar-entry-color: var(--ow-text);
+        --NavBar-entry-color--active: var(--ow-accent-ink);
+        --NavBar-entry-backgroundColor--hover: var(--ow-accent-soft);
+        --NavBar-entry-backgroundColor--active: var(--ow-accent-soft);
+        .ow-appearance-trigger { color: var(--ow-text); }
+    }
+    &[data-ow-surface="glass"] .o_web_client {
+        .o_form_sheet, .o_kanban_record:not(.o_kanban_ghost), .ow-studio-settings, .ow-preview-window {
+            background-color: color-mix(in srgb, var(--ow-surface) 94%, transparent);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 32px color-mix(in srgb, var(--ow-accent) 7%, transparent), inset 0 1px 0 color-mix(in srgb, var(--ow-surface) 70%, transparent);
+        }
+    }
+    &[data-ow-surface="elevated"] { --ow-shadow: 0 10px 32px rgba(15, 23, 42, .12), 0 2px 5px rgba(15, 23, 42, .035); }
+    &[data-ow-surface="clean"] {
+        --ow-shadow: none;
+        .o_web_client .o_form_sheet { border-top-width: 1px; }
+    }
+    &[data-ow-striped-rows="true"] .o_web_client .o_list_table tbody > .o_data_row:nth-child(even):not(.o_selected_row):not(:hover) > td {
+        background-color: color-mix(in srgb, var(--ow-accent) 4%, var(--ow-surface));
+    }
+    &[data-ow-field-glow="true"] .o_web_client {
+        .o_form_view .o_field_widget .o_input:focus,
+        .o_searchview:focus-within { box-shadow: 0 0 0 3px color-mix(in srgb, var(--ow-accent) 13%, transparent); }
+        .o_form_view .o_field_widget.o_field_invalid .o_input:focus { box-shadow: 0 0 0 3px rgba(220, 53, 69, .15); }
+    }
+    &[data-ow-font-scale="large"] .o_web_client {
+        .o_form_sheet, .o_list_renderer { font-size: 16px; }
+        .o_form_view .o_form_label, .o_form_view .o_input { font-size: 15px; }
+        .o_list_renderer .o_list_table thead th { font-size: 14px; }
+        .o_kanban_record { font-size: 15px; }
+    }
+    &[data-ow-motion="true"] .o_web_client {
+        .btn, .o_input, .o_kanban_record, .ow-demo-card, .ow-preset, .ow-palette, .ow-preview-tabs button {
+            transition: transform var(--ow-duration) var(--ow-ease), background-color var(--ow-duration) ease, border-color var(--ow-duration) ease, box-shadow var(--ow-duration) ease;
+        }
+        .o_form_renderer, .o_list_renderer, .ow-preview-form, .ow-preview-list, .ow-preview-kanban {
+            animation: ow-reveal var(--ow-duration) var(--ow-ease);
+        }
+        .modal-content { animation: ow-dialog-in var(--ow-duration) var(--ow-ease); }
+        .ow-studio-hero, .ow-preview-stats > div { animation: ow-reveal var(--ow-duration) var(--ow-ease); }
+        .btn-primary:active { transform: scale(.98); }
+    }
+}
+.ow-studio {
+    .ow-studio-hero {
+        background-image: radial-gradient(ellipse at 100% 0, color-mix(in srgb, var(--ow-secondary) 45%, transparent), transparent 60%), radial-gradient(ellipse at 20% 100%, color-mix(in srgb, var(--ow-accent) 40%, transparent), transparent 65%);
+        border: 1px solid rgba(255, 255, 255, .12);
+        box-shadow: 0 12px 36px color-mix(in srgb, var(--ow-accent) 16%, transparent);
+    }
+    .ow-hero-mark { background: var(--ow-gradient); border-color: rgba(255, 255, 255, .3); color: #fff; box-shadow: 0 12px 36px rgba(0, 0, 0, .18); }
+    .ow-live-label::before { content: ""; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: currentColor; margin-inline-end: 5px; }
+    .ow-preview-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; > div { padding: 18px 14px; border: 1px solid var(--ow-border); border-radius: var(--ow-radius); background: var(--ow-surface); box-shadow: var(--ow-shadow); i { display: block; color: var(--ow-accent-ink); margin-bottom: 10px; font-size: 15px; } strong { font-size: 22px; letter-spacing: -.6px; } span { display: block; color: var(--ow-muted); font-size: 10px; margin-top: 5px; line-height: 1.5; } } }
+    .ow-preset-grid { display: grid; gap: 7px; }
+    .ow-preset { display: flex; align-items: center; gap: 12px; text-align: start; border: 1px solid var(--ow-border); border-radius: var(--ow-small-radius); background: var(--ow-surface); padding: 9px; color: var(--ow-text); strong { display: block; font-size: 11px; } small { display: block; font-size: 9px; font-weight: 400; margin-top: 4px; color: var(--ow-muted); } > i { margin-inline-start: auto; color: var(--ow-accent-ink); font-size: 11px; } &.is-selected { background: var(--ow-accent-soft); border-color: var(--ow-accent); } }
+    .ow-preset-art { width: 42px; height: 37px; border-radius: 7px; flex-shrink: 0; position: relative; overflow: hidden; &::after { content: ""; position: absolute; inset: 9px 7px 0; border-radius: 4px 4px 0 0; background: rgba(255, 255, 255, .3); border: 1px solid rgba(255, 255, 255, .4); } }
+    .ow-preset-aurora { background: linear-gradient(135deg, #4f46e5, #9333ea, #e879f9); }
+    .ow-preset-midnight { background: linear-gradient(135deg, #111827, #1d4ed8, #6d28d9); }
+    .ow-preset-lagoon { background: linear-gradient(135deg, #0f766e, #0369a1, #67e8f9); }
+    .ow-preset-sunset { background: linear-gradient(135deg, #b45309, #be123c, #fda4af); }
+    .ow-preset-atelier { background: linear-gradient(135deg, #475569, #94a3b8, #e2e8f0); }
+    .ow-demo-avatar { background: var(--ow-gradient); color: #fff; box-shadow: 0 4px 10px color-mix(in srgb, var(--ow-accent) 20%, transparent); }
+    .ow-demo-card { border-top: 2px solid var(--ow-accent); }
+    .ow-preview-tabs .is-selected { box-shadow: 0 3px 9px color-mix(in srgb, var(--ow-accent) 12%, transparent); }
+    .ow-toggle-line input { appearance: none; width: 34px; height: 20px; border-radius: 20px; background: var(--ow-border); cursor: pointer; border: 1px solid var(--ow-border); position: relative; &::after { content: ""; display: block; position: absolute; width: 14px; height: 14px; top: 2px; inset-inline-start: 2px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, .15); } &:checked { background: var(--ow-accent); border-color: var(--ow-accent); &::after { inset-inline-start: 16px; } } }
+}
+.ow-appearance-systray { display: flex; align-items: stretch; }
+@keyframes ow-reveal { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ow-dialog-in { from { opacity: 0; transform: translateY(8px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (hover: hover) and (pointer: fine) {
+    html.ow-premium[data-ow-motion="true"][data-ow-hover-lift="true"] .o_web_client {
+        .o_kanban_record:not(.o_kanban_ghost):not(.o_dragged):not(.o_kanban_dragged):hover,
+        .ow-demo-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px color-mix(in srgb, var(--ow-accent) 15%, transparent); }
+        .ow-preset:hover, .ow-palette:hover { transform: translateY(-2px); }
+    }
+}
+@media (min-width: 901px) { .ow-studio-action .ow-studio-preview { position: sticky; top: 24px; } }
+// Explicitly cover every new effect when motion is disabled or the OS requests it.
+html.ow-premium[data-ow-motion="false"] .o_web_client {
+    .o_form_renderer, .o_list_renderer, .modal-content, .ow-studio-hero, .ow-preview-stats > div,
+    .ow-preview-form, .ow-preview-list, .ow-preview-kanban { animation: none; }
+    .btn, .o_input, .o_kanban_record, .ow-demo-card, .ow-preset, .ow-palette, .ow-preview-tabs button { transition: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    html.ow-premium .o_web_client {
+        .o_form_renderer, .o_list_renderer, .modal-content, .ow-studio-hero, .ow-preview-stats > div,
+        .ow-preview-form, .ow-preview-list, .ow-preview-kanban { animation: none; }
+        .btn, .o_input, .o_kanban_record, .ow-demo-card, .ow-preset, .ow-palette, .ow-preview-tabs button { transition: none; }
+        .o_kanban_record:not(.o_kanban_ghost):not(.o_dragged):not(.o_kanban_dragged):hover,
+        .ow-demo-card:hover, .ow-preset:hover, .ow-palette:hover, .btn-primary:active { transform: none !important; }
+    }
+}
+@media (forced-colors: active) {
+    .ow-studio .ow-toggle-line input { appearance: auto; }
+    html.ow-premium .o_web_client .btn-primary { border: 1px solid ButtonText; }
+}
+@media print {
+    html.ow-premium .o_web_client .o_form_sheet { border: 0; background: #fff; backdrop-filter: none; box-shadow: none; }
+}
