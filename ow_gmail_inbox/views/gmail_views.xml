@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_gmail_inbox" model="ir.actions.client">
+        <field name="name">Gmail Inbox</field><field name="tag">ow_gmail_inbox.workspace</field>
+    </record>
+    <menuitem id="menu_gmail_root" name="Gmail Inbox" sequence="80" groups="base.group_user" web_icon="ow_gmail_inbox,static/description/icon.png"/>
+    <menuitem id="menu_gmail_workspace" name="My Mailbox" parent="menu_gmail_root" action="action_gmail_inbox" sequence="1" groups="base.group_user"/>
+    <menuitem id="menu_gmail_settings" name="Configuration" parent="menu_gmail_root" action="action_gmail_settings" sequence="90" groups="base.group_system"/>
+</odoo>

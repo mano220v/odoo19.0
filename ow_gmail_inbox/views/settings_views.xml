@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_gmail_inbox" model="ir.ui.view">
+        <field name="name">res.config.settings.gmail.inbox</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Gmail Inbox" name="ow_gmail_inbox" groups="base.group_system">
+                    <block title="Google OAuth setup">
+                        <setting string="Google OAuth client" help="Enable Gmail API in Google Cloud, configure the consent screen and create a Web application OAuth client.">
+                            <div class="content-group">
+                                <label for="ow_gmail_client_id"/><field name="ow_gmail_client_id" placeholder="Your client ID ending in apps.googleusercontent.com"/>
+                                <label for="ow_gmail_client_secret"/><field name="ow_gmail_client_secret" password="True"/>
+                            </div>
+                        </setting>
+                        <setting string="Public Odoo URL" help="Use your public HTTPS URL. HTTP localhost is supported for local development. Save before connecting an account.">
+                            <field name="ow_gmail_base_url" placeholder="https://erp.example.com"/>
+                        </setting>
+                        <setting string="Google authorized redirect URI" help="Copy this exact URI into the Web application's Authorized redirect URIs in Google Cloud.">
+                            <field name="ow_gmail_callback_url" readonly="1" widget="CopyClipboardChar"/>
+                        </setting>
+                        <setting string="Mailbox permission" help="Each user signs in on Google's authorization page. This app never asks for their Gmail password.">
+                            <div class="text-muted">Required scope: https://www.googleapis.com/auth/gmail.modify</div>
+                            <div class="mt-2 text-muted">For an external testing app, add users to the OAuth test-user list. Public distribution may require Google's restricted-scope verification.</div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+    <record id="action_gmail_settings" model="ir.actions.act_window">
+        <field name="name">Gmail Settings</field><field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field><field name="target">current</field>
+        <field name="context">{'module': 'ow_gmail_inbox'}</field>
+    </record>
+</odoo>
