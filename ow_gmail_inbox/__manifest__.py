@@ -6,7 +6,7 @@
     "author": "Odoo Wings",
     "website": "https://apps.odoo.com/apps/modules/browse?author=Odoo%20Wings",
     "support": "vsmanoj144@gmail.com",
-    "license': 'LGPL-3",
+    "license": "LGPL-3",
     "depends": ["web", "base_setup"],
     "external_dependencies": {"python": ["requests", "cryptography"]},
     "data": [
