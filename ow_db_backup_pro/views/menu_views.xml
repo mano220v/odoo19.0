@@ -1,5 +1,7 @@
 <odoo>
-    <menuitem id="menu_db_backup_root" name="DB Backup Pro" sequence="90"/>
+    <menuitem id="menu_db_backup_root" name="DB Backup Pro" sequence="90"
+              groups="ow_db_backup_pro.group_backup_manager"
+              web_icon="ow_db_backup_pro,static/description/icon.png"/>
     <menuitem id="menu_db_backup_config" name="Configurations" parent="menu_db_backup_root"
               action="action_db_backup_config" sequence="10"/>
     <menuitem id="menu_db_backup_history" name="Backup History" parent="menu_db_backup_root"

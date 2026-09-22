@@ -1,11 +1,16 @@
 import base64
+import hashlib
 import io
 import json
 import logging
 import os
+import re
 import time
 import traceback
 from datetime import timedelta
+from urllib.parse import quote, urljoin, urlparse
+
+import requests
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
@@ -87,6 +92,7 @@ class DbBackupConfig(models.Model):
         ('s3', 'Amazon S3 / Compatible'),
         ('gdrive', 'Google Drive'),
         ('dropbox', 'Dropbox'),
+        ('webdav', 'WebDAV / Nextcloud'),
     ], string='Storage Destination', default='local', required=True)
 
     # Local
@@ -98,6 +104,7 @@ class DbBackupConfig(models.Model):
     ftp_username = fields.Char(string='Username')
     ftp_password = fields.Char(string='Password')
     ftp_directory = fields.Char(string='Remote Directory', default='/')
+    ftp_tls = fields.Boolean(string='Use Explicit TLS (FTPS)')
     sftp_private_key = fields.Text(string='Private Key (optional, PEM)')
 
     # S3
@@ -108,6 +115,19 @@ class DbBackupConfig(models.Model):
     s3_endpoint_url = fields.Char(string='Custom Endpoint URL',
                                    help='Leave empty for AWS. Set for MinIO / DigitalOcean Spaces / Wasabi etc.')
     s3_path_prefix = fields.Char(string='Path Prefix', default='odoo-backups/')
+    s3_server_side_encryption = fields.Selection([
+        ('none', 'None'),
+        ('AES256', 'Amazon S3 managed key (AES-256)'),
+        ('aws:kms', 'AWS KMS key'),
+    ], string='Server-side Encryption', default='none')
+    s3_kms_key_id = fields.Char(string='KMS Key ID')
+    s3_storage_class = fields.Selection([
+        ('STANDARD', 'Standard'),
+        ('STANDARD_IA', 'Standard - Infrequent Access'),
+        ('ONEZONE_IA', 'One Zone - Infrequent Access'),
+        ('INTELLIGENT_TIERING', 'Intelligent Tiering'),
+        ('GLACIER_IR', 'Glacier Instant Retrieval'),
+    ], default='STANDARD', string='Storage Class')
 
     # Google Drive
     gdrive_service_account_file = fields.Binary(string='Service Account JSON Key')
@@ -118,6 +138,13 @@ class DbBackupConfig(models.Model):
     dropbox_access_token = fields.Char(string='Access Token')
     dropbox_folder = fields.Char(string='Folder Path', default='/odoo-backups')
 
+    # WebDAV / Nextcloud
+    webdav_url = fields.Char(string='WebDAV Base URL')
+    webdav_username = fields.Char(string='WebDAV Username')
+    webdav_password = fields.Char(string='WebDAV Password')
+    webdav_folder = fields.Char(string='WebDAV Folder', default='odoo-backups')
+    webdav_verify_ssl = fields.Boolean(string='Verify TLS Certificate', default=True)
+
     # --- Retention ---
     retention_policy = fields.Selection([
         ('forever', 'Keep Forever'),
@@ -126,6 +153,9 @@ class DbBackupConfig(models.Model):
     ], string='Retention Policy', default='count', required=True)
     retention_count = fields.Integer(string='Number of Backups to Keep', default=7)
     retention_days = fields.Integer(string='Number of Days to Keep', default=30)
+    verify_after_backup = fields.Boolean(
+        string='Verify After Upload', default=True,
+        help='Downloads the stored object and compares its SHA-256 checksum. This doubles transfer usage for remote destinations.')
 
     # --- Security ---
     encrypt_backup = fields.Boolean(string='Encrypt Backup (AES-256 ZIP)')
@@ -147,6 +177,15 @@ class DbBackupConfig(models.Model):
     ], compute='_compute_history_stats', string='Last Status')
     last_backup_date = fields.Datetime(compute='_compute_history_stats', string='Last Backup')
     total_storage_used = fields.Float(compute='_compute_history_stats', string='Storage Used (MB)')
+    verified_count = fields.Integer(compute='_compute_history_stats')
+    health_state = fields.Selection([
+        ('empty', 'No Backup'), ('healthy', 'Healthy'),
+        ('warning', 'Warning'), ('critical', 'Critical'),
+    ], compute='_compute_health', string='Backup Health')
+    health_message = fields.Char(compute='_compute_health')
+    max_backup_age_hours = fields.Integer(
+        string='Maximum Backup Age (hours)', default=26,
+        help='Health becomes critical when the last successful backup is older than this value.')
 
     @api.depends('history_ids', 'history_ids.status', 'history_ids.file_size')
     def _compute_history_stats(self):
@@ -161,6 +200,52 @@ class DbBackupConfig(models.Model):
             rec.total_storage_used = sum(
                 histories.filtered(lambda h: h.status == 'success').mapped('file_size')
             ) / (1024.0 * 1024.0)
+            rec.verified_count = len(histories.filtered(lambda h: h.status == 'success' and h.integrity_state == 'verified'))
+
+    @api.depends('history_ids.status', 'history_ids.create_date', 'history_ids.integrity_state', 'max_backup_age_hours')
+    def _compute_health(self):
+        now = fields.Datetime.now()
+        for rec in self:
+            latest = rec.history_ids.filtered(lambda item: item.status in ('success', 'failed')).sorted('create_date', reverse=True)[:1]
+            latest_success = rec.history_ids.filtered(lambda item: item.status == 'success').sorted('create_date', reverse=True)[:1]
+            if not latest:
+                rec.health_state = 'empty'
+                rec.health_message = _('No backup has run yet.')
+            elif latest.status == 'failed':
+                rec.health_state = 'critical'
+                rec.health_message = _('The most recent backup failed.')
+            elif latest_success and rec.max_backup_age_hours and latest_success.create_date < now - timedelta(hours=rec.max_backup_age_hours):
+                rec.health_state = 'critical'
+                rec.health_message = _('The last successful backup is older than %s hours.') % rec.max_backup_age_hours
+            elif latest.integrity_state == 'failed':
+                rec.health_state = 'critical'
+                rec.health_message = _('The latest backup failed integrity verification.')
+            elif latest.integrity_state != 'verified':
+                rec.health_state = 'warning'
+                rec.health_message = _('The latest backup has not been verified.')
+            else:
+                rec.health_state = 'healthy'
+                rec.health_message = _('Latest backup is successful and verified.')
+
+    @api.constrains('interval_number', 'retention_count', 'retention_days', 'max_backup_age_hours')
+    def _check_positive_values(self):
+        for rec in self:
+            if rec.interval_number <= 0:
+                raise UserError(_('Schedule interval must be greater than zero.'))
+            if rec.retention_policy == 'count' and rec.retention_count <= 0:
+                raise UserError(_('Retention count must be greater than zero.'))
+            if rec.retention_policy == 'days' and rec.retention_days <= 0:
+                raise UserError(_('Retention days must be greater than zero.'))
+            if rec.max_backup_age_hours < 0:
+                raise UserError(_('Maximum backup age cannot be negative.'))
+
+    @api.constrains('database_name', 'additional_databases')
+    def _check_database_names(self):
+        pattern = re.compile(r'^[A-Za-z0-9_.-]+$')
+        for rec in self:
+            names = [rec.database_name] + [item.strip() for item in (rec.additional_databases or '').split(',') if item.strip()]
+            if any(name and not pattern.fullmatch(name) for name in names):
+                raise UserError(_('Database names may contain only letters, numbers, dots, underscores and hyphens.'))
 
     # ------------------------------------------------------------------
     # Cron management
@@ -176,7 +261,6 @@ class DbBackupConfig(models.Model):
                     'code': "env['db.backup.config'].browse(%d)._run_backup()" % rec.id,
                     'interval_number': rec.interval_number,
                     'interval_type': rec.interval_type,
-                    'numbercall': -1,
                     'active': True,
                     'nextcall': rec.nextcall or fields.Datetime.now(),
                 }
@@ -262,6 +346,15 @@ class DbBackupConfig(models.Model):
 
     def _run_single_backup(self, db_name):
         self.ensure_one()
+        lock_key = 'ow_db_backup_pro:%s:%s' % (self.id, db_name)
+        self.env.cr.execute('SELECT pg_try_advisory_xact_lock(hashtext(%s))', (lock_key,))
+        if not self.env.cr.fetchone()[0]:
+            return self.env['db.backup.history'].sudo().create({
+                'config_id': self.id,
+                'database_name': db_name,
+                'status': 'skipped',
+                'error_message': _('Another backup for this configuration and database is already running.'),
+            })
         history = self.env['db.backup.history'].sudo().create({
             'config_id': self.id,
             'database_name': db_name,
@@ -273,14 +366,21 @@ class DbBackupConfig(models.Model):
             if self.encrypt_backup:
                 data, filename = self._encrypt_backup_data(data, filename)
             size = len(data)
+            checksum = hashlib.sha256(data).hexdigest()
             location = self._upload_to_storage(data, filename)
+            history.write({
+                'file_size': size,
+                'file_location': location,
+                'backup_filename': filename,
+                'checksum_sha256': checksum,
+                'integrity_state': 'pending' if self.verify_after_backup else 'not_checked',
+            })
+            if self.verify_after_backup:
+                self._verify_history_integrity(history)
             duration = time.time() - start
             history.write({
                 'status': 'success',
                 'duration': duration,
-                'file_size': size,
-                'file_location': location,
-                'backup_filename': filename,
             })
             self._cleanup_retention()
             if self.notify_on_success:
@@ -342,9 +442,10 @@ class DbBackupConfig(models.Model):
         for h in to_delete:
             try:
                 self._delete_from_storage(h)
-            except Exception:  # noqa
+                h.write({'status': 'deleted', 'deleted_at': fields.Datetime.now(), 'retention_error': False})
+            except Exception as exc:  # noqa
                 _logger.exception('Could not delete old backup %s from storage', h.backup_filename)
-            h.write({'status': 'deleted'})
+                h.write({'retention_error': str(exc)})
 
     # ------------------------------------------------------------------
     # Storage dispatch
@@ -355,6 +456,40 @@ class DbBackupConfig(models.Model):
         if not method:
             raise UserError(_('Unsupported storage type: %s') % self.storage_type)
         return method(data, filename)
+
+    def _download_from_storage(self, history):
+        self.ensure_one()
+        method = getattr(self, '_download_%s' % self.storage_type, None)
+        if not method:
+            raise UserError(_('Integrity verification is not supported for destination: %s') % self.storage_type)
+        return method(history)
+
+    def _verify_history_integrity(self, history):
+        self.ensure_one()
+        try:
+            stored_data = self._download_from_storage(history)
+            actual = hashlib.sha256(stored_data).hexdigest()
+            if actual != history.checksum_sha256:
+                history.write({
+                    'integrity_state': 'failed',
+                    'verified_at': fields.Datetime.now(),
+                    'verification_message': _('Checksum mismatch. Expected %s but received %s.') % (history.checksum_sha256, actual),
+                })
+                raise UserError(_('Backup upload verification failed: SHA-256 checksum mismatch.'))
+            history.write({
+                'integrity_state': 'verified',
+                'verified_at': fields.Datetime.now(),
+                'verification_message': _('Stored backup matches its SHA-256 checksum.'),
+            })
+            return True
+        except Exception as exc:
+            if history.integrity_state != 'failed':
+                history.write({
+                    'integrity_state': 'failed',
+                    'verified_at': fields.Datetime.now(),
+                    'verification_message': str(exc),
+                })
+            raise
 
     def _delete_from_storage(self, history):
         self.ensure_one()
@@ -370,21 +505,44 @@ class DbBackupConfig(models.Model):
         return method()
 
     # ---- Local ----
+    def _safe_local_folder(self):
+        self.ensure_one()
+        folder = os.path.realpath(os.path.expanduser(self.local_folder or '/var/odoo_backups'))
+        allowed_root = self.env['ir.config_parameter'].sudo().get_param('ow_db_backup_pro.allowed_backup_root')
+        if allowed_root:
+            root = os.path.realpath(os.path.expanduser(allowed_root))
+            if folder != root and not folder.startswith(root + os.sep):
+                raise UserError(_('Local backup folder must be inside the configured allowed backup root: %s') % root)
+        return folder
+
     def _upload_local(self, data, filename):
-        folder = self.local_folder or '/var/odoo_backups'
+        folder = self._safe_local_folder()
         if not os.path.exists(folder):
-            os.makedirs(folder, exist_ok=True)
+            os.makedirs(folder, mode=0o700, exist_ok=True)
         path = os.path.join(folder, filename)
         with open(path, 'wb') as f:
             f.write(data)
+        os.chmod(path, 0o600)
         return path
 
+    def _download_local(self, history):
+        path = os.path.realpath(history.file_location or '')
+        folder = self._safe_local_folder()
+        if path != folder and not path.startswith(folder + os.sep):
+            raise UserError(_('Stored backup path is outside the configured local backup folder.'))
+        with open(path, 'rb') as backup_file:
+            return backup_file.read()
+
     def _delete_local(self, history):
-        if history.file_location and os.path.exists(history.file_location):
-            os.remove(history.file_location)
+        path = os.path.realpath(history.file_location or '')
+        folder = self._safe_local_folder()
+        if path != folder and not path.startswith(folder + os.sep):
+            raise UserError(_('Refusing to delete a file outside the configured local backup folder.'))
+        if path and os.path.exists(path):
+            os.remove(path)
 
     def _test_local(self):
-        folder = self.local_folder or '/var/odoo_backups'
+        folder = self._safe_local_folder()
         try:
             if not os.path.exists(folder):
                 os.makedirs(folder, exist_ok=True)
@@ -399,9 +557,11 @@ class DbBackupConfig(models.Model):
     # ---- FTP ----
     def _get_ftp_connection(self):
         import ftplib
-        ftp = ftplib.FTP()
+        ftp = ftplib.FTP_TLS() if self.ftp_tls else ftplib.FTP()
         ftp.connect(self.ftp_host, self.ftp_port or 21, timeout=30)
         ftp.login(self.ftp_username, self.ftp_password)
+        if self.ftp_tls:
+            ftp.prot_p()
         if self.ftp_directory:
             try:
                 ftp.cwd(self.ftp_directory)
@@ -432,6 +592,15 @@ class DbBackupConfig(models.Model):
         ftp = self._get_ftp_connection()
         try:
             ftp.delete(os.path.basename(history.file_location))
+        finally:
+            ftp.quit()
+
+    def _download_ftp(self, history):
+        ftp = self._get_ftp_connection()
+        output = io.BytesIO()
+        try:
+            ftp.retrbinary('RETR %s' % os.path.basename(history.file_location), output.write)
+            return output.getvalue()
         finally:
             ftp.quit()
 
@@ -491,6 +660,15 @@ class DbBackupConfig(models.Model):
             sftp.close()
             transport.close()
 
+    def _download_sftp(self, history):
+        sftp, transport = self._get_sftp_connection()
+        try:
+            with sftp.open(history.file_location, 'rb') as remote_file:
+                return remote_file.read()
+        finally:
+            sftp.close()
+            transport.close()
+
     def _test_sftp(self):
         try:
             sftp, transport = self._get_sftp_connection()
@@ -516,12 +694,27 @@ class DbBackupConfig(models.Model):
     def _upload_s3(self, data, filename):
         client = self._get_s3_client()
         key = '%s%s' % (self.s3_path_prefix or '', filename)
-        client.put_object(Bucket=self.s3_bucket, Key=key, Body=data)
+        values = {
+            'Bucket': self.s3_bucket,
+            'Key': key,
+            'Body': data,
+            'StorageClass': self.s3_storage_class or 'STANDARD',
+            'Metadata': {'sha256': hashlib.sha256(data).hexdigest()},
+        }
+        if self.s3_server_side_encryption != 'none':
+            values['ServerSideEncryption'] = self.s3_server_side_encryption
+            if self.s3_server_side_encryption == 'aws:kms' and self.s3_kms_key_id:
+                values['SSEKMSKeyId'] = self.s3_kms_key_id
+        client.put_object(**values)
         return key
 
     def _delete_s3(self, history):
         client = self._get_s3_client()
         client.delete_object(Bucket=self.s3_bucket, Key=history.file_location)
+
+    def _download_s3(self, history):
+        response = self._get_s3_client().get_object(Bucket=self.s3_bucket, Key=history.file_location)
+        return response['Body'].read()
 
     def _test_s3(self):
         try:
@@ -558,6 +751,16 @@ class DbBackupConfig(models.Model):
         service = self._get_gdrive_service()
         service.files().delete(fileId=history.file_location).execute()
 
+    def _download_gdrive(self, history):
+        request = self._get_gdrive_service().files().get_media(fileId=history.file_location)
+        output = io.BytesIO()
+        from googleapiclient.http import MediaIoBaseDownload
+        downloader = MediaIoBaseDownload(output, request)
+        done = False
+        while not done:
+            _, done = downloader.next_chunk()
+        return output.getvalue()
+
     def _test_gdrive(self):
         try:
             service = self._get_gdrive_service()
@@ -585,6 +788,10 @@ class DbBackupConfig(models.Model):
         dbx = self._get_dropbox_client()
         dbx.files_delete_v2(history.file_location)
 
+    def _download_dropbox(self, history):
+        _, response = self._get_dropbox_client().files_download(history.file_location)
+        return response.content
+
     def _test_dropbox(self):
         try:
             dbx = self._get_dropbox_client()
@@ -592,6 +799,62 @@ class DbBackupConfig(models.Model):
             return True, _('Dropbox connection successful')
         except Exception as e:  # noqa
             return False, str(e)
+
+    # ---- WebDAV / Nextcloud ----
+    def _webdav_target_url(self, filename=None):
+        self.ensure_one()
+        if not self.webdav_url:
+            raise UserError(_('Set the WebDAV base URL first.'))
+        parsed = urlparse(self.webdav_url)
+        if parsed.scheme not in ('http', 'https') or not parsed.netloc:
+            raise UserError(_('WebDAV URL must be a valid HTTP or HTTPS URL.'))
+        base = self.webdav_url.rstrip('/') + '/'
+        segments = [quote(part, safe='') for part in (self.webdav_folder or '').split('/') if part]
+        if filename:
+            segments.append(quote(filename, safe=''))
+        return urljoin(base, '/'.join(segments))
+
+    def _webdav_request(self, method, url, **kwargs):
+        auth = (self.webdav_username or '', self.webdav_password or '')
+        try:
+            response = requests.request(
+                method, url, auth=auth, verify=self.webdav_verify_ssl,
+                timeout=120, allow_redirects=True, **kwargs)
+        except requests.RequestException as exc:
+            raise UserError(_('WebDAV request failed: %s') % exc) from exc
+        if response.status_code >= 400:
+            raise UserError(_('WebDAV returned HTTP %s: %s') % (response.status_code, response.text[:500]))
+        return response
+
+    def _ensure_webdav_folder(self):
+        current = self.webdav_url.rstrip('/') + '/'
+        for part in [item for item in (self.webdav_folder or '').split('/') if item]:
+            current = urljoin(current, quote(part, safe='') + '/')
+            response = requests.request(
+                'MKCOL', current,
+                auth=(self.webdav_username or '', self.webdav_password or ''),
+                verify=self.webdav_verify_ssl, timeout=60,
+            )
+            if response.status_code not in (201, 301, 302, 405):
+                raise UserError(_('Could not create WebDAV folder (HTTP %s).') % response.status_code)
+
+    def _upload_webdav(self, data, filename):
+        self._ensure_webdav_folder()
+        self._webdav_request('PUT', self._webdav_target_url(filename), data=data)
+        return filename
+
+    def _download_webdav(self, history):
+        return self._webdav_request('GET', self._webdav_target_url(history.backup_filename)).content
+
+    def _delete_webdav(self, history):
+        self._webdav_request('DELETE', self._webdav_target_url(history.backup_filename))
+
+    def _test_webdav(self):
+        try:
+            self._webdav_request('PROPFIND', self.webdav_url.rstrip('/') + '/', headers={'Depth': '0'})
+            return True, _('WebDAV connection successful')
+        except Exception as exc:  # noqa
+            return False, str(exc)
 
     # ------------------------------------------------------------------
     # Notifications

@@ -11,6 +11,8 @@
                     <li>Size: <span t-out="object.file_size_human"/></li>
                     <li>Duration: <span t-out="'%.1f' % object.duration"/> seconds</li>
                     <li>Destination: <span t-out="object.storage_type"/></li>
+                    <li>Integrity: <span t-out="object.integrity_state"/></li>
+                    <li>SHA-256: <span t-out="object.checksum_sha256"/></li>
                 </ul>
             </div>
         </field>

@@ -17,17 +17,32 @@ Only install what you actually use as a storage destination:
 | Dropbox          | `dropbox`                                         |
 | Encryption       | `pyzipper`                                        |
 
-Local and FTP work out of the box with the Python standard library.
+Local, FTP/FTPS and WebDAV work without an optional storage SDK.
+
+## Production security
+
+Set the system parameter `ow_db_backup_pro.allowed_backup_root` to the
+absolute directory below which local backups may be written. Example:
+
+```text
+/var/odoo_backups
+```
+
+Local backup directories are created with owner-only access and every backup
+file is written with mode `0600`. Backup credentials are restricted to Backup
+Managers, so protect the Odoo database and its own backups appropriately.
 
 ## Menu: DB Backup Pro
 - **Configurations** — create one or more backup profiles: source database(s),
-  schedule, storage destination, retention policy, encryption, email alerts.
+  schedule, storage destination, retention policy, encryption, integrity
+  verification and email alerts.
   "Backup Now" runs immediately; "Test Connection" verifies credentials
   without uploading anything.
 - **Backup History** — every run, its status, size, duration, destination and
   (on failure) the full error trace. Includes Graph and Pivot views for
-  storage-usage trends. Local backups can be downloaded straight from the
-  list; any successful backup can be restored.
+  storage-usage trends. Backups carry a SHA-256 checksum and can be verified
+  again at any time. Local backups can be downloaded from the list; successful
+  backups from any supported destination can be restored into a new database.
 - **Instant Backup** — one-off backup you generate and download immediately,
   independent of any saved configuration.
 
@@ -47,6 +62,14 @@ core build.
 - "Additional Databases" lets one config back up several databases on the
   same Postgres server in a single run; this requires the Postgres role
   Odoo connects with to have rights on those other databases.
+- Each uploaded backup can be downloaded automatically and compared with its
+  SHA-256 checksum. Disable **Verify After Upload** only when remote bandwidth
+  is more important than end-to-end verification.
+- Overlapping jobs for the same configuration/database are skipped through a
+  PostgreSQL advisory lock rather than producing competing archives.
+- S3-compatible storage includes MinIO, Wasabi, Cloudflare R2 and DigitalOcean
+  Spaces. Server-side AES-256/KMS encryption and storage classes are supported.
+- WebDAV supports Nextcloud and other standards-compliant WebDAV servers.
 - Encrypted backups are re-zipped with AES-256 via `pyzipper`; without
   that library installed, enabling encryption raises a clear error rather
   than silently skipping it.

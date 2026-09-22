@@ -1,6 +1,6 @@
 {
     'name': 'Automatic Database Backup Pro',
-    'version': '19.0.1.0.0',
+    'version': '19.0.2.0.0',
     'category': 'Administration',
     'summary': 'Premium automated, multi-destination database backup with retention, encryption & alerts',
     'description': """
@@ -11,11 +11,14 @@ Enterprise-grade scheduled backup solution for Odoo 19.
 Features
 --------
 * Schedule backups (minutes/hours/days/weeks/months) per configuration
-* Multiple storage destinations: Local disk, FTP, SFTP, Amazon S3 (or compatible),
-  Google Drive, Dropbox
+* Multiple storage destinations: Local disk, FTP/FTPS, SFTP, Amazon S3 (or compatible),
+  Google Drive, Dropbox, WebDAV and Nextcloud
 * Backup format: Full (Database + Filestore ZIP) or SQL Dump only
 * AES-256 password protected / encrypted backups (optional, via pyzipper)
 * Auto-retention: keep last N backups, or keep backups for N days
+* SHA-256 integrity checks with optional automatic post-upload verification
+* Overlapping-job protection, health monitoring and one-click retry
+* S3 storage classes, server-side encryption and KMS support
 * Email alerts on success and/or failure per configuration
 * One-click "Backup Now" and "Test Connection" for every storage type
 * Full backup history log: size, duration, status, destination, error trace
@@ -37,7 +40,7 @@ Optional Python dependencies (install only what you need)
     "website": "https://apps.odoo.com/apps/modules/browse?author=Odoo%20Wings",
     "support": "vsmanoj144@gmail.com",
     "license": "OPL-1",
-    "price": 3.95,
+    "price": 14.95,
     "currency": "USD",
     'depends': ['base', 'mail'],
     'data': [
