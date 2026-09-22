@@ -1,0 +1,37 @@
+$ow-indigo: #5b4cf0;
+$ow-violet: #8b5cf6;
+$ow-coral: #ff6b6b;
+
+.ow_cleaner_form {
+    background: radial-gradient(circle at 90% 0, rgba($ow-violet, .10), transparent 32%), #f7f8fc;
+    .o_form_sheet_bg { background: transparent; }
+    .o_form_sheet { border: 0; border-radius: 20px; box-shadow: 0 14px 45px rgba(34, 30, 80, .08); }
+}
+.ow_cleaner_hero {
+    display: flex; align-items: center; gap: 18px; color: white; margin: -24px -24px 24px;
+    padding: 25px 30px; border-radius: 20px 20px 6px 6px;
+    background: linear-gradient(120deg, #29235c, $ow-indigo 55%, $ow-violet);
+    position: relative; overflow: hidden;
+    &::after { content: ""; position: absolute; width: 180px; height: 180px; border: 32px solid rgba(255,255,255,.08); border-radius: 50%; right: -45px; top: -85px; }
+    h2 { color: white; margin: 0 0 4px; font-weight: 800; }
+    p { margin: 0; color: rgba(255,255,255,.8); }
+    .ow_cleaner_hero_icon { width: 54px; height: 54px; border-radius: 17px; display: grid; place-items: center; font-size: 24px; background: rgba(255,255,255,.16); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
+}
+.ow_metric_grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 22px 0;
+    > div { padding: 18px; border: 1px solid #e9e7fa; border-radius: 15px; background: linear-gradient(145deg,#fff,#faf9ff); }
+    strong { display: block; color: $ow-indigo; font-size: 27px; font-weight: 800; }
+    span { color: #78829a; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+}
+.ow_duplicate_kanban .o_kanban_record { border: 0 !important; border-radius: 16px !important; box-shadow: 0 8px 28px rgba(43,39,92,.09); overflow: hidden; transition: transform .2s, box-shadow .2s;
+    &:hover { transform: translateY(-3px); box-shadow: 0 14px 35px rgba(43,39,92,.15); }
+}
+.ow_group_card { padding: 16px; border-top: 4px solid $ow-indigo;
+    h4 { margin: 15px 0 7px; font-weight: 750; color: #272443; }
+    p { min-height: 34px; color: #7a8298; }
+    .ow_confidence { background: linear-gradient(135deg,$ow-indigo,$ow-violet); color: white; border-radius: 9px; padding: 4px 9px; font-weight: 800; }
+}
+.ow_duplicate_merge_hero { display:flex; gap:15px; align-items:center; padding:18px; margin-bottom:18px; color:white; border-radius:14px; background:linear-gradient(120deg,#302a73,$ow-indigo,$ow-violet);
+    i { font-size:25px; padding:13px; border-radius:12px; background:rgba(255,255,255,.15); }
+    strong, span { display:block; } span { color:rgba(255,255,255,.78); }
+}
+@media (max-width: 767px) { .ow_metric_grid { grid-template-columns: repeat(2,1fr); } .ow_cleaner_hero { margin: -16px -16px 18px; padding: 20px; } }

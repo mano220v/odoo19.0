@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_duplicate_merge_wizard_form" model="ir.ui.view">
+        <field name="name">ow.duplicate.merge.wizard.form</field>
+        <field name="model">ow.duplicate.merge.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Review and Merge Duplicates" class="ow_duplicate_merge_wizard">
+                <div class="ow_duplicate_merge_hero">
+                    <i class="fa fa-compress" title="Merge"/>
+                    <div><strong>Choose the record to keep</strong><span>References and useful values will be consolidated into the master.</span></div>
+                </div>
+                <group>
+                    <field name="group_id"/>
+                    <field name="master_member_id" domain="[('group_id', '=', group_id)]" options="{'no_create': True}"/>
+                    <field name="fill_missing_values"/>
+                    <field name="disposition" widget="radio"/>
+                    <field name="confirmation" invisible="disposition != 'delete'" required="disposition == 'delete'" placeholder="Enter DELETE"/>
+                </group>
+                <div class="alert alert-warning" role="alert"><field name="warning_message" nolabel="1"/></div>
+                <field name="member_ids" readonly="1">
+                    <list create="0" delete="0">
+                        <field name="is_suggested_master" widget="boolean_favorite" string="Suggested"/>
+                        <field name="record_name"/>
+                        <field name="completeness_score"/>
+                        <field name="value_preview"/>
+                        <field name="exists"/>
+                        <button name="action_open_record" type="object" string="Open" icon="fa-external-link"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_merge" type="object" string="Merge Records" class="btn-primary" icon="fa-compress" confirm="Merge these duplicate records into the selected master?"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="rule_contacts" model="ow.duplicate.rule">
+        <field name="name">Contacts: Email, Phone, VAT &amp; Name</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="minimum_confidence">75</field>
+        <field name="maximum_records">10000</field>
+        <field name="domain_filter">[('parent_id', '=', False)]</field>
+    </record>
+    <record id="rule_contacts_email" model="ow.duplicate.rule.field">
+        <field name="rule_id" ref="rule_contacts"/><field name="sequence">10</field>
+        <field name="field_id" ref="base.field_res_partner__email"/><field name="match_type">exact</field>
+        <field name="normalization">email</field><field name="weight">3</field><field name="threshold">100</field>
+    </record>
+    <record id="rule_contacts_phone" model="ow.duplicate.rule.field">
+        <field name="rule_id" ref="rule_contacts"/><field name="sequence">20</field>
+        <field name="field_id" ref="base.field_res_partner__phone"/><field name="match_type">exact</field>
+        <field name="normalization">phone</field><field name="weight">3</field><field name="threshold">100</field>
+    </record>
+    <record id="rule_contacts_vat" model="ow.duplicate.rule.field">
+        <field name="rule_id" ref="rule_contacts"/><field name="sequence">30</field>
+        <field name="field_id" ref="base.field_res_partner__vat"/><field name="match_type">exact</field>
+        <field name="normalization">alphanumeric</field><field name="weight">4</field><field name="threshold">100</field>
+    </record>
+    <record id="rule_contacts_name" model="ow.duplicate.rule.field">
+        <field name="rule_id" ref="rule_contacts"/><field name="sequence">40</field>
+        <field name="field_id" ref="base.field_res_partner__name"/><field name="match_type">fuzzy</field>
+        <field name="normalization">whitespace</field><field name="weight">2</field><field name="threshold">82</field>
+    </record>
+</odoo>
