@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="view_conversion_list" model="ir.ui.view">
+    <field name="name">ow.document.conversion.list</field>
+    <field name="model">ow.document.conversion</field>
+    <field name="arch" type="xml">
+      <list decoration-success="state == 'done'" decoration-danger="state == 'failed'">
+        <field name="name"/>
+        <field name="direction" widget="badge"/>
+        <field name="input_filename"/>
+        <field name="state" widget="badge" decoration-success="state == 'done'" decoration-danger="state == 'failed'"/>
+        <field name="engine" optional="show"/>
+        <field name="page_count" optional="show"/>
+        <field name="duration" optional="hide"/>
+        <field name="user_id" groups="ow_document_converter_pro.group_converter_manager"/>
+        <field name="converted_at"/>
+        <button name="action_convert" type="object" string="Convert" icon="fa-magic" class="btn-primary" invisible="state not in ('draft','failed')"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_conversion_kanban" model="ir.ui.view">
+    <field name="name">ow.document.conversion.kanban</field>
+    <field name="model">ow.document.conversion</field>
+    <field name="arch" type="xml">
+      <kanban class="ow_converter_kanban">
+        <field name="name"/>
+        <field name="direction"/>
+        <field name="state"/>
+        <field name="input_filename"/>
+        <field name="output_filename"/>
+        <field name="engine"/>
+        <field name="page_count"/>
+        <templates>
+          <t t-name="card">
+            <div class="ow_converter_card">
+              <div class="d-flex justify-content-between">
+                <span class="ow_file_icon">
+                  <i t-att-class="record.direction.raw_value === 'pdf_docx' ? 'fa fa-file-pdf-o' : 'fa fa-file-word-o'" title="Document"/>
+                </span>
+                <span class="badge rounded-pill" t-att-class="record.state.raw_value === 'done' ? 'text-bg-success' : record.state.raw_value === 'failed' ? 'text-bg-danger' : 'text-bg-light'">
+                  <field name="state"/>
+                </span>
+              </div>
+              <h4>
+                <field name="name"/>
+              </h4>
+              <p>
+                <field name="input_filename"/>
+              </p>
+              <div class="ow_card_meta">
+                <span>
+                  <field name="direction"/>
+                </span>
+                <span t-if="record.page_count.raw_value"><field name="page_count"/> pages</span>
+              </div>
+              <button t-if="record.state.raw_value === 'draft' || record.state.raw_value === 'failed'" name="action_convert" type="object" class="btn btn-primary w-100 mt-3"><i class="fa fa-magic me-1"/> Convert Now</button>
+            </div>
+          </t>
+        </templates>
+      </kanban>
+    </field>
+  </record>
+  <record id="view_conversion_form" model="ir.ui.view">
+    <field name="name">ow.document.conversion.form</field>
+    <field name="model">ow.document.conversion</field>
+    <field name="arch" type="xml">
+      <form string="Document Conversion" class="ow_converter_form">
+        <header>
+          <button name="action_convert" type="object" string="Convert Document" icon="fa-magic" class="btn-primary" invisible="state not in ('draft','failed')"/>
+          <button name="action_reset" type="object" string="Convert Again" invisible="state not in ('done','failed')"/>
+          <button name="action_new_conversion" type="object" string="New Conversion" invisible="state != 'done'"/>
+          <field name="state" widget="statusbar" statusbar_visible="draft,converting,done"/>
+        </header>
+        <sheet>
+          <div class="ow_converter_hero">
+            <div class="ow_converter_hero_icon">
+              <i class="fa fa-exchange" title="Document converter"/>
+            </div>
+            <div>
+              <h2>Private document conversion</h2>
+              <p>Convert PDF and Word documents locally on your Odoo server. No cloud upload and no third-party API.</p>
+            </div>
+          </div>
+          <div class="oe_title">
+            <label for="name"/>
+            <h1>
+              <field name="name" placeholder="Conversion title"/>
+            </h1>
+          </div>
+          <div class="ow_converter_workspace">
+            <div class="ow_upload_panel">
+              <div class="ow_step">1</div>
+              <h3>Upload document</h3>
+              <p>PDF, DOC, or DOCX · maximum 25 MB</p>
+              <field name="input_file" filename="input_filename" widget="binary"/>
+              <field name="input_filename" invisible="1"/>
+              <field name="direction" readonly="1" widget="badge"/>
+              <field name="input_size" readonly="1" widget="integer"/>
+            </div>
+            <div class="ow_arrow">
+              <i class="fa fa-long-arrow-right"/>
+            </div>
+            <div class="ow_result_panel">
+              <div class="ow_step">2</div>
+              <h3>Download result</h3>
+              <p invisible="state == 'done'">Select Convert Document to create the output.</p>
+              <field name="output_file" filename="output_filename" widget="binary" readonly="1" invisible="state != 'done'"/>
+              <field name="output_filename" invisible="1"/>
+              <field name="engine" readonly="1" invisible="state != 'done'"/>
+              <field name="page_count" readonly="1" invisible="state != 'done'"/>
+            </div>
+          </div>
+          <div class="alert alert-danger mt-3" role="alert" invisible="state != 'failed'">
+            <field name="error_message" nolabel="1"/>
+          </div>
+          <div class="alert alert-warning mt-3" role="status" invisible="direction != 'pdf_docx'">PDF files store positioned page content rather than document structure. The free text engine creates an editable DOCX but may not preserve columns, tables, fonts, or scanned images. Install <b>pdf2docx</b> on the server for richer layout reconstruction.</div>
+          <group>
+            <group string="Conversion details">
+              <field name="user_id" readonly="1"/>
+              <field name="company_id" readonly="1" groups="base.group_multi_company"/>
+              <field name="converted_at"/>
+              <field name="duration"/>
+            </group>
+            <group string="Retention">
+              <field name="keep_until"/>
+              <field name="output_size" readonly="1"/>
+              <field name="notes" placeholder="Internal note..."/>
+            </group>
+          </group>
+          <chatter/>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="view_conversion_search" model="ir.ui.view">
+    <field name="name">ow.document.conversion.search</field>
+    <field name="model">ow.document.conversion</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name"/>
+        <field name="input_filename"/>
+        <field name="user_id"/>
+        <filter name="completed" string="Completed" domain="[('state','=','done')]"/>
+        <filter name="pdf_docx" string="PDF to DOCX" domain="[('direction','=','pdf_docx')]"/>
+        <filter name="word_pdf" string="Word to PDF" domain="[('direction','=','word_pdf')]"/>
+        <group>
+          <filter name="group_direction" string="Direction" context="{'group_by':'direction'}"/>
+          <filter name="group_state" string="Status" context="{'group_by':'state'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+  <record id="action_conversion" model="ir.actions.act_window">
+    <field name="name">Document Converter</field>
+    <field name="res_model">ow.document.conversion</field>
+    <field name="view_mode">kanban,list,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">Convert your first document</p>
+      <p>Upload PDF, DOC, or DOCX files and convert securely inside Odoo.</p>
+    </field>
+  </record>
+</odoo>
