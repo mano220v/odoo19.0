@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
- <record id="view_access_audit_list" model="ir.ui.view"><field name="name">ow.access.audit.list</field><field name="model">ow.access.audit</field><field name="arch" type="xml"><list create="0" edit="0" delete="0"><field name="create_date"/><field name="profile_id"/><field name="action" widget="badge"/><field name="user_id"/><field name="details"/></list></field></record>
- <record id="view_access_audit_form" model="ir.ui.view"><field name="name">ow.access.audit.form</field><field name="model">ow.access.audit</field><field name="arch" type="xml"><form create="0" edit="0" delete="0" class="ow_access_form"><sheet><div class="ow_access_hero"><div class="ow_access_hero_icon"><i class="fa fa-history" title="Audit history"/></div><div><h2>Security audit event</h2><p>Trace when a profile was applied and who performed the operation.</p></div></div><group><field name="profile_id"/><field name="action"/><field name="user_id"/><field name="create_date"/></group><field name="details"/></sheet></form></field></record>
- <record id="action_access_audit" model="ir.actions.act_window"><field name="name">Audit Trail</field><field name="res_model">ow.access.audit</field><field name="view_mode">list,form</field></record>
-</odoo>
