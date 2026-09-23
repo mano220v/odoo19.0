@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <menuitem id="menu_access_root" name="Access Pro" sequence="34" web_icon="ow_access_management_pro,static/description/icon.png" groups="ow_access_management_pro.group_access_auditor"/>
+ <menuitem id="menu_access_profiles" name="Access Profiles" parent="menu_access_root" action="action_access_profile" sequence="10"/>
+ <menuitem id="menu_access_audit" name="Audit Trail" parent="menu_access_root" action="action_access_audit" sequence="20"/>
+</odoo>
