@@ -1,0 +1,89 @@
+.o_form_view .o_form_sheet_bg .o_form_sheet {
+    position: relative;
+}
+
+.ow_sale_confirm_stamp {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    z-index: 5;
+    pointer-events: none;
+    transform: rotate(-8deg);
+}
+
+.ow_sale_confirm_stamp .o_field_html,
+.ow_sale_confirm_stamp .o_readonly_modifier {
+    margin: 0;
+}
+
+.ow_sale_confirm_stamp_svg {
+    width: 128px;
+    height: 128px;
+    display: block;
+    filter: drop-shadow(0 8px 16px rgba(21, 128, 61, 0.16));
+}
+
+.ow_sale_confirm_stamp_svg .ow_stamp_outer {
+    fill: rgba(255, 255, 255, 0.92);
+    stroke: #16a34a;
+    stroke-width: 4;
+}
+
+.ow_sale_confirm_stamp_svg .ow_stamp_dash {
+    fill: none;
+    stroke: rgba(22, 163, 74, 0.75);
+    stroke-width: 2;
+    stroke-dasharray: 8 6;
+}
+
+.ow_sale_confirm_stamp_svg .ow_stamp_inner {
+    fill: none;
+    stroke: rgba(22, 163, 74, 0.45);
+    stroke-width: 1.5;
+}
+
+.ow_sale_confirm_stamp_svg .ow_stamp_company {
+    fill: #15803d;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.9px;
+}
+
+.ow_sale_confirm_stamp_svg .ow_stamp_main {
+    fill: #14532d;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    font-weight: 900;
+}
+
+.ow_sale_confirm_stamp_svg .ow_stamp_confirmed {
+    font-size: 14px;
+}
+
+.ow_sale_confirm_stamp_svg .ow_stamp_line {
+    stroke: rgba(22, 163, 74, 0.72);
+    stroke-width: 2.5;
+}
+
+.ow_sale_confirm_stamp_svg .ow_stamp_date {
+    fill: #166534;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+@media (max-width: 991px) {
+    .ow_sale_confirm_stamp {
+        position: static;
+        transform: none;
+        display: flex;
+        justify-content: flex-end;
+        margin: 8px 0 14px;
+    }
+
+    .ow_sale_confirm_stamp_svg {
+        width: 118px;
+        height: 118px;
+    }
+}

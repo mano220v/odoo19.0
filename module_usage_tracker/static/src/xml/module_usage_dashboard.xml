@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="module_usage_tracker.Dashboard" owl="1">
+        <Layout display="display" className="'h-100 overflow-auto'">
+            <div class="o_mut_dashboard">
+                <div class="o_mut_header">
+                    <div>
+                        <span class="o_mut_eyebrow"><i class="fa fa-line-chart"/> Usage analytics</span>
+                        <h2>Module Usage Dashboard</h2>
+                        <p>Active time spent in each Odoo module with percentage contribution and user activity.</p>
+                    </div>
+                    <div class="o_mut_controls">
+                        <div class="o_mut_periods">
+                            <button t-att-class="{active: state.period === 'today'}" t-on-click="() => this.setPeriod('today')">Today</button>
+                            <button t-att-class="{active: state.period === 'week'}" t-on-click="() => this.setPeriod('week')">Week</button>
+                            <button t-att-class="{active: state.period === 'month'}" t-on-click="() => this.setPeriod('month')">Month</button>
+                            <button t-att-class="{active: state.period === 'all'}" t-on-click="() => this.setPeriod('all')">All</button>
+                        </div>
+                        <div class="o_mut_filter_row">
+                            <input type="date" t-att-value="state.fromDate" t-on-change="(ev) => this.setDate('fromDate', ev)"/>
+                            <input type="date" t-att-value="state.toDate" t-on-change="(ev) => this.setDate('toDate', ev)"/>
+                            <select t-on-change="(ev) => this.setUser(ev)">
+                                <option value="0">All Users</option>
+                                <option t-foreach="state.users" t-as="user" t-key="user.id"
+                                        t-att-value="user.id"
+                                        t-att-selected="state.userId === user.id">
+                                    <t t-esc="user.name"/>
+                                </option>
+                            </select>
+                            <button class="btn btn-light o_mut_icon_btn" title="Refresh" t-on-click="() => this.loadData()">
+                                <i t-att-class="state.loading ? 'fa fa-circle-o-notch fa-spin' : 'fa fa-refresh'"/>
+                            </button>
+                        </div>
+                        <small t-if="state.data.last_refresh">Updated <t t-esc="state.data.last_refresh"/></small>
+                    </div>
+                </div>
+
+                <div class="o_mut_kpis">
+                    <button class="o_mut_kpi" t-on-click="() => this.openAllLogs()">
+                        <span><i class="fa fa-clock-o"/> Total Time</span>
+                        <strong><t t-esc="state.data.total_duration"/></strong>
+                        <small><t t-esc="state.data.label"/></small>
+                    </button>
+                    <button class="o_mut_kpi is-green" t-on-click="() => this.openAllLogs()">
+                        <span><i class="fa fa-cubes"/> Modules Used</span>
+                        <strong><t t-esc="state.data.module_count"/></strong>
+                        <small>Apps with tracked activity</small>
+                    </button>
+                    <button class="o_mut_kpi is-blue" t-on-click="() => this.openAllLogs()">
+                        <span><i class="fa fa-trophy"/> Top Module</span>
+                        <strong class="o_mut_text_fit"><t t-esc="state.data.top_module"/></strong>
+                        <small>Highest usage share</small>
+                    </button>
+                    <button class="o_mut_kpi is-red" t-on-click="() => this.openActiveUserLogs()">
+                        <span><i class="fa fa-users"/> Active Users</span>
+                        <strong><t t-esc="state.data.users.length"/></strong>
+                        <small>Users in selected period</small>
+                    </button>
+                </div>
+
+                <div class="o_mut_main">
+                    <div class="o_mut_panel o_mut_module_panel">
+                        <div class="o_mut_panel_title">
+                            <span>Module time share</span>
+                            <button class="btn btn-link" t-on-click="() => this.openAllLogs()">Open logs</button>
+                        </div>
+                        <div t-if="!state.data.rows.length" class="o_mut_empty">
+                            <i class="fa fa-info-circle"/>
+                            <span>No module usage has been tracked for this period.</span>
+                        </div>
+                        <button t-foreach="state.data.rows" t-as="row" t-key="row.module_name"
+                                class="o_mut_module_row"
+                                t-on-click="() => this.openLogs(row.domain, row.module_name + ' Usage')">
+                            <div class="o_mut_module_top">
+                                <strong><t t-esc="row.module_name"/></strong>
+                                <span><t t-esc="row.percentage"/>%</span>
+                            </div>
+                            <div class="o_mut_meter">
+                                <span t-attf-style="width: {{ this.rowWidth(row) }}"/>
+                            </div>
+                            <div class="o_mut_module_bottom">
+                                <small><t t-esc="row.duration"/></small>
+                                <small><t t-esc="row.seconds"/> seconds</small>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div class="o_mut_side">
+                        <div class="o_mut_panel">
+                            <div class="o_mut_panel_title">
+                                <span>Top users</span>
+                            </div>
+                            <div t-if="!state.data.users.length" class="o_mut_empty compact">No user activity</div>
+                            <div t-foreach="state.data.users" t-as="user" t-key="user.id || user.name" class="o_mut_user_row">
+                                <span><i class="fa fa-user-circle"/> <t t-esc="user.name"/></span>
+                                <strong><t t-esc="user.duration"/></strong>
+                            </div>
+                        </div>
+
+                        <div class="o_mut_panel">
+                            <div class="o_mut_panel_title">
+                                <span>Daily trend</span>
+                            </div>
+                            <div class="o_mut_trend" t-if="state.data.trend.length">
+                                <div t-foreach="state.data.trend" t-as="point" t-key="point.label" class="o_mut_trend_item">
+                                    <span class="o_mut_bar" t-attf-style="height: {{ this.trendHeight(point) }}"/>
+                                    <small><t t-esc="point.label"/></small>
+                                </div>
+                            </div>
+                            <div t-else="" class="o_mut_empty compact">No trend data</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="o_mut_panel">
+                    <div class="o_mut_panel_title">
+                        <span>Recent activity</span>
+                    </div>
+                    <div class="o_mut_recent">
+                        <div t-if="!state.data.recent.length" class="o_mut_empty compact">No recent logs</div>
+                        <button t-foreach="state.data.recent" t-as="item" t-key="item.id" class="o_mut_recent_row"
+                                t-on-click="() => this.openLogs([['id', '=', item.id]], 'Usage Log')">
+                            <span><t t-esc="item.module_name"/></span>
+                            <span><t t-esc="item.user_id ? item.user_id[1] : ''"/></span>
+                            <span><t t-esc="item.duration_display"/></span>
+                            <span><t t-esc="item.start_datetime"/></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </Layout>
+    </t>
+</templates>

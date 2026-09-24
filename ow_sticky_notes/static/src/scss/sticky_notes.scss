@@ -1,0 +1,283 @@
+// ---------------------------------------------------------------------
+// Sticky Notes widget styling
+// ---------------------------------------------------------------------
+
+$sn-colors: (
+    yellow: (#fff4b8, #4a4326),
+    pink: (#ffd6e8, #5a2e40),
+    blue: (#cfe8ff, #1f3a5a),
+    green: (#d3f5d3, #234a23),
+    purple: (#e6d9ff, #3a2a5a),
+    orange: (#ffe0bd, #5a3b1a),
+);
+
+.o_sn_root {
+    position: relative;
+    z-index: 1049;
+}
+
+// --- Floating ball -----------------------------------------------------
+
+.o_sn_ball {
+    position: fixed;
+    right: 24px;
+    bottom: 88px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffd76a, #ffb300);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    z-index: 1051;
+    touch-action: none;
+    user-select: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    i {
+        font-size: 22px;
+        color: #4a3400;
+    }
+
+    &:hover {
+        transform: scale(1.06);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
+    }
+
+    &.o_sn_ball_dragging {
+        cursor: grabbing;
+        transform: scale(1.1);
+    }
+
+    &.o_sn_ball_open {
+        background: linear-gradient(145deg, #ffb300, #ff9800);
+    }
+}
+
+.o_sn_badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 9px;
+    background: #d32f2f;
+    color: #fff;
+    font-size: 11px;
+    line-height: 18px;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 0 0 2px #fff;
+}
+
+// --- Backdrop (mobile) --------------------------------------------------
+
+.o_sn_backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1049;
+    display: none;
+
+    @media (max-width: 767px) {
+        display: block;
+    }
+}
+
+// --- Slide-in panel ------------------------------------------------------
+
+.o_sn_panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 340px;
+    max-width: 92vw;
+    background: #f7f5ef;
+    box-shadow: -4px 0 18px rgba(0, 0, 0, 0.18);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    z-index: 1050;
+
+    &.o_sn_panel_open {
+        transform: translateX(0);
+    }
+}
+
+.o_sn_panel_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: #ffb300;
+    color: #3a2900;
+    flex: 0 0 auto;
+}
+
+.o_sn_panel_title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.o_sn_panel_actions {
+    display: flex;
+    gap: 6px;
+}
+
+.o_sn_icon_btn {
+    background: rgba(255, 255, 255, 0.35);
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.6);
+    }
+}
+
+.o_sn_filter_bar {
+    display: flex;
+    gap: 6px;
+    padding: 8px 16px;
+    flex: 0 0 auto;
+    border-bottom: 1px solid #e5e0d3;
+}
+
+.o_sn_panel_body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.o_sn_empty {
+    text-align: center;
+    color: #8a8371;
+    margin-top: 40px;
+
+    i {
+        font-size: 28px;
+        margin-bottom: 8px;
+        display: block;
+    }
+}
+
+// --- Note cards ------------------------------------------------------------
+
+.o_sn_card {
+    border-radius: 8px;
+    padding: 10px 12px 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    @each $name, $pair in $sn-colors {
+        &[data-color="#{$name}"] {
+            background: nth($pair, 1);
+            color: nth($pair, 2);
+        }
+    }
+}
+
+.o_sn_card_toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.o_sn_swatches {
+    display: flex;
+    gap: 5px;
+}
+
+.o_sn_swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    border: 2px solid transparent;
+
+    @each $name, $pair in $sn-colors {
+        &[data-color="#{$name}"] {
+            background: nth($pair, 1);
+        }
+    }
+
+    &.o_sn_swatch_active {
+        border-color: rgba(0, 0, 0, 0.45);
+    }
+}
+
+.o_sn_card_icons {
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    opacity: 0.65;
+
+    i {
+        cursor: pointer;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .o_sn_pinned {
+        opacity: 1;
+        color: #b34700;
+        transform: rotate(35deg);
+    }
+}
+
+.o_sn_card_title {
+    background: transparent;
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 0;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.o_sn_card_content {
+    background: transparent;
+    border: none;
+    resize: vertical;
+    min-height: 70px;
+    font-size: 13px;
+    line-height: 1.4;
+    padding: 0;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.o_sn_card_footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    opacity: 0.65;
+}
+
+.o_sn_chip {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    padding: 1px 7px;
+}

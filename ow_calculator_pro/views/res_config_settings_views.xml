@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_calculator" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.calculator.pro</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <div class="app_settings_block" data-string="Calculator" string="Calculator"
+                     data-key="ow_calculator_pro" groups="base.group_system">
+                    <h2>Calculator Pro</h2>
+                    <div class="row mt16 o_settings_container" name="calculator_pro_settings">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="calculator_history_enabled"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="calculator_history_enabled"/>
+                                <div class="text-muted">
+                                    Automatically save every calculation to the history log
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="calculator_decimal_precision"/>
+                                <field name="calculator_decimal_precision"/>
+                                <div class="text-muted">
+                                    Number of decimal places shown in results
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="calculator_default_theme"/>
+                                <field name="calculator_default_theme"/>
+                                <div class="text-muted">
+                                    Default appearance for new users
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="calculator_history_retention_days"/>
+                                <field name="calculator_history_retention_days"/>
+                                <div class="text-muted">
+                                    Automatically delete history older than this many days (0 = keep forever)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

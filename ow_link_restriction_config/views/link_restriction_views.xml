@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         LIST VIEW
+    ================================================================ -->
+    <record id="view_ow_link_restriction_list" model="ir.ui.view">
+        <field name="name">ow.link.restriction.list</field>
+        <field name="model">ow.link.restriction</field>
+        <field name="arch" type="xml">
+            <list string="Internal Link Restrictions" editable="bottom">
+                <field name="model_id"/>
+                <field name="model_name"/>
+                <field name="note"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         FORM VIEW
+    ================================================================ -->
+    <record id="view_ow_link_restriction_form" model="ir.ui.view">
+        <field name="name">ow.link.restriction.form</field>
+        <field name="model">ow.link.restriction</field>
+        <field name="arch" type="xml">
+            <form string="Internal Link Restriction">
+                <sheet>
+                    <group>
+                        <field name="model_id" options="{'no_create': True}"/>
+                        <field name="model_name" readonly="1"/>
+                        <field name="active"/>
+                        <field name="note" placeholder="Optional note..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         WINDOW ACTION
+    ================================================================ -->
+    <record id="action_ow_link_restriction" model="ir.actions.act_window">
+        <field name="name">Internal Link Restrictions</field>
+        <field name="res_model">ow.link.restriction</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No restricted models yet.
+            </p>
+            <p>
+                Add a model here to disable the Many2one "Internal link"
+                open-record click-through on that model's Form and List
+                views. Kanban views are never affected. Untick Active to
+                pause a restriction without deleting it.
+            </p>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         MENUS (standalone root, no dependency on core Settings menu IDs)
+    ================================================================ -->
+    <menuitem id="menu_ow_tools_root"
+              name="Interlink Restrict"
+              sequence="95"
+              groups="base.group_system"/>
+
+    <menuitem id="menu_ow_link_restriction"
+              name="Internal Link Restrictions"
+              parent="menu_ow_tools_root"
+              action="action_ow_link_restriction"
+              sequence="10"
+              groups="base.group_system"/>
+
+</odoo>

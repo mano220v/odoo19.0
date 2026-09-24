@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ow_clear_download_history_wizard_form" model="ir.ui.view">
+        <field name="name">ow.clear.download.history.wizard.form</field>
+        <field name="model">ow.clear.download.history.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Clear Download History">
+                <group>
+                    <field name="older_than_days"/>
+                </group>
+                <p class="text-muted">
+                    This will permanently delete every download history record older
+                    than the number of days above. This action cannot be undone.
+                </p>
+                <footer>
+                    <button string="Delete Records" type="object" name="action_clear"
+                            class="btn-danger" confirm="Are you sure? This cannot be undone."/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ow_clear_download_history_wizard" model="ir.actions.act_window">
+        <field name="name">Clear Download History</field>
+        <field name="res_model">ow.clear.download.history.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

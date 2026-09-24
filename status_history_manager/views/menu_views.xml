@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         Global "All Change History" action & top-level menu
+         Visible only to: History Manager
+    ══════════════════════════════════════════════════════════════════════════ -->
+
+    <record id="action_status_history_log_global" model="ir.actions.act_window">
+        <field name="name">All Change History</field>
+        <field name="res_model">status.history.log</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No changes recorded yet.</p>
+            <p>
+                Changes to Status, Price, Quantity and Discount on Purchase Orders,
+                Sales Orders and Inventory Transfers will appear here automatically.
+            </p>
+        </field>
+    </record>
+
+    <!-- Top-level application menu — History Manager only -->
+    <menuitem id="menu_status_history_root"
+              name="Change History"
+              web_icon="status_history_manager,static/description/icon.png"
+              sequence="100"
+              groups="status_history_manager.group_history_manager"/>
+
+    <menuitem id="menu_status_history_all"
+              name="All Change History"
+              parent="menu_status_history_root"
+              action="action_status_history_log_global"
+              sequence="1"
+              groups="status_history_manager.group_history_manager"/>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         Purchase — Change History sub-menu
+         Visible only to: History User (and above)
+    ══════════════════════════════════════════════════════════════════════════ -->
+
+    <record id="action_purchase_history_log" model="ir.actions.act_window">
+        <field name="name">Purchase Change History</field>
+        <field name="res_model">status.history.log</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('purchase_order_id', '!=', False)]</field>
+        <field name="context">{'search_default_filter_purchase': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No purchase changes recorded yet.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_purchase_history_log"
+              name="Change History"
+              parent="purchase.menu_purchase_root"
+              action="action_purchase_history_log"
+              sequence="99"
+              groups="status_history_manager.group_history_user"/>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         Sales — Change History sub-menu
+         Visible only to: History User (and above)
+    ══════════════════════════════════════════════════════════════════════════ -->
+
+    <record id="action_sale_history_log" model="ir.actions.act_window">
+        <field name="name">Sales Change History</field>
+        <field name="res_model">status.history.log</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('sale_order_id', '!=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No sales changes recorded yet.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_sale_history_log"
+              name="Change History"
+              parent="sale.sale_menu_root"
+              action="action_sale_history_log"
+              sequence="99"
+              groups="status_history_manager.group_history_user"/>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         Inventory — Change History sub-menu
+         Visible only to: History User (and above)
+    ══════════════════════════════════════════════════════════════════════════ -->
+
+    <record id="action_stock_history_log" model="ir.actions.act_window">
+        <field name="name">Inventory Change History</field>
+        <field name="res_model">status.history.log</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('stock_picking_id', '!=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No inventory changes recorded yet.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_stock_history_log"
+              name="Change History"
+              parent="stock.menu_stock_root"
+              action="action_stock_history_log"
+              sequence="99"
+              groups="status_history_manager.group_history_user"/>
+
+</odoo>

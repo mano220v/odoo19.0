@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_ow_currency" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.ow.currency</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <div class="app_settings_block" data-string="Currency Rate Updater" string="Currency Rate Updater" data-key="ow_currency_rate_updater">
+                    <h2>Live Currency Rate Updater</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="ow_currency_base_currency_id" string="Base Currency"/>
+                                <div class="text-muted">
+                                    Rates are always fetched relative to your <strong>company currency</strong>.
+                                    Change it under Accounting/Invoicing → Configuration → Settings if needed.
+                                </div>
+                                <field name="ow_currency_base_currency_id" class="mt8" readonly="1" style="width: auto;"/>
+                                <div class="text-muted mt8">
+                                    <i class="fa fa-info-circle"/> Only <strong>active</strong> currencies get a rate.
+                                    Enable the ones you need under
+                                    Accounting/Invoicing → Configuration → Currencies before syncing.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="ow_currency_auto_update"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ow_currency_auto_update" string="Automatic Background Sync"/>
+                                <div class="text-muted">
+                                    Keep exchange rates fresh automatically on a schedule
+                                </div>
+                                <div class="content-group" invisible="not ow_currency_auto_update">
+                                    <field name="ow_currency_update_interval" class="mt8" style="width: auto;"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="ow_currency_provider" string="Rate Provider"/>
+                                <div class="text-muted">
+                                    Where live exchange rates are fetched from
+                                </div>
+                                <div class="content-group">
+                                    <field name="ow_currency_provider" class="mt8" style="width: auto;"/>
+                                    <div invisible="ow_currency_provider != 'custom'" class="mt8">
+                                        <label for="ow_currency_custom_api_url" string="Custom API URL"/>
+                                        <field name="ow_currency_custom_api_url" placeholder="https://example.com/latest?base=USD"/>
+                                        <label for="ow_currency_custom_api_key" string="API Key (optional)"/>
+                                        <field name="ow_currency_custom_api_key" password="True"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

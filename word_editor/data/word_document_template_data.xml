@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+
+    <!-- ═══ Blank Template ════════════════════════════════════════════════ -->
+    <record id="template_blank" model="word.document.template">
+      <field name="name">Blank Document</field>
+      <field name="category">blank</field>
+      <field name="sequence">1</field>
+      <field name="icon">fa-file-o</field>
+      <field name="description">Start with a clean, empty document.</field>
+      <field name="content"><![CDATA[<p><br></p>]]></field>
+    </record>
+
+    <!-- ═══ Business Letter ═══════════════════════════════════════════════ -->
+    <record id="template_business_letter" model="word.document.template">
+      <field name="name">Business Letter</field>
+      <field name="category">letter</field>
+      <field name="sequence">10</field>
+      <field name="icon">fa-envelope</field>
+      <field name="description">Professional business letter with standard formatting.</field>
+      <field name="content"><![CDATA[
+<div style="font-family:Arial,sans-serif;font-size:12pt;line-height:1.6;">
+  <p style="text-align:right;"><strong>[Your Company Name]</strong><br>
+  [Street Address]<br>
+  [City, State ZIP]<br>
+  [Date]</p>
+  <p><br></p>
+  <p>[Recipient Name]<br>
+  [Title]<br>
+  [Company]<br>
+  [Address]</p>
+  <p><br></p>
+  <p>Dear [Recipient Name],</p>
+  <p><br></p>
+  <p>I am writing to [state the purpose of your letter]. [Opening paragraph explaining the reason for the letter].</p>
+  <p><br></p>
+  <p>[Body paragraph 1: provide details, context, or background information relevant to your purpose].</p>
+  <p><br></p>
+  <p>[Body paragraph 2: additional information, supporting points, or next steps].</p>
+  <p><br></p>
+  <p>Please feel free to contact me at [phone/email] if you have any questions or require further information.</p>
+  <p><br></p>
+  <p>Sincerely,</p>
+  <p><br></p>
+  <p><br></p>
+  <p><strong>[Your Name]</strong><br>
+  [Your Title]<br>
+  [Email] | [Phone]</p>
+</div>
+]]></field>
+    </record>
+
+    <!-- ═══ Meeting Notes ══════════════════════════════════════════════════ -->
+    <record id="template_meeting_notes" model="word.document.template">
+      <field name="name">Meeting Notes</field>
+      <field name="category">meeting</field>
+      <field name="sequence">20</field>
+      <field name="icon">fa-users</field>
+      <field name="description">Structured template for capturing meeting notes and action items.</field>
+      <field name="content"><![CDATA[
+<div style="font-family:Arial,sans-serif;font-size:12pt;line-height:1.6;">
+  <h1 style="color:#1a365d;border-bottom:2px solid #4a90d9;padding-bottom:8px;">Meeting Notes</h1>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <tr>
+      <td style="padding:6px 0;width:150px;"><strong>Date:</strong></td>
+      <td style="padding:6px 0;">[Date]</td>
+      <td style="padding:6px 0;width:150px;"><strong>Time:</strong></td>
+      <td style="padding:6px 0;">[Time]</td>
+    </tr>
+    <tr>
+      <td style="padding:6px 0;"><strong>Location:</strong></td>
+      <td style="padding:6px 0;">[Location / Video Call]</td>
+      <td style="padding:6px 0;"><strong>Facilitator:</strong></td>
+      <td style="padding:6px 0;">[Name]</td>
+    </tr>
+  </table>
+
+  <h2 style="color:#2c5282;">Attendees</h2>
+  <ul>
+    <li>[Name, Role]</li>
+    <li>[Name, Role]</li>
+    <li>[Name, Role]</li>
+  </ul>
+
+  <h2 style="color:#2c5282;">Agenda</h2>
+  <ol>
+    <li>[Agenda Item 1]</li>
+    <li>[Agenda Item 2]</li>
+    <li>[Agenda Item 3]</li>
+  </ol>
+
+  <h2 style="color:#2c5282;">Discussion Points</h2>
+  <h3>1. [Topic 1]</h3>
+  <p>[Notes and discussion points]</p>
+  <h3>2. [Topic 2]</h3>
+  <p>[Notes and discussion points]</p>
+
+  <h2 style="color:#2c5282;">Decisions Made</h2>
+  <ul>
+    <li>[Decision 1]</li>
+    <li>[Decision 2]</li>
+  </ul>
+
+  <h2 style="color:#2c5282;">Action Items</h2>
+  <table style="width:100%;border-collapse:collapse;border:1px solid #ddd;">
+    <thead>
+      <tr style="background:#ebf4ff;">
+        <th style="padding:8px;border:1px solid #ddd;text-align:left;">Action</th>
+        <th style="padding:8px;border:1px solid #ddd;text-align:left;">Owner</th>
+        <th style="padding:8px;border:1px solid #ddd;text-align:left;">Due Date</th>
+        <th style="padding:8px;border:1px solid #ddd;text-align:left;">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:8px;border:1px solid #ddd;">[Action 1]</td>
+        <td style="padding:8px;border:1px solid #ddd;">[Owner]</td>
+        <td style="padding:8px;border:1px solid #ddd;">[Date]</td>
+        <td style="padding:8px;border:1px solid #ddd;">Pending</td>
+      </tr>
+      <tr>
+        <td style="padding:8px;border:1px solid #ddd;">[Action 2]</td>
+        <td style="padding:8px;border:1px solid #ddd;">[Owner]</td>
+        <td style="padding:8px;border:1px solid #ddd;">[Date]</td>
+        <td style="padding:8px;border:1px solid #ddd;">Pending</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 style="color:#2c5282;">Next Meeting</h2>
+  <p>Date: [Date] &nbsp;|&nbsp; Time: [Time] &nbsp;|&nbsp; Location: [Location]</p>
+</div>
+]]></field>
+    </record>
+
+    <!-- ═══ Project Report ════════════════════════════════════════════════ -->
+    <record id="template_project_report" model="word.document.template">
+      <field name="name">Project Report</field>
+      <field name="category">report</field>
+      <field name="sequence">30</field>
+      <field name="icon">fa-bar-chart</field>
+      <field name="description">Comprehensive project status report template.</field>
+      <field name="content"><![CDATA[
+<div style="font-family:Arial,sans-serif;font-size:12pt;line-height:1.6;">
+  <div style="text-align:center;margin-bottom:32px;">
+    <h1 style="color:#1a365d;font-size:24pt;">[Project Name]</h1>
+    <h2 style="color:#4a90d9;font-size:16pt;font-weight:normal;">Status Report</h2>
+    <p style="color:#666;">[Reporting Period] | Prepared by: [Author]</p>
+  </div>
+
+  <h2 style="color:#2c5282;border-left:4px solid #4a90d9;padding-left:12px;">1. Executive Summary</h2>
+  <p>[Brief overview of the project status, key achievements, and major issues].</p>
+
+  <h2 style="color:#2c5282;border-left:4px solid #4a90d9;padding-left:12px;">2. Project Overview</h2>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:16px;">
+    <tr>
+      <td style="padding:8px;background:#ebf4ff;border:1px solid #bee3f8;width:30%;"><strong>Project Name</strong></td>
+      <td style="padding:8px;border:1px solid #bee3f8;">[Name]</td>
+    </tr>
+    <tr>
+      <td style="padding:8px;background:#ebf4ff;border:1px solid #bee3f8;"><strong>Project Manager</strong></td>
+      <td style="padding:8px;border:1px solid #bee3f8;">[Manager]</td>
+    </tr>
+    <tr>
+      <td style="padding:8px;background:#ebf4ff;border:1px solid #bee3f8;"><strong>Start Date</strong></td>
+      <td style="padding:8px;border:1px solid #bee3f8;">[Date]</td>
+    </tr>
+    <tr>
+      <td style="padding:8px;background:#ebf4ff;border:1px solid #bee3f8;"><strong>Target End Date</strong></td>
+      <td style="padding:8px;border:1px solid #bee3f8;">[Date]</td>
+    </tr>
+    <tr>
+      <td style="padding:8px;background:#ebf4ff;border:1px solid #bee3f8;"><strong>Overall Status</strong></td>
+      <td style="padding:8px;border:1px solid #bee3f8;"><span style="color:green;font-weight:bold;">● On Track</span></td>
+    </tr>
+  </table>
+
+  <h2 style="color:#2c5282;border-left:4px solid #4a90d9;padding-left:12px;">3. Progress Summary</h2>
+  <p>[Describe progress made during the reporting period].</p>
+
+  <h2 style="color:#2c5282;border-left:4px solid #4a90d9;padding-left:12px;">4. Key Milestones</h2>
+  <table style="width:100%;border-collapse:collapse;">
+    <thead>
+      <tr style="background:#2c5282;color:white;">
+        <th style="padding:10px;text-align:left;">Milestone</th>
+        <th style="padding:10px;text-align:left;">Due Date</th>
+        <th style="padding:10px;text-align:left;">Status</th>
+        <th style="padding:10px;text-align:left;">Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:8px;border:1px solid #ddd;">[Milestone 1]</td>
+        <td style="padding:8px;border:1px solid #ddd;">[Date]</td>
+        <td style="padding:8px;border:1px solid #ddd;color:green;">✓ Complete</td>
+        <td style="padding:8px;border:1px solid #ddd;"></td>
+      </tr>
+      <tr>
+        <td style="padding:8px;border:1px solid #ddd;">[Milestone 2]</td>
+        <td style="padding:8px;border:1px solid #ddd;">[Date]</td>
+        <td style="padding:8px;border:1px solid #ddd;color:orange;">⚠ In Progress</td>
+        <td style="padding:8px;border:1px solid #ddd;"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 style="color:#2c5282;border-left:4px solid #4a90d9;padding-left:12px;">5. Risks &amp; Issues</h2>
+  <p>[Describe any current risks or issues and mitigation plans].</p>
+
+  <h2 style="color:#2c5282;border-left:4px solid #4a90d9;padding-left:12px;">6. Next Steps</h2>
+  <ul>
+    <li>[Next step 1]</li>
+    <li>[Next step 2]</li>
+    <li>[Next step 3]</li>
+  </ul>
+</div>
+]]></field>
+    </record>
+
+    <!-- ═══ Invoice / Quote ════════════════════════════════════════════════ -->
+    <record id="template_invoice" model="word.document.template">
+      <field name="name">Invoice / Quote</field>
+      <field name="category">invoice</field>
+      <field name="sequence">40</field>
+      <field name="icon">fa-money</field>
+      <field name="description">Professional invoice or quotation template.</field>
+      <field name="content"><![CDATA[
+<div style="font-family:Arial,sans-serif;font-size:12pt;line-height:1.6;">
+  <table style="width:100%;border-collapse:collapse;margin-bottom:40px;">
+    <tr>
+      <td style="width:60%;vertical-align:top;">
+        <h1 style="color:#1a365d;font-size:28pt;margin:0;">INVOICE</h1>
+        <p style="color:#666;margin:4px 0 0;"># [Invoice Number]</p>
+      </td>
+      <td style="text-align:right;vertical-align:top;">
+        <strong style="font-size:14pt;">[Your Company Name]</strong><br>
+        [Street Address]<br>
+        [City, State ZIP]<br>
+        [Email] | [Phone]<br>
+        [Website]
+      </td>
+    </tr>
+  </table>
+
+  <table style="width:100%;margin-bottom:32px;">
+    <tr>
+      <td style="width:50%;vertical-align:top;">
+        <p style="color:#4a90d9;font-weight:bold;margin-bottom:4px;text-transform:uppercase;font-size:10pt;">Bill To</p>
+        <p><strong>[Client Name / Company]</strong><br>
+        [Street Address]<br>
+        [City, State ZIP]<br>
+        [Email]</p>
+      </td>
+      <td style="width:50%;text-align:right;vertical-align:top;">
+        <table style="float:right;">
+          <tr><td style="padding:4px 8px;color:#666;">Invoice Date:</td><td style="padding:4px 8px;"><strong>[Date]</strong></td></tr>
+          <tr><td style="padding:4px 8px;color:#666;">Due Date:</td><td style="padding:4px 8px;"><strong>[Date]</strong></td></tr>
+          <tr><td style="padding:4px 8px;color:#666;">Terms:</td><td style="padding:4px 8px;"><strong>Net 30</strong></td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <thead>
+      <tr style="background:#2c5282;color:white;">
+        <th style="padding:12px;text-align:left;">Description</th>
+        <th style="padding:12px;text-align:right;width:80px;">Qty</th>
+        <th style="padding:12px;text-align:right;width:100px;">Unit Price</th>
+        <th style="padding:12px;text-align:right;width:100px;">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#f7fafc;">
+        <td style="padding:12px;border-bottom:1px solid #e2e8f0;">[Service / Product 1]</td>
+        <td style="padding:12px;border-bottom:1px solid #e2e8f0;text-align:right;">1</td>
+        <td style="padding:12px;border-bottom:1px solid #e2e8f0;text-align:right;">$0.00</td>
+        <td style="padding:12px;border-bottom:1px solid #e2e8f0;text-align:right;">$0.00</td>
+      </tr>
+      <tr>
+        <td style="padding:12px;border-bottom:1px solid #e2e8f0;">[Service / Product 2]</td>
+        <td style="padding:12px;border-bottom:1px solid #e2e8f0;text-align:right;">1</td>
+        <td style="padding:12px;border-bottom:1px solid #e2e8f0;text-align:right;">$0.00</td>
+        <td style="padding:12px;border-bottom:1px solid #e2e8f0;text-align:right;">$0.00</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table style="float:right;margin-bottom:32px;">
+    <tr><td style="padding:6px 16px;text-align:right;color:#666;">Subtotal:</td><td style="padding:6px 16px;text-align:right;"><strong>$0.00</strong></td></tr>
+    <tr><td style="padding:6px 16px;text-align:right;color:#666;">Tax (0%):</td><td style="padding:6px 16px;text-align:right;"><strong>$0.00</strong></td></tr>
+    <tr style="background:#2c5282;color:white;">
+      <td style="padding:12px 16px;text-align:right;font-size:14pt;"><strong>Total:</strong></td>
+      <td style="padding:12px 16px;text-align:right;font-size:14pt;"><strong>$0.00</strong></td>
+    </tr>
+  </table>
+
+  <div style="clear:both;padding-top:32px;border-top:1px solid #e2e8f0;color:#666;font-size:10pt;">
+    <p><strong>Payment Methods:</strong> Bank Transfer | Credit Card | PayPal</p>
+    <p><strong>Bank Details:</strong> [Bank Name] | Account: [Account Number] | Sort Code: [Sort Code]</p>
+    <p><strong>Notes:</strong> Thank you for your business!</p>
+  </div>
+</div>
+]]></field>
+    </record>
+
+  </data>
+</odoo>

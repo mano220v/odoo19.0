@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ═══ PDF Report ════════════════════════════════════════════════════ -->
+        <record id="report_word_document_pdf" model="ir.actions.report">
+            <field name="name">Word Document</field>
+            <field name="model">word.document</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">word_editor.report_word_document_template</field>
+            <field name="report_file">word_editor.report_word_document_template</field>
+            <field name="binding_model_id" ref="model_word_document"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- ═══ QWeb Report Template ══════════════════════════════════════════ -->
+        <template id="report_word_document_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <style>
+                            .doc-page {
+                                font-family: 'Times New Roman', Times, serif;
+                                font-size: 12pt;
+                                line-height: 1.6;
+                                color: #000;
+                            }
+                            .doc-header {
+                                border-bottom: 2px solid #2c5282;
+                                padding-bottom: 12px;
+                                margin-bottom: 24px;
+                            }
+                            .doc-title {
+                                font-size: 22pt;
+                                font-weight: bold;
+                                color: #1a202c;
+                                margin-bottom: 4px;
+                            }
+                            .doc-meta {
+                                font-size: 9pt;
+                                color: #666;
+                                margin-top: 4px;
+                            }
+                            .doc-content img { max-width: 100%; }
+                            .doc-content table {
+                                border-collapse: collapse;
+                                width: 100%;
+                                margin: 12px 0;
+                            }
+                            .doc-content td, .doc-content th {
+                                border: 1px solid #ccc;
+                                padding: 6px 10px;
+                            }
+                            .doc-content th {
+                                background: #f7fafc;
+                                font-weight: bold;
+                            }
+                            .doc-content h1 { font-size: 18pt; margin: 16px 0 8px; }
+                            .doc-content h2 { font-size: 15pt; margin: 14px 0 6px; }
+                            .doc-content h3 { font-size: 13pt; margin: 12px 0 6px; }
+                            .doc-content p  { margin: 6px 0; }
+                            .doc-content ul, .doc-content ol { margin: 6px 0 6px 24px; }
+                            .doc-content blockquote {
+                                border-left: 3px solid #4a90d9;
+                                margin: 12px 0;
+                                padding: 8px 16px;
+                                color: #555;
+                                font-style: italic;
+                            }
+                            .doc-footer {
+                                border-top: 1px solid #ddd;
+                                margin-top: 32px;
+                                padding-top: 8px;
+                                font-size: 8pt;
+                                color: #999;
+                                display: flex;
+                                justify-content: space-between;
+                            }
+                        </style>
+
+                        <div class="doc-page">
+                            <div class="doc-header">
+                                <div class="doc-title">
+                                    <t t-out="doc.name"/>
+                                </div>
+                                <div class="doc-meta">
+                                    Author: <t t-out="doc.author_id.name"/>&#160;|&#160;
+                                    Date: <t t-out="doc.write_date.strftime('%B %d, %Y') if doc.write_date else ''"/>&#160;|&#160;
+                                    Words: <t t-out="doc.word_count"/>
+                                    <t t-if="doc.tag_ids">
+                                        &#160;|&#160; Tags:
+                                        <t t-foreach="doc.tag_ids" t-as="tag">
+                                            <span><t t-out="tag.name"/><t t-if="not tag_last">, </t></span>
+                                        </t>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <div class="doc-content" t-field="doc.content"/>
+
+                            <div class="doc-footer">
+                                <span><t t-out="doc.company_id.name"/></span>
+                                <span>Generated by Odoo Word Editor</span>
+                                <span><t t-out="doc.write_date.strftime('%Y-%m-%d %H:%M') if doc.write_date else ''"/></span>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

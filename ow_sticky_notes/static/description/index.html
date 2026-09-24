@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>Sticky Notes - Floating Quick Notes Widget for Odoo 19</title>
+</head>
+<body>
+<section class="oe_container">
+<div class="tlr-description" style="background-color:#f0f2f5 !important;color:#2d3748 !important;max-width:1180px !important;margin:0 auto !important;padding:18px !important;font-family:Arial,Helvetica,sans-serif !important;box-sizing:border-box;">
+
+<!-- HERO -->
+<div style="background-color:#0f172a !important;color:#fff !important;border-radius:26px;padding:38px 28px 32px;box-shadow:0 18px 40px rgba(15,23,42,.22) !important;overflow:hidden;position:relative;">
+  <div style="position:absolute;top:0;left:0;width:5px;height:100%;background-color:#714b67 !important;border-radius:26px 0 0 26px;"></div>
+  <div style="text-align:center;max-width:900px;margin:0 auto;position:relative;">
+    <div style="display:inline-block;background-color:rgba(113,75,103,.22) !important;border:1px solid rgba(113,75,103,.4) !important;border-radius:999px;padding:8px 20px;font-size:13px;font-weight:800;letter-spacing:.5px;color:#d7b8ce !important;margin-bottom:20px;">
+      📌 Ready for Odoo 19 · Always One Click Away
+    </div>
+    <h1 style="margin:0 0 14px;font-size:46px;line-height:1.06;letter-spacing:-1.5px;font-weight:900;color:#fff !important;">
+      Sticky Notes<br/>
+      <span style="color:#c99bc4 !important;">Floating Quick Notes Widget</span>
+    </h1>
+    <p style="margin:0 auto 22px;font-size:17px;line-height:1.8;color:rgba(255,255,255,.85) !important;max-width:820px;">
+      A small floating ball that follows you across every backend screen — list, form, kanban, Settings, everywhere. Click it to slide in a panel of colour-coded, autosaving sticky notes you can pin, tag to a record, or reach in a keystroke with Alt+N.
+    </p>
+    <div>
+      <span style="display:inline-block;background-color:#714b67 !important;color:#fff !important;border-radius:999px;padding:9px 20px;font-size:13px;font-weight:800;margin:5px;box-shadow:0 6px 18px rgba(113,75,103,.4) !important;">Odoo 19</span>
+      <span style="display:inline-block;background-color:#f5b301 !important;color:#4a3400 !important;border-radius:999px;padding:9px 20px;font-size:13px;font-weight:800;margin:5px;box-shadow:0 6px 18px rgba(245,179,1,.35) !important;">6 Note Colours</span>
+      <span style="display:inline-block;background-color:#1cc88a !important;color:#fff !important;border-radius:999px;padding:9px 20px;font-size:13px;font-weight:800;margin:5px;box-shadow:0 6px 18px rgba(28,200,138,.35) !important;">Autosave · No Save Button</span>
+      <span style="display:inline-block;background-color:rgba(255,255,255,.1) !important;color:rgba(255,255,255,.85) !important;border:1px solid rgba(255,255,255,.2) !important;border-radius:999px;padding:9px 20px;font-size:13px;font-weight:700;margin:5px;">OWL · OPL-1</span>
+    </div>
+  </div>
+</div>
+
+<!-- TOP FEATURE CARDS -->
+<div style="margin-top:18px;">
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#f8f5f7 !important;border:1px solid #e6d3e0 !important;border-radius:18px;padding:18px;height:100%;box-sizing:border-box;">
+<div style="width:40px;height:40px;border-radius:11px;background-color:#f0e2ec !important;color:#714b67 !important;font-size:20px;text-align:center;line-height:40px;margin-bottom:10px;">🟡</div>
+<div style="font-weight:800;color:#3a2836 !important;font-size:14px;margin-bottom:5px;">Floating Ball, Everywhere</div>
+<div style="font-size:13px;line-height:1.65;color:#5b6472 !important;">Lives at the web client root, so it survives every navigation — list, form, kanban, Settings.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#fff1f1 !important;border:1px solid #fecdd3 !important;border-radius:18px;padding:18px;height:100%;box-sizing:border-box;">
+<div style="width:40px;height:40px;border-radius:11px;background-color:#ffe4e6 !important;color:#c0392b !important;font-size:20px;text-align:center;line-height:40px;margin-bottom:10px;">📌</div>
+<div style="font-weight:800;color:#7f1d1d !important;font-size:14px;margin-bottom:5px;">Pin What Matters</div>
+<div style="font-size:13px;line-height:1.65;color:#5b6472 !important;">Pinned notes always float to the top of the panel, no matter how many you keep.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#eef4ff !important;border:1px solid #c7dbff !important;border-radius:18px;padding:18px;height:100%;box-sizing:border-box;">
+<div style="width:40px;height:40px;border-radius:11px;background-color:#dbe8ff !important;color:#1f3a5a !important;font-size:20px;text-align:center;line-height:40px;margin-bottom:10px;">🔗</div>
+<div style="font-weight:800;color:#1f3a5a !important;font-size:14px;margin-bottom:5px;">Linked to a Record</div>
+<div style="font-size:13px;line-height:1.65;color:#5b6472 !important;">Attach a note to the record you're on and it resurfaces automatically next time.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#eefbf2 !important;border:1px solid #bbf7d0 !important;border-radius:18px;padding:18px;height:100%;box-sizing:border-box;">
+<div style="width:40px;height:40px;border-radius:11px;background-color:#dcfce7 !important;color:#15803d !important;font-size:20px;text-align:center;line-height:40px;margin-bottom:10px;">⌨️</div>
+<div style="font-weight:800;color:#14532d !important;font-size:14px;margin-bottom:5px;">Alt+N Anywhere</div>
+<div style="font-size:13px;line-height:1.65;color:#5b6472 !important;">One keyboard shortcut opens or closes the panel from any screen in the backend.</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+<!-- NAVIGATION -->
+<div style="margin-top:16px;background-color:#fff !important;border:1px solid #e5e7eb !important;border-radius:18px;padding:12px;text-align:center;">
+<a href="#overview" style="display:inline-block;margin:4px;padding:10px 20px;border-radius:999px;background-color:#714b67 !important;color:#fff !important;text-decoration:none;font-weight:800;font-size:14px;">Overview</a>
+<a href="#features" style="display:inline-block;margin:4px;padding:10px 20px;border-radius:999px;background-color:#f3f5fb !important;color:#1f2a5a !important;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #dfe5f2 !important;">Features</a>
+<a href="#workflow" style="display:inline-block;margin:4px;padding:10px 20px;border-radius:999px;background-color:#f3f5fb !important;color:#1f2a5a !important;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #dfe5f2 !important;">Workflow</a>
+<a href="#setup" style="display:inline-block;margin:4px;padding:10px 20px;border-radius:999px;background-color:#f3f5fb !important;color:#1f2a5a !important;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #dfe5f2 !important;">Setup</a>
+<a href="#technical" style="display:inline-block;margin:4px;padding:10px 20px;border-radius:999px;background-color:#f3f5fb !important;color:#1f2a5a !important;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #dfe5f2 !important;">Technical</a>
+<a href="#changelog" style="display:inline-block;margin:4px;padding:10px 20px;border-radius:999px;background-color:#f3f5fb !important;color:#1f2a5a !important;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #dfe5f2 !important;">Changelog</a>
+</div>
+
+<!-- OVERVIEW -->
+<div id="overview" style="margin-top:22px;background-color:#fff !important;border:1px solid #e5e7eb !important;border-radius:22px;padding:28px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.22em;color:#714b67 !important;text-transform:uppercase;margin-bottom:8px;">Overview</div>
+<h2 style="margin:0 0 14px;color:#111827 !important;font-size:26px;letter-spacing:-.3px;">Windows Sticky Notes, built into the Odoo backend</h2>
+<p style="margin:0 0 18px;font-size:15px;line-height:1.85;color:#4b5563 !important;max-width:930px;">
+  <strong>Sticky Notes</strong> adds a small, draggable ball to every screen of the Odoo backend — the same mechanism Odoo uses for the Discuss chat windows, so it's always there no matter where you navigate. Click it and a panel slides in from the right holding as many colour-coded notes as you like. Type and the note saves itself about half a second after you stop, with no save button to remember.
+</p>
+<p style="margin:0 0 20px;font-size:15px;line-height:1.85;color:#4b5563 !important;max-width:930px;">
+  Notes are private per user, stored server-side, and follow you across devices and sessions — a dedicated record rule keeps every user scoped to their own. Pin the ones that matter, colour-code the rest, and optionally link a note to whatever record you have open so it resurfaces automatically the next time you're back on it.
+</p>
+<table style="width:100%;border-collapse:separate;border-spacing:0;">
+<tr>
+<td style="width:50%;padding:0 8px 12px 0;vertical-align:top;">
+<div style="background-color:#f8faff !important;border:1px solid #e2e8f0 !important;border-left:4px solid #714b67 !important;border-radius:0 14px 14px 0;padding:16px;">
+<div style="font-weight:800;color:#3a2836 !important;margin-bottom:5px;">🟡 Six Colour-Coded Notes</div>
+<div style="font-size:13px;line-height:1.7;color:#5b6472 !important;">Yellow, pink, blue, green, purple, orange — keep as many notes as you like, not just one.</div>
+</div>
+</td>
+<td style="width:50%;padding:0 0 12px 8px;vertical-align:top;">
+<div style="background-color:#f8faff !important;border:1px solid #e2e8f0 !important;border-left:4px solid #1cc88a !important;border-radius:0 14px 14px 0;padding:16px;">
+<div style="font-weight:800;color:#14532d !important;margin-bottom:5px;">💾 Autosaves as You Type</div>
+<div style="font-size:13px;line-height:1.7;color:#5b6472 !important;">No save button, no lost drafts — notes persist to the server automatically.</div>
+</div>
+</td>
+</tr>
+<tr>
+<td style="padding:0 8px 0 0;vertical-align:top;">
+<div style="background-color:#f8faff !important;border:1px solid #e2e8f0 !important;border-left:4px solid #f59e0b !important;border-radius:0 14px 14px 0;padding:16px;">
+<div style="font-weight:800;color:#78350f !important;margin-bottom:5px;">🖱️ Draggable Ball</div>
+<div style="font-size:13px;line-height:1.7;color:#5b6472 !important;">Park it wherever it's out of your way — its position is remembered per browser.</div>
+</div>
+</td>
+<td style="padding:0 0 0 8px;vertical-align:top;">
+<div style="background-color:#f8faff !important;border:1px solid #e2e8f0 !important;border-left:4px solid #c0392b !important;border-radius:0 14px 14px 0;padding:16px;">
+<div style="font-weight:800;color:#7f1d1d !important;margin-bottom:5px;">🔒 Private &amp; Scoped</div>
+<div style="font-size:13px;line-height:1.7;color:#5b6472 !important;">A record rule ensures every user only ever sees their own notes.</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+<!-- FEATURES -->
+<div id="features" style="margin-top:22px;background-color:#fff !important;border:1px solid #e5e7eb !important;border-radius:22px;padding:28px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.22em;color:#714b67 !important;text-transform:uppercase;margin-bottom:8px;">Features</div>
+<h2 style="margin:0 0 20px;color:#111827 !important;font-size:26px;letter-spacing:-.3px;">Everything included for quick, everyday notes</h2>
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="width:33.33%;padding:6px;vertical-align:top;"><div style="background-color:#f8f5f7 !important;border:1px solid #e6d3e0 !important;border-radius:16px;padding:18px;height:100%;box-sizing:border-box;"><div style="font-size:24px;margin-bottom:8px;">🎈</div><div style="font-weight:800;color:#3a2836 !important;font-size:14px;margin-bottom:5px;">Floating Quick-Ball</div><div style="font-size:13px;line-height:1.7;color:#5b6472 !important;">Always available, on every backend screen, just like a systray that follows you around.</div></div></td>
+<td style="width:33.33%;padding:6px;vertical-align:top;"><div style="background-color:#f8f5f7 !important;border:1px solid #e6d3e0 !important;border-radius:16px;padding:18px;height:100%;box-sizing:border-box;"><div style="font-size:24px;margin-bottom:8px;">📥</div><div style="font-weight:800;color:#3a2836 !important;font-size:14px;margin-bottom:5px;">Slide-In Panel</div><div style="font-size:13px;line-height:1.7;color:#5b6472 !important;">Click the ball to slide the notes panel in from the right; click again, the X, or outside on mobile to hide it.</div></div></td>
+<td style="width:33.33%;padding:6px;vertical-align:top;"><div style="background-color:#f8f5f7 !important;border:1px solid #e6d3e0 !important;border-radius:16px;padding:18px;height:100%;box-sizing:border-box;"><div style="font-size:24px;margin-bottom:8px;">🎨</div><div style="font-weight:800;color:#3a2836 !important;font-size:14px;margin-bottom:5px;">Six Note Colours</div><div style="font-size:13px;line-height:1.7;color:#5b6472 !important;">Yellow, pink, blue, green, purple, orange — change any note's colour with one click on a swatch.</div></div></td>
+</tr>
+<tr>
+<td style="padding:6px;vertical-align:top;"><div style="background-color:#fff1f1 !important;border:1px solid #fecdd3 !important;border-radius:16px;padding:18px;height:100%;box-sizing:border-box;"><div style="font-size:24px;margin-bottom:8px;">💾</div><div style="font-weight:800;color:#7f1d1d !important;font-size:14px;margin-bottom:5px;">Autosave</div><div style="font-size:13px;line-height:1.7;color:#5b6472 !important;">Saves roughly half a second after you stop typing — no save button, ever.</div></div></td>
+<td style="padding:6px;vertical-align:top;"><div style="background-color:#fff1f1 !important;border:1px solid #fecdd3 !important;border-radius:16px;padding:18px;height:100%;box-sizing:border-box;"><div style="font-size:24px;margin-bottom:8px;">📌</div><div style="font-weight:800;color:#7f1d1d !important;font-size:14px;margin-bottom:5px;">Pin Important Notes</div><div style="font-size:13px;line-height:1.7;color:#5b6472 !important;">Pinned notes stay sorted to the top of the panel, ahead of everything else.</div></div></td>
+<td style="padding:6px;vertical-align:top;"><div style="background-color:#fff1f1 !important;border:1px solid #fecdd3 !important;border-radius:16px;padding:18px;height:100%;box-sizing:border-box;"><div style="font-size:24px;margin-bottom:8px;">🔗</div><div style="font-weight:800;color:#7f1d1d !important;font-size:14px;margin-bottom:5px;">Link to a Record</div><div style="font-size:13px;line-height:1.7;color:#5b6472 !important;">Tie a note to the record you have open; filter to "This record" to see only its notes.</div></div></td>
+</tr>
+<tr>
+<td style="padding:6px;vertical-align:top;"><div style="background-color:#fffbeb !important;border:1px solid #fde68a !important;border-radius:16px;padding:18px;height:100%;box-sizing:border-box;"><div style="font-size:24px;margin-bottom:8px;">⌨️</div><div style="font-weight:800;color:#78350f !important;font-size:14px;margin-bottom:5px;">Alt+N Shortcut</div><div style="font-size:13px;line-height:1.7;color:#5b6472 !important;">Toggle the panel open or closed from anywhere in the backend, hands never leave the keyboard.</div></div></td>
+<td style="padding:6px;vertical-align:top;"><div style="background-color:#fffbeb !important;border:1px solid #fde68a !important;border-radius:16px;padding:18px;height:100%;box-sizing:border-box;"><div style="font-size:24px;margin-bottom:8px;">🖱️</div><div style="font-weight:800;color:#78350f !important;font-size:14px;margin-bottom:5px;">Draggable Ball</div><div style="font-size:13px;line-height:1.7;color:#5b6472 !important;">Drag it wherever it's out of your way — position remembered per browser.</div></div></td>
+<td style="padding:6px;vertical-align:top;"><div style="background-color:#fffbeb !important;border:1px solid #fde68a !important;border-radius:16px;padding:18px;height:100%;box-sizing:border-box;"><div style="font-size:24px;margin-bottom:8px;">🔒</div><div style="font-weight:800;color:#78350f !important;font-size:14px;margin-bottom:5px;">Private, Server-Side</div><div style="font-size:13px;line-height:1.7;color:#5b6472 !important;">Notes are private per user and stored server-side, so they follow you across devices and sessions.</div></div></td>
+</tr>
+</table>
+</div>
+
+<!-- WORKFLOW -->
+<div id="workflow" style="margin-top:22px;background-color:#fff !important;border:1px solid #e5e7eb !important;border-radius:22px;padding:28px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.22em;color:#714b67 !important;text-transform:uppercase;margin-bottom:8px;">Workflow</div>
+<h2 style="margin:0 0 20px;color:#111827 !important;font-size:26px;letter-spacing:-.3px;">How a note gets jotted down</h2>
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="width:48px;vertical-align:top;padding:0 14px 20px 0;"><div style="width:40px;height:40px;border-radius:50%;background-color:#714b67 !important;color:#fff !important;font-weight:900;font-size:17px;text-align:center;line-height:40px;box-shadow:0 4px 12px rgba(113,75,103,.35) !important;">1</div></td>
+<td style="vertical-align:top;padding-bottom:20px;border-bottom:1px dashed #e5e7eb !important;"><div style="font-weight:800;color:#1f2a5a !important;font-size:14px;margin-bottom:4px;">Click the ball</div><div style="font-size:13px;color:#5b6472 !important;line-height:1.7;">Or press Alt+N from anywhere — the notes panel slides in from the right.</div></td>
+</tr>
+<tr><td colspan="2" style="height:14px;"></td></tr>
+<tr>
+<td style="width:48px;vertical-align:top;padding:0 14px 20px 0;"><div style="width:40px;height:40px;border-radius:50%;background-color:#714b67 !important;color:#fff !important;font-weight:900;font-size:17px;text-align:center;line-height:40px;box-shadow:0 4px 12px rgba(113,75,103,.35) !important;">2</div></td>
+<td style="vertical-align:top;padding-bottom:20px;border-bottom:1px dashed #e5e7eb !important;"><div style="font-weight:800;color:#1f2a5a !important;font-size:14px;margin-bottom:4px;">Add a note</div><div style="font-size:13px;color:#5b6472 !important;line-height:1.7;">Click the + button — a new note appears with a random colour, ready to type into.</div></td>
+</tr>
+<tr><td colspan="2" style="height:14px;"></td></tr>
+<tr>
+<td style="width:48px;vertical-align:top;padding:0 14px 20px 0;"><div style="width:40px;height:40px;border-radius:50%;background-color:#714b67 !important;color:#fff !important;font-weight:900;font-size:17px;text-align:center;line-height:40px;box-shadow:0 4px 12px rgba(113,75,103,.35) !important;">3</div></td>
+<td style="vertical-align:top;padding-bottom:20px;border-bottom:1px dashed #e5e7eb !important;"><div style="font-weight:800;color:#1f2a5a !important;font-size:14px;margin-bottom:4px;">Type — it saves itself</div><div style="font-size:13px;color:#5b6472 !important;line-height:1.7;">No save button; the title and content autosave about half a second after you pause.</div></td>
+</tr>
+<tr><td colspan="2" style="height:14px;"></td></tr>
+<tr>
+<td style="width:48px;vertical-align:top;padding:0 14px 20px 0;"><div style="width:40px;height:40px;border-radius:50%;background-color:#714b67 !important;color:#fff !important;font-weight:900;font-size:17px;text-align:center;line-height:40px;box-shadow:0 4px 12px rgba(113,75,103,.35) !important;">4</div></td>
+<td style="vertical-align:top;padding-bottom:20px;border-bottom:1px dashed #e5e7eb !important;"><div style="font-weight:800;color:#1f2a5a !important;font-size:14px;margin-bottom:4px;">Colour, pin, or link it</div><div style="font-size:13px;color:#5b6472 !important;line-height:1.7;">Pick a swatch, tap the pin to keep it on top, or tap the link icon to tie it to the open record.</div></td>
+</tr>
+<tr><td colspan="2" style="height:14px;"></td></tr>
+<tr>
+<td style="width:48px;vertical-align:top;padding:0 14px 0 0;"><div style="width:40px;height:40px;border-radius:50%;background-color:#714b67 !important;color:#fff !important;font-weight:900;font-size:17px;text-align:center;line-height:40px;box-shadow:0 4px 12px rgba(113,75,103,.35) !important;">5</div></td>
+<td style="vertical-align:top;"><div style="font-weight:800;color:#1f2a5a !important;font-size:14px;margin-bottom:4px;">Find it again, anywhere</div><div style="font-size:13px;color:#5b6472 !important;line-height:1.7;">Notes follow you across devices and sessions — click the ball again, wherever you are.</div></td>
+</tr>
+</table>
+</div>
+
+<!-- SETUP -->
+<div id="setup" style="margin-top:22px;background-color:#fff !important;border:1px solid #e5e7eb !important;border-radius:22px;padding:28px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.22em;color:#714b67 !important;text-transform:uppercase;margin-bottom:8px;">Setup</div>
+<h2 style="margin:0 0 20px;color:#111827 !important;font-size:26px;letter-spacing:-.3px;">Install and start jotting notes</h2>
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="width:48px;vertical-align:top;padding:0 14px 20px 0;"><div style="width:40px;height:40px;border-radius:50%;background-color:#714b67 !important;color:#fff !important;font-weight:900;font-size:17px;text-align:center;line-height:40px;box-shadow:0 4px 12px rgba(113,75,103,.35) !important;">1</div></td>
+<td style="vertical-align:top;padding-bottom:20px;border-bottom:1px dashed #e5e7eb !important;"><div style="font-weight:800;color:#1f2a5a !important;font-size:14px;margin-bottom:4px;">Install the module</div><div style="font-size:13px;color:#5b6472 !important;line-height:1.7;">Copy the module into your Odoo 19 addons path, update the app list, then install <strong>Sticky Notes</strong> from Apps.</div></td>
+</tr>
+<tr><td colspan="2" style="height:14px;"></td></tr>
+<tr>
+<td style="width:48px;vertical-align:top;padding:0 14px 20px 0;"><div style="width:40px;height:40px;border-radius:50%;background-color:#714b67 !important;color:#fff !important;font-weight:900;font-size:17px;text-align:center;line-height:40px;box-shadow:0 4px 12px rgba(113,75,103,.35) !important;">2</div></td>
+<td style="vertical-align:top;padding-bottom:20px;border-bottom:1px dashed #e5e7eb !important;"><div style="font-weight:800;color:#1f2a5a !important;font-size:14px;margin-bottom:4px;">No configuration needed</div><div style="font-size:13px;color:#5b6472 !important;line-height:1.7;">The floating ball appears immediately for every internal user — nothing to set up first.</div></td>
+</tr>
+<tr><td colspan="2" style="height:14px;"></td></tr>
+<tr>
+<td style="width:48px;vertical-align:top;padding:0 14px 0 0;"><div style="width:40px;height:40px;border-radius:50%;background-color:#714b67 !important;color:#fff !important;font-weight:900;font-size:17px;text-align:center;line-height:40px;box-shadow:0 4px 12px rgba(113,75,103,.35) !important;">3</div></td>
+<td style="vertical-align:top;"><div style="font-weight:800;color:#1f2a5a !important;font-size:14px;margin-bottom:4px;">Click the ball and start writing</div><div style="font-size:13px;color:#5b6472 !important;line-height:1.7;">Add your first note, pick a colour, and pin it if it matters. That's the whole setup.</div></td>
+</tr>
+</table>
+</div>
+
+<!-- TECHNICAL -->
+<div id="technical" style="margin-top:22px;background-color:#fff !important;border:1px solid #e5e7eb !important;border-radius:22px;padding:28px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.22em;color:#714b67 !important;text-transform:uppercase;margin-bottom:8px;">Technical</div>
+<h2 style="margin:0 0 20px;color:#111827 !important;font-size:26px;letter-spacing:-.3px;">Module information</h2>
+<table style="width:100%;border-collapse:separate;border-spacing:0;">
+<tr>
+<td style="width:33%;padding:0 8px 12px 0;vertical-align:top;"><div style="background-color:#f8f5f7 !important;border:1px solid #e6d3e0 !important;border-radius:14px;padding:16px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.14em;color:#714b67 !important;text-transform:uppercase;margin-bottom:6px;">Frontend</div><div style="font-weight:800;color:#3a2836 !important;margin-bottom:4px;">OWL Component</div><div style="font-size:12px;color:#5b6472 !important;line-height:1.7;">Registered in main_components<br/>Renders at the web client root</div></div></td>
+<td style="width:33%;padding:0 4px 12px;vertical-align:top;"><div style="background-color:#f8f5f7 !important;border:1px solid #e6d3e0 !important;border-radius:14px;padding:16px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.14em;color:#714b67 !important;text-transform:uppercase;margin-bottom:6px;">Data Model</div><div style="font-weight:800;color:#3a2836 !important;margin-bottom:4px;">ow.sticky.note</div><div style="font-size:12px;color:#5b6472 !important;line-height:1.7;">Title, content, colour, pin flag,<br/>optional linked record</div></div></td>
+<td style="width:33%;padding:0 0 12px 4px;vertical-align:top;"><div style="background-color:#f8f5f7 !important;border:1px solid #e6d3e0 !important;border-radius:14px;padding:16px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.14em;color:#714b67 !important;text-transform:uppercase;margin-bottom:6px;">Security</div><div style="font-weight:800;color:#3a2836 !important;margin-bottom:4px;">Per-User Record Rule</div><div style="font-size:12px;color:#5b6472 !important;line-height:1.7;">Every user is scoped strictly<br/>to their own notes</div></div></td>
+</tr>
+<tr>
+<td style="padding:0 8px 0 0;vertical-align:top;"><div style="background-color:#f8f5f7 !important;border:1px solid #e6d3e0 !important;border-radius:14px;padding:16px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.14em;color:#714b67 !important;text-transform:uppercase;margin-bottom:6px;">Odoo Version</div><div style="font-weight:800;color:#3a2836 !important;margin-bottom:4px;">16.0</div><div style="font-size:12px;color:#5b6472 !important;line-height:1.7;">Tree views &amp; attrs syntax<br/>matching the 16.0 API</div></div></td>
+<td style="padding:0 4px;vertical-align:top;"><div style="background-color:#f8f5f7 !important;border:1px solid #e6d3e0 !important;border-radius:14px;padding:16px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.14em;color:#714b67 !important;text-transform:uppercase;margin-bottom:6px;">License</div><div style="font-weight:800;color:#3a2836 !important;margin-bottom:4px;">OPL-1</div><div style="font-size:12px;color:#5b6472 !important;line-height:1.7;">Odoo Proprietary License<br/>v1.0</div></div></td>
+<td style="padding:0 0 0 4px;vertical-align:top;"><div style="background-color:#f8f5f7 !important;border:1px solid #e6d3e0 !important;border-radius:14px;padding:16px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.14em;color:#714b67 !important;text-transform:uppercase;margin-bottom:6px;">Best For</div><div style="font-weight:800;color:#3a2836 !important;margin-bottom:4px;">Personal Productivity</div><div style="font-size:12px;color:#5b6472 !important;line-height:1.7;">Anyone who needs quick notes<br/>without leaving Odoo</div></div></td>
+</tr>
+</table>
+</div>
+
+<!-- CHANGELOG -->
+<div id="changelog" style="margin-top:22px;background-color:#fff !important;border:1px solid #e5e7eb !important;border-radius:22px;padding:28px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.22em;color:#714b67 !important;text-transform:uppercase;margin-bottom:8px;">Changelog</div>
+<h2 style="margin:0 0 18px;color:#111827 !important;font-size:26px;letter-spacing:-.3px;">Version history</h2>
+<div style="background-color:#f8faff !important;border:1px solid #e2e8f0 !important;border-left:4px solid #714b67 !important;border-radius:0 16px 16px 0;padding:18px;">
+<div style="font-weight:800;color:#3a2836 !important;font-size:15px;margin-bottom:8px;">16.0.1.0.0 — Initial Release</div>
+<table style="width:100%;border-collapse:collapse;font-size:13px;color:#5b6472 !important;line-height:1.7;">
+<tr><td style="width:50%;padding:4px 10px 4px 0;vertical-align:top;">✓ Floating quick-ball on every backend screen</td><td style="padding:4px 0;vertical-align:top;">✓ Six colour-coded, unlimited sticky notes</td></tr>
+<tr><td style="padding:4px 10px 4px 0;vertical-align:top;">✓ Autosave, no save button required</td><td style="padding:4px 0;vertical-align:top;">✓ Pin notes to keep them on top</td></tr>
+<tr><td style="padding:4px 10px 4px 0;vertical-align:top;">✓ Optional link to the current record</td><td style="padding:4px 0;vertical-align:top;">✓ Alt+N keyboard shortcut, draggable ball</td></tr>
+</table>
+</div>
+</div>
+
+<!-- FOOTER -->
+<div style="margin-top:22px;background-color:#0f172a !important;border-radius:24px;padding:34px;text-align:center;position:relative;overflow:hidden;">
+<div style="position:relative;">
+<div style="font-size:22px;font-weight:900;color:#fff !important;margin-bottom:8px;">Sticky Notes for Odoo 19</div>
+<div style="font-size:14px;color:rgba(255,255,255,.7) !important;margin-bottom:22px;">Floating ball · 6 colours · Autosave · Pin · Link to record · Alt+N</div>
+<div>
+<span style="display:inline-block;background-color:#714b67 !important;color:#fff !important;border-radius:999px;padding:11px 28px;font-size:14px;font-weight:800;margin:5px;box-shadow:0 8px 20px rgba(113,75,103,.4) !important;">Install Sticky Notes</span>
+<span style="display:inline-block;background-color:rgba(255,255,255,.1) !important;color:#fff !important;border-radius:999px;padding:11px 22px;font-size:14px;font-weight:700;margin:5px;border:1px solid rgba(255,255,255,.2) !important;">OPL-1 License</span>
+</div>
+</div>
+</div>
+
+</div><!-- /tlr-description -->
+</section>
+</body>
+</html>

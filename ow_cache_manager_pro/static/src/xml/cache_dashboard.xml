@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="ow_cache_manager_pro.Dashboard" owl="1">
+  	<div class="ow-cache-dashboard-container">
+    <div class="o_tcm_dashboard">
+      <div class="o_tcm_header">
+        <h2>Cache &amp; Storage Manager</h2>
+        <div class="o_tcm_actions">
+          <label class="o_tcm_toggle">
+            <input type="checkbox" t-att-checked="state.auto_clean_enabled" t-on-change="toggleAutoClean"/>
+            Auto-clean daily
+          </label>
+          <button class="btn btn-outline-secondary" t-on-click="exportExcel"
+                  t-att-disabled="state.exporting or !state.scanned">
+            <i class="fa fa-file-excel-o"/>
+            <t t-if="state.exporting"> Exporting...</t>
+            <t t-else=""> Export Excel</t>
+          </button>
+          <button class="btn btn-primary" t-on-click="generate" t-att-disabled="state.loading">
+            <t t-if="state.loading">Scanning...</t>
+            <t t-else="">Generate</t>
+          </button>
+          <button class="btn btn-danger" t-on-click="clearAll"
+                  t-att-disabled="state.clearing or !state.scanned">
+            <t t-if="state.clearing">Clearing...</t>
+            <t t-else="">Clear All Cache</t>
+          </button>
+        </div>
+      </div>
+
+      <div class="o_tcm_freed" t-if="state.last_freed_mb !== null">
+        <i class="fa fa-check-circle"/> Freed <t t-esc="fmt(state.last_freed_mb)"/>
+        across <t t-esc="state.last_cleared_count"/> file(s)
+      </div>
+
+      <div class="o_tcm_summary" t-if="state.scanned">
+        <div class="o_tcm_card o_tcm_total">
+          <span class="o_tcm_label">Total Storage Scanned</span>
+          <span class="o_tcm_value" t-esc="fmt(state.total_mb)"/>
+        </div>
+
+        <div class="o_tcm_card">
+          <span class="o_tcm_label">Asset Cache (regenerable)</span>
+          <span class="o_tcm_value" t-esc="fmt(state.asset_cache_mb)"/>
+          <span class="o_tcm_sub" t-esc="state.asset_count + ' files'"/>
+          <button class="btn btn-sm btn-outline-danger" t-on-click="clearAssets"
+                  t-att-disabled="state.clearing">Clear</button>
+        </div>
+
+        <div class="o_tcm_card">
+          <span class="o_tcm_label">Orphaned Junk Files</span>
+          <span class="o_tcm_value" t-esc="fmt(state.orphaned_mb)"/>
+          <span class="o_tcm_sub" t-esc="state.orphaned_count + ' files'"/>
+          <button class="btn btn-sm btn-outline-danger" t-on-click="clearOrphaned"
+                  t-att-disabled="state.clearing">Clear</button>
+        </div>
+
+        <div class="o_tcm_card">
+          <span class="o_tcm_label">Database Size</span>
+          <span class="o_tcm_value" t-esc="state.db_size_pretty"/>
+          <span class="o_tcm_sub">PostgreSQL, whole database</span>
+        </div>
+      </div>
+
+      <div class="o_tcm_breakdown" t-if="state.scanned">
+        <h3>Storage by Content Type <small class="text-muted">(click a row to view files)</small></h3>
+
+        <div class="o_tcm_breakdown_body">
+          <div class="o_tcm_donut_wrap">
+            <div class="o_tcm_donut" t-attf-style="background: #{chartGradient}">
+              <div class="o_tcm_donut_hole">
+                <span class="o_tcm_donut_value" t-esc="fmt(state.total_mb)"/>
+                <span class="o_tcm_donut_caption">total</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="o_tcm_rows">
+            <div class="o_tcm_row" t-on-click="() => this.openCategory('image')">
+              <span class="o_tcm_row_label"><i class="fa fa-file-image-o"/> Images</span>
+              <div class="o_tcm_bar_wrap">
+                <div class="o_tcm_bar o_tcm_bar_image" t-attf-style="width: #{barWidth(state.image_mb)}"/>
+              </div>
+              <span class="o_tcm_row_value" t-esc="fmt(state.image_mb)"/>
+            </div>
+
+            <div class="o_tcm_row" t-on-click="() => this.openCategory('video')">
+              <span class="o_tcm_row_label"><i class="fa fa-file-video-o"/> Videos</span>
+              <div class="o_tcm_bar_wrap">
+                <div class="o_tcm_bar o_tcm_bar_video" t-attf-style="width: #{barWidth(state.video_mb)}"/>
+              </div>
+              <span class="o_tcm_row_value" t-esc="fmt(state.video_mb)"/>
+            </div>
+
+            <div class="o_tcm_row" t-on-click="() => this.openCategory('document')">
+              <span class="o_tcm_row_label"><i class="fa fa-file-text-o"/> Documents</span>
+              <div class="o_tcm_bar_wrap">
+                <div class="o_tcm_bar o_tcm_bar_document" t-attf-style="width: #{barWidth(state.document_mb)}"/>
+              </div>
+              <span class="o_tcm_row_value" t-esc="fmt(state.document_mb)"/>
+            </div>
+
+            <div class="o_tcm_row" t-on-click="() => this.openCategory('audio')">
+              <span class="o_tcm_row_label"><i class="fa fa-file-audio-o"/> Audio</span>
+              <div class="o_tcm_bar_wrap">
+                <div class="o_tcm_bar o_tcm_bar_audio" t-attf-style="width: #{barWidth(state.audio_mb)}"/>
+              </div>
+              <span class="o_tcm_row_value" t-esc="fmt(state.audio_mb)"/>
+            </div>
+
+            <div class="o_tcm_row" t-on-click="() => this.openCategory('other')">
+              <span class="o_tcm_row_label"><i class="fa fa-file-o"/> Other</span>
+              <div class="o_tcm_bar_wrap">
+                <div class="o_tcm_bar o_tcm_bar_other" t-attf-style="width: #{barWidth(state.other_mb)}"/>
+              </div>
+              <span class="o_tcm_row_value" t-esc="fmt(state.other_mb)"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="o_tcm_bottom_grid" t-if="state.scanned">
+        <div class="o_tcm_panel">
+          <h3>Top Storage Consumers</h3>
+          <table class="table table-sm" t-if="state.top_models.length">
+            <thead>
+              <tr><th>Model</th><th>Files</th><th class="text-end">Size</th></tr>
+            </thead>
+            <tbody>
+              <tr t-foreach="state.top_models" t-as="m" t-key="m.model">
+                <td t-esc="m.label"/>
+                <td t-esc="m.count"/>
+                <td class="text-end" t-esc="fmt(m.size_mb)"/>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="o_tcm_panel">
+          <h3>Duplicate Records</h3>
+          <p>
+            <span class="o_tcm_dup_stat" t-esc="state.duplicate_groups"/> duplicate group(s),
+            <span class="o_tcm_dup_stat" t-esc="state.duplicate_extra_records"/> extra row(s) that
+            could be cleaned up.
+          </p>
+          <p class="text-muted" style="font-size:12px;">
+            Files are stored once on disk (content-addressed filestore) - this mainly
+            tidies the database, actual disk savings are usually small.
+          </p>
+          <button class="btn btn-sm btn-outline-warning" t-on-click="openDuplicates"
+                  t-att-disabled="!state.duplicate_groups">
+            Review Duplicates
+          </button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </t>
+</templates>

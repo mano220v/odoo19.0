@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_conversion_user,Conversion user,model_ow_document_conversion,ow_document_converter_pro.group_converter_user,1,1,1,1
+access_conversion_manager,Conversion manager,model_ow_document_conversion,ow_document_converter_pro.group_converter_manager,1,1,1,1

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_ow_download_history_list" model="ir.ui.view">
+        <field name="name">ow.download.history.list</field>
+        <field name="model">ow.download.history</field>
+        <field name="arch" type="xml">
+            <list string="Download History" default_order="download_date desc" create="false" edit="false">
+                <field name="download_date"/>
+                <field name="user_id"/>
+                <field name="file_name"/>
+                <field name="file_type" decoration-info="file_type == 'report'" decoration-success="file_type == 'export'"/>
+                <field name="res_model" optional="hide"/>
+                <field name="res_name"/>
+                <field name="file_size_human" string="Size"/>
+                <field name="ip_address" optional="hide"/>
+                <field name="company_id" optional="hide" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ow_download_history_form" model="ir.ui.view">
+        <field name="name">ow.download.history.form</field>
+        <field name="model">ow.download.history</field>
+        <field name="arch" type="xml">
+            <form string="Download History" create="false" edit="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="file_name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="download_date"/>
+                            <field name="file_type"/>
+                            <field name="mimetype"/>
+                            <field name="file_size_human" string="File Size"/>
+                        </group>
+                        <group>
+                            <field name="res_model"/>
+                            <field name="res_name"/>
+                            <field name="ip_address"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <button name="action_open_source_record" type="object"
+                            string="Open Source Record" class="btn-secondary"
+                            invisible="not res_model or not res_id"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ow_download_history_search" model="ir.ui.view">
+        <field name="name">ow.download.history.search</field>
+        <field name="model">ow.download.history</field>
+        <field name="arch" type="xml">
+            <search string="Search Download History">
+                <field name="file_name"/>
+                <field name="user_id"/>
+                <field name="res_model"/>
+                <field name="res_name"/>
+                <filter string="My Downloads" name="my_downloads" domain="[('user_id', '=', uid)]"/>
+                <filter string="Today" name="today"
+        domain="[('download_date', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:00')), ('download_date', '&lt;', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))]"/>
+<filter string="This Week" name="this_week"
+        domain="[('download_date', '&gt;=', (context_today() + relativedelta(weeks=-1, days=1, weekday=0)).strftime('%Y-%m-%d 00:00:00')), ('download_date', '&lt;=', (context_today() + relativedelta(weekday=6)).strftime('%Y-%m-%d 23:59:59'))]"/>
+                <separator/>
+                <filter string="Attachments" name="type_attachment" domain="[('file_type', '=', 'attachment')]"/>
+                <filter string="Images" name="type_image" domain="[('file_type', '=', 'image')]"/>
+                <filter string="Reports" name="type_report" domain="[('file_type', '=', 'report')]"/>
+                <filter string="Data Exports" name="type_export" domain="[('file_type', '=', 'export')]"/>       
+            </search>
+        </field>
+    </record>
+
+    <record id="view_ow_download_history_pivot" model="ir.ui.view">
+        <field name="name">ow.download.history.pivot</field>
+        <field name="model">ow.download.history</field>
+        <field name="arch" type="xml">
+            <pivot string="Download History Analysis">
+                <field name="user_id" type="row"/>
+                <field name="file_type" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_ow_download_history_graph" model="ir.ui.view">
+        <field name="name">ow.download.history.graph</field>
+        <field name="model">ow.download.history</field>
+        <field name="arch" type="xml">
+            <graph string="Downloads Over Time" type="line">
+                <field name="download_date" interval="day"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_ow_download_history" model="ir.actions.act_window">
+        <field name="name">Download History</field>
+        <field name="res_model">ow.download.history</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+        <field name="search_view_id" ref="view_ow_download_history_search"/>
+        <field name="context">{'search_default_this_week': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No downloads logged yet
+            </p>
+            <p>
+                Every attachment, report and data export downloaded through Odoo
+                will show up here automatically — nothing to configure.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ow_download_history_dashboard" model="ir.actions.act_window">
+        <field name="name">Download Dashboard</field>
+        <field name="res_model">ow.download.history</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="search_view_id" ref="view_ow_download_history_search"/>
+    </record>
+
+</odoo>

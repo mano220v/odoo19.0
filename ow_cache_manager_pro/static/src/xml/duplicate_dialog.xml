@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="ow_cache_manager_pro.DuplicateDialog" owl="1">
+    <Dialog title="'Duplicate Attachment Records'" size="'lg'">
+      <div class="o_tcm_dialog">
+        <p class="o_tcm_note">
+          <i class="fa fa-info-circle"/>
+          Odoo stores each unique file once on disk. These rows point to
+          identical file content, so removing the extra rows cleans up
+          database clutter, but usually frees little or no extra disk space.
+        </p>
+        <p t-if="state.loading">Scanning...</p>
+        <table class="table table-sm" t-if="!state.loading and state.groups.length">
+          <thead>
+            <tr>
+              <th>Checksum</th>
+              <th>Copies</th>
+              <th class="text-end">Size Each</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr t-foreach="state.groups" t-as="g" t-key="g.checksum">
+              <td t-esc="g.checksum"/>
+              <td t-esc="g.count"/>
+              <td class="text-end" t-esc="g.size_mb + ' MB'"/>
+            </tr>
+          </tbody>
+        </table>
+        <p t-if="!state.loading and !state.groups.length">No duplicate records found.</p>
+      </div>
+      <t t-set-slot="footer">
+        <button class="btn btn-danger" t-on-click="cleanAll"
+                t-att-disabled="state.cleaning or state.loading or !state.groups.length">
+          <t t-if="state.cleaning">Cleaning...</t>
+          <t t-else="">Keep Newest, Remove Rest</t>
+        </button>
+        <button class="btn btn-secondary" t-on-click="() => this.props.close()">Close</button>
+      </t>
+    </Dialog>
+  </t>
+</templates>

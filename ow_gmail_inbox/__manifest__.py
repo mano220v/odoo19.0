@@ -1,0 +1,33 @@
+{
+    "name": "Gmail Inbox | Google Mail Workspace",
+    "summary": "Connect Gmail with Google OAuth and read, search, compose and reply inside Odoo",
+    "version": "19.0.1.0.3",
+    "category": "Productivity/Mail",
+    "author": "Odoo Wings",
+    "website": "https://apps.odoo.com/apps/modules/browse?author=Odoo%20Wings",
+    "support": "vsmanoj144@gmail.com",
+    "license": "LGPL-3",
+    "depends": ["web", "base_setup"],
+    "external_dependencies": {"python": ["requests", "cryptography"]},
+    "data": [
+        "security/gmail_security.xml",
+        "security/ir.model.access.csv",
+        "views/settings_views.xml",
+        "views/gmail_views.xml",
+        "views/oauth_templates.xml",
+    ],
+    "assets": {"web.assets_backend": [
+        "ow_gmail_inbox/static/src/gmail_app.js",
+        "ow_gmail_inbox/static/src/gmail_app.xml",
+        "ow_gmail_inbox/static/src/gmail_app.scss",
+    ]},
+    "images": [
+        "static/description/banner.png",
+        "static/description/inbox_preview.png",
+        "static/description/compose_preview.png",
+    ],
+    "uninstall_hook": "uninstall_hook",
+    "installable": True,
+    "application": True,
+    "auto_install": False,
+}

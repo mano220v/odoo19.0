@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_inventory_dashboard" model="ir.actions.client">
+        <field name="name">Dashboard</field>
+        <field name="tag">ow_inventory_dashboard_tag</field>
+    </record>
+
+    <menuitem id="menu_inventory_dashboard_root"
+              name="Inventory Dashboard"
+              action="action_inventory_dashboard"
+              sequence="1"/>
+
+    <!-- Also surface it as the first item inside the standard Inventory app -->
+    <menuitem id="menu_inventory_dashboard_in_stock"
+              name="Dashboard"
+              parent="stock.menu_stock_root"
+              action="action_inventory_dashboard"
+              sequence="1"/>
+
+</odoo>

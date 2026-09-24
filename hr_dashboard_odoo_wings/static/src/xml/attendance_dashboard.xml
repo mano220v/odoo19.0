@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+  <t t-name="hr_dashboard_odoo_wings.AttendanceDashboard">
+	<div class="hr-dashboard-container">
+    <div class="o_atd_root">
+
+      <!-- ░░ LOADING ░░ -->
+      <t t-if="state.loading">
+        <div class="o_atd_loading">
+          <i class="fa fa-circle-o-notch fa-spin fa-3x o_atd_spinner"/>
+          <p>Loading attendance data…</p>
+        </div>
+      </t>
+
+      <!-- ░░ ERROR ░░ -->
+      <t t-elif="state.error">
+        <div class="o_atd_error">
+          <i class="fa fa-exclamation-triangle fa-2x"/>
+          <p>Unable to load dashboard data. Please check the server log.</p>
+          <button class="btn btn-primary mt-2" t-on-click="() => this.loadData()">
+            <i class="fa fa-refresh me-1"/> Retry
+          </button>
+        </div>
+      </t>
+
+      <!-- ░░ DASHBOARD ░░ -->
+      <t t-else="">
+
+        <!-- ── Header ─────────────────────────────────────────────────── -->
+        <div class="o_atd_header">
+          <div class="o_atd_title">
+            <i class="fa fa-tachometer me-2"/>
+            <span>Employee Attendance</span>
+          </div>
+          <div class="o_atd_header_right">
+            <span class="o_atd_date_badge">
+              <i class="fa fa-calendar me-1"/>
+              <t t-esc="state.todayLabel"/>
+            </span>
+            <button class="o_atd_refresh_btn" t-on-click="() => this.loadData()">
+              <i class="fa fa-refresh me-1"/>Refresh
+            </button>
+            <button class="o_atd_export_btn" t-on-click="() => this.openExportModal()">
+              <i class="fa fa-download me-1"/>Export
+            </button>
+          </div>
+        </div>
+
+        <!-- ── Cards ──────────────────────────────────────────────────── -->
+        <div class="o_atd_cards">
+
+          <!-- Total -->
+          <div class="o_atd_card o_atd_total"
+               t-on-click="() => this.openList('all')" title="View all employees">
+            <div class="o_atd_card_icon"><i class="fa fa-users"/></div>
+            <div class="o_atd_card_body">
+              <div class="o_atd_card_count" t-esc="state.totalCount"/>
+              <div class="o_atd_card_label">Total Employees</div>
+            </div>
+            <div class="o_atd_card_arrow"><i class="fa fa-chevron-right"/></div>
+          </div>
+
+          <!-- Present -->
+          <div class="o_atd_card o_atd_present"
+               t-on-click="() => this.openList('present')" title="View present employees">
+            <div class="o_atd_card_icon"><i class="fa fa-check-circle"/></div>
+            <div class="o_atd_card_body">
+              <div class="o_atd_card_count" t-esc="state.presentCount"/>
+              <div class="o_atd_card_label">Present Today</div>
+              <div class="o_atd_card_pct"><t t-esc="this.pct(state.presentCount)"/>%</div>
+            </div>
+            <div class="o_atd_card_arrow"><i class="fa fa-chevron-right"/></div>
+          </div>
+
+          <!-- On Leave -->
+          <div class="o_atd_card o_atd_on_leave"
+               t-on-click="() => this.openList('on_leave')" title="View employees on leave">
+            <div class="o_atd_card_icon"><i class="fa fa-plane"/></div>
+            <div class="o_atd_card_body">
+              <div class="o_atd_card_count" t-esc="state.onLeaveCount"/>
+              <div class="o_atd_card_label">On Leave Today</div>
+              <div class="o_atd_card_pct"><t t-esc="this.pct(state.onLeaveCount)"/>%</div>
+            </div>
+            <div class="o_atd_card_arrow"><i class="fa fa-chevron-right"/></div>
+          </div>
+
+          <!-- Absent -->
+          <div class="o_atd_card o_atd_absent"
+               t-on-click="() => this.openList('absent')" title="View absent employees">
+            <div class="o_atd_card_icon"><i class="fa fa-times-circle"/></div>
+            <div class="o_atd_card_body">
+              <div class="o_atd_card_count" t-esc="state.absentCount"/>
+              <div class="o_atd_card_label">Absent Today</div>
+              <div class="o_atd_card_pct"><t t-esc="this.pct(state.absentCount)"/>%</div>
+            </div>
+            <div class="o_atd_card_arrow"><i class="fa fa-chevron-right"/></div>
+          </div>
+
+        </div>
+        <!-- /Cards -->
+
+        <!-- ── Attendance Overview Panel ──────────────────────────────── -->
+        <div class="o_atd_overview">
+
+          <div class="o_atd_panel">
+            <div class="o_atd_panel_header">
+              <i class="fa fa-bar-chart me-2"/>Attendance Overview
+            </div>
+
+            <!-- Present bar -->
+            <div class="o_atd_bar_row">
+              <div class="o_atd_bar_label">
+                <span class="o_atd_dot o_dot_present"/><span>Present</span>
+              </div>
+              <div class="o_atd_bar_track">
+                <div class="o_atd_bar_fill o_fill_present"
+                     t-attf-style="width: {{this.pct(state.presentCount)}}%"/>
+              </div>
+              <div class="o_atd_bar_val">
+                <t t-esc="state.presentCount"/> / <t t-esc="state.totalCount"/>
+              </div>
+            </div>
+
+            <!-- On Leave bar -->
+            <div class="o_atd_bar_row">
+              <div class="o_atd_bar_label">
+                <span class="o_atd_dot o_dot_on_leave"/><span>On Leave</span>
+              </div>
+              <div class="o_atd_bar_track">
+                <div class="o_atd_bar_fill o_fill_on_leave"
+                     t-attf-style="width: {{this.pct(state.onLeaveCount)}}%"/>
+              </div>
+              <div class="o_atd_bar_val">
+                <t t-esc="state.onLeaveCount"/> / <t t-esc="state.totalCount"/>
+              </div>
+            </div>
+
+            <!-- Absent bar -->
+            <div class="o_atd_bar_row">
+              <div class="o_atd_bar_label">
+                <span class="o_atd_dot o_dot_absent"/><span>Absent</span>
+              </div>
+              <div class="o_atd_bar_track">
+                <div class="o_atd_bar_fill o_fill_absent"
+                     t-attf-style="width: {{this.pct(state.absentCount)}}%"/>
+              </div>
+              <div class="o_atd_bar_val">
+                <t t-esc="state.absentCount"/> / <t t-esc="state.totalCount"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Donut-style summary -->
+          <div class="o_atd_summary_panel">
+            <div class="o_atd_panel_header">
+              <i class="fa fa-info-circle me-2"/>Quick Summary
+            </div>
+            <div class="o_atd_summary_items">
+              <div class="o_atd_summary_item" t-on-click="() => this.openList('present')">
+                <div class="o_summary_circle o_circle_present">
+                  <t t-esc="this.pct(state.presentCount)"/>%
+                </div>
+                <div class="o_summary_label">Present</div>
+                <div class="o_summary_count"><t t-esc="state.presentCount"/> emp</div>
+              </div>
+              <div class="o_atd_summary_item" t-on-click="() => this.openList('on_leave')">
+                <div class="o_summary_circle o_circle_on_leave">
+                  <t t-esc="this.pct(state.onLeaveCount)"/>%
+                </div>
+                <div class="o_summary_label">On Leave</div>
+                <div class="o_summary_count"><t t-esc="state.onLeaveCount"/> emp</div>
+              </div>
+              <div class="o_atd_summary_item" t-on-click="() => this.openList('absent')">
+                <div class="o_summary_circle o_circle_absent">
+                  <t t-esc="this.pct(state.absentCount)"/>%
+                </div>
+                <div class="o_summary_label">Absent</div>
+                <div class="o_summary_count"><t t-esc="state.absentCount"/> emp</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /Overview -->
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             DEPARTMENT-WISE ATTENDANCE
+        ═══════════════════════════════════════════════════════════════════ -->
+        <div class="o_atd_dept_section">
+
+          <!-- Section header -->
+          <div class="o_atd_dept_header">
+            <div class="o_atd_dept_title">
+              <i class="fa fa-sitemap me-2"/>Department-wise Attendance
+            </div>
+            <div class="o_atd_dept_legend">
+              <span class="o_dept_legend_dot" style="background:#1cc88a;"/>
+              <span>Present</span>
+              <span class="o_dept_legend_dot" style="background:#f6c23e;"/>
+              <span>On Leave</span>
+              <span class="o_dept_legend_dot" style="background:#e74a3b;"/>
+              <span>Absent</span>
+            </div>
+          </div>
+
+          <!-- Department cards — horizontal scroll -->
+          <div class="o_atd_dept_scroll">
+            <t t-foreach="state.departments" t-as="dept" t-key="dept.id">
+
+              <div class="o_atd_dept_card">
+
+                <!-- Dept name + total -->
+                <div class="o_atd_dept_name"
+                     t-on-click="() => this.openDeptList(dept, 'all')"
+                     t-att-title="`Click to view all ${dept.name} employees`">
+                  <i class="fa fa-building-o me-1"/>
+                  <span t-esc="dept.name"/>
+                </div>
+                <div class="o_atd_dept_total">
+                  <t t-esc="dept.total"/> employee<t t-if="dept.total !== 1">s</t>
+                </div>
+
+                <!-- 3 circles: Present / Leave / Absent -->
+                <div class="o_atd_dept_circles">
+
+                  <!-- Present -->
+                  <div class="o_atd_dept_circle_wrap"
+                       t-on-click="() => this.openDeptList(dept, 'present')"
+                       title="Click to view present employees">
+                    <div class="o_atd_dept_circle o_dc_present">
+                      <t t-esc="dept.present_count"/>
+                    </div>
+                    <div class="o_atd_dept_circle_label o_dcl_present">Present</div>
+                  </div>
+
+                  <!-- On Leave -->
+                  <div class="o_atd_dept_circle_wrap"
+                       t-on-click="() => this.openDeptList(dept, 'on_leave')"
+                       title="Click to view employees on leave">
+                    <div class="o_atd_dept_circle o_dc_on_leave">
+                      <t t-esc="dept.on_leave_count"/>
+                    </div>
+                    <div class="o_atd_dept_circle_label o_dcl_on_leave">On Leave</div>
+                  </div>
+
+                  <!-- Absent -->
+                  <div class="o_atd_dept_circle_wrap"
+                       t-on-click="() => this.openDeptList(dept, 'absent')"
+                       title="Click to view absent employees">
+                    <div class="o_atd_dept_circle o_dc_absent">
+                      <t t-esc="dept.absent_count"/>
+                    </div>
+                    <div class="o_atd_dept_circle_label o_dcl_absent">Absent</div>
+                  </div>
+
+                </div>
+                <!-- /circles -->
+
+                <!-- Mini presence bar at bottom of card -->
+                <div class="o_atd_dept_minibar">
+                  <div class="o_atd_dept_minibar_fill o_mb_present"
+                       t-attf-style="width:{{this.pct(dept.present_count, dept.total)}}%"
+                       t-att-title="`Present: ${dept.present_count}`"/>
+                  <div class="o_atd_dept_minibar_fill o_mb_on_leave"
+                       t-attf-style="width:{{this.pct(dept.on_leave_count, dept.total)}}%"
+                       t-att-title="`On Leave: ${dept.on_leave_count}`"/>
+                  <div class="o_atd_dept_minibar_fill o_mb_absent"
+                       t-attf-style="width:{{this.pct(dept.absent_count, dept.total)}}%"
+                       t-att-title="`Absent: ${dept.absent_count}`"/>
+                </div>
+
+              </div>
+              <!-- /dept card -->
+
+            </t>
+
+            <!-- Empty state -->
+            <t t-if="state.departments.length === 0">
+              <div class="o_atd_dept_empty">
+                <i class="fa fa-inbox fa-2x"/>
+                <p>No departments found.</p>
+              </div>
+            </t>
+
+          </div>
+          <!-- /scroll -->
+
+        </div>
+        <!-- /dept section -->
+
+        <!-- ── Footer ─────────────────────────────────────────────────────── -->
+        <div class="o_atd_footer">
+          <i class="fa fa-clock-o me-1"/>
+          Last refreshed: <strong t-esc="state.lastRefresh"/>
+          
+          
+          Auto-refreshes every 5 minutes
+        </div>
+
+        <!-- ── Export Modal ───────────────────────────────────────────────── -->
+        <t t-if="state.showExportModal">
+          <div class="o_atd_modal_backdrop" t-on-click="() => this.closeExportModal()">
+            <div class="o_atd_modal" t-on-click="(ev) => ev.stopPropagation()">
+
+              <div class="o_atd_modal_header">
+                <span><i class="fa fa-download me-2"/>Export Attendance</span>
+                <i class="fa fa-times o_atd_modal_close" t-on-click="() => this.closeExportModal()"/>
+              </div>
+
+              <div class="o_atd_modal_body">
+
+                <p class="o_atd_modal_label">Choose date range</p>
+
+                <div class="o_atd_modal_choice_row">
+                  <button
+                    t-attf-class="o_atd_choice_btn {{ state.exportDateType === 'current' ? 'active' : '' }}"
+                    t-on-click="() => this.setExportDateType('current')">
+                    <i class="fa fa-calendar-check-o me-1"/> Current Date
+                  </button>
+                  <button
+                    t-attf-class="o_atd_choice_btn {{ state.exportDateType === 'range' ? 'active' : '' }}"
+                    t-on-click="() => this.setExportDateType('range')">
+                    <i class="fa fa-calendar-o me-1"/> Other Date(s)
+                  </button>
+                </div>
+
+                <!-- Current date confirmation -->
+                <t t-if="state.exportDateType === 'current'">
+                  <div class="o_atd_modal_info">
+                    <i class="fa fa-info-circle me-1"/>
+                    Will export today's attendance — <strong t-esc="state.todayLabel"/>
+                  </div>
+                </t>
+
+                <!-- From / To pickers -->
+                <t t-else="">
+                  <div class="o_atd_modal_date_row">
+                    <div class="o_atd_modal_field">
+                      <label>From Date</label>
+                      <input type="date" t-model="state.exportFromDate"/>
+                    </div>
+                    <div class="o_atd_modal_field">
+                      <label>To Date</label>
+                      <input type="date" t-model="state.exportToDate"/>
+                    </div>
+                  </div>
+                </t>
+
+                <t t-if="state.exportError">
+                  <div class="o_atd_modal_error">
+                    <i class="fa fa-exclamation-circle me-1"/>
+                    <t t-esc="state.exportError"/>
+                  </div>
+                </t>
+
+              </div>
+
+              <div class="o_atd_modal_footer">
+                <button class="o_atd_modal_btn_cancel"
+                        t-on-click="() => this.closeExportModal()"
+                        t-att-disabled="state.exporting">
+                  Cancel
+                </button>
+                <button class="o_atd_modal_btn_confirm"
+                        t-on-click="() => this.confirmExport()"
+                        t-att-disabled="state.exporting">
+                  <t t-if="state.exporting">
+                    <i class="fa fa-circle-o-notch fa-spin me-1"/>Exporting…
+                  </t>
+                  <t t-else="">
+                    <i class="fa fa-download me-1"/>Export
+                  </t>
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </t>
+
+      </t>
+    </div>
+    </div>
+  </t>
+
+</templates>

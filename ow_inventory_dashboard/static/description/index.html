@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>Inventory Dashboard for Odoo 19</title>
+</head>
+<body>
+<section class="oe_container">
+<div class="owinv-description" style="background-color:#f5faf9 !important;color:#1f2a28 !important;max-width:1180px !important;margin:0 auto !important;padding:18px !important;font-family:Arial,Helvetica,sans-serif !important;box-sizing:border-box;">
+
+<!-- HERO -->
+<div style="background-color:#0f1e1d !important;color:#fff !important;border-radius:20px;padding:40px 30px 34px;box-shadow:0 18px 40px rgba(15,30,29,.28) !important;overflow:hidden;position:relative;">
+  <div style="position:absolute;top:0;right:0;width:220px;height:220px;background-color:rgba(13,148,136,.16) !important;border-radius:50%;transform:translate(60px,-90px);"></div>
+  <div style="position:absolute;bottom:0;left:0;width:180px;height:180px;background-color:rgba(99,102,241,.14) !important;border-radius:50%;transform:translate(-60px,70px);"></div>
+  <div style="text-align:center;max-width:880px;margin:0 auto;position:relative;">
+    <div style="display:inline-block;background-color:rgba(13,148,136,.18) !important;border:1px solid rgba(13,148,136,.4) !important;border-radius:8px;padding:7px 18px;font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#5eead4 !important;margin-bottom:22px;">
+      📦 Built for Odoo 19 · Inventory
+    </div>
+    <h1 style="margin:0 0 16px;font-size:42px;line-height:1.12;letter-spacing:-1px;font-weight:900;color:#fff !important;">
+      Every stock number,<br/>
+      <span style="color:#5eead4 !important;">one click from the truth</span>
+    </h1>
+    <p style="margin:0 auto 26px;font-size:16px;line-height:1.8;color:rgba(255,255,255,.78) !important;max-width:760px;">
+      A clickable, color-coded control room for stock levels, transfers, reordering and warehouse activity — low stock alerts, backorders, on-time delivery rate and a live location breakdown, all in one view.
+    </p>
+    <table style="margin:0 auto;border-collapse:collapse;">
+      <tr>
+        <td style="padding:5px;"><span style="display:inline-block;background-color:#0d9488 !important;color:#fff !important;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:900;">Odoo 19</span></td>
+        <td style="padding:5px;"><span style="display:inline-block;background-color:rgba(255,255,255,.08) !important;color:#fff !important;border:1px solid rgba(255,255,255,.2) !important;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;">Fully Clickable KPIs</span></td>
+        <td style="padding:5px;"><span style="display:inline-block;background-color:rgba(255,255,255,.08) !important;color:#fff !important;border:1px solid rgba(255,255,255,.2) !important;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;">Auto-Refresh 30s</span></td>
+        <td style="padding:5px;"><span style="display:inline-block;background-color:rgba(255,255,255,.08) !important;color:#fff !important;border:1px solid rgba(255,255,255,.2) !important;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;">OWL 2 · OPL-1</span></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- NAV -->
+<div style="margin-top:14px;background-color:#fff !important;border:1px solid #dcebe8 !important;border-radius:12px;padding:10px;text-align:center;">
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="text-align:center;padding:6px;"><a href="#stock-levels" style="color:#0f766e !important;text-decoration:none;font-size:13px;font-weight:800;">Stock Levels</a></td>
+<td style="text-align:center;padding:6px;"><a href="#transfers" style="color:#0f766e !important;text-decoration:none;font-size:13px;font-weight:800;">Transfers</a></td>
+<td style="text-align:center;padding:6px;"><a href="#operations" style="color:#0f766e !important;text-decoration:none;font-size:13px;font-weight:800;">Operations</a></td>
+<td style="text-align:center;padding:6px;"><a href="#insights" style="color:#0f766e !important;text-decoration:none;font-size:13px;font-weight:800;">Insights</a></td>
+<td style="text-align:center;padding:6px;"><a href="#setup" style="color:#0f766e !important;text-decoration:none;font-size:13px;font-weight:800;">Setup</a></td>
+<td style="text-align:center;padding:6px;"><a href="#technical" style="color:#0f766e !important;text-decoration:none;font-size:13px;font-weight:800;">Technical</a></td>
+<td style="text-align:center;padding:6px;"><a href="#changelog" style="color:#0f766e !important;text-decoration:none;font-size:13px;font-weight:800;">Changelog</a></td>
+</tr>
+</table>
+</div>
+
+<!-- STOCK LEVELS -->
+<div id="stock-levels" style="margin-top:20px;background-color:#fff !important;border:1px solid #dcebe8 !important;border-radius:18px;padding:26px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.2em;color:#0d9488 !important;text-transform:uppercase;margin-bottom:6px;">Stock Levels</div>
+<h2 style="margin:0 0 18px;color:#0f1e1d !important;font-size:24px;letter-spacing:-.3px;">What's on hand, right now</h2>
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#effcf9 !important;border:1px solid #b9e9df !important;border-left:4px solid #0d9488 !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">📦</div>
+<div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:4px;">Products</div>
+<div style="font-size:12px;line-height:1.6;color:#5b6b67 !important;">Total active storable products, always up to date.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#ecfdf5 !important;border:1px solid #bbf0d3 !important;border-left:4px solid #059669 !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">✅</div>
+<div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:4px;">In Stock</div>
+<div style="font-size:12px;line-height:1.6;color:#5b6b67 !important;">Products with quantity on hand greater than zero.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#fff7ed !important;border:1px solid #fbdba0 !important;border-left:4px solid #d97706 !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">⚠️</div>
+<div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:4px;">Low Stock</div>
+<div style="font-size:12px;line-height:1.6;color:#5b6b67 !important;">Reordering rules currently triggered and needing action.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#fff1f2 !important;border:1px solid #f3c2c2 !important;border-left:4px solid #dc2626 !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">⛔</div>
+<div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:4px;">Out of Stock</div>
+<div style="font-size:12px;line-height:1.6;color:#5b6b67 !important;">Products at zero or negative quantity on hand.</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+<!-- TRANSFERS -->
+<div id="transfers" style="margin-top:20px;background-color:#fff !important;border:1px solid #dcebe8 !important;border-radius:18px;padding:26px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.2em;color:#0d9488 !important;text-transform:uppercase;margin-bottom:6px;">Transfers</div>
+<h2 style="margin:0 0 18px;color:#0f1e1d !important;font-size:24px;letter-spacing:-.3px;">Receipts, deliveries and internal moves</h2>
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#eef2ff !important;border:1px solid #c7d0fb !important;border-left:4px solid #4f46e5 !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">🔄</div>
+<div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:4px;">Open Transfers</div>
+<div style="font-size:12px;line-height:1.6;color:#5b6b67 !important;">Everything not yet done or cancelled, filtered by period.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#ecfeff !important;border:1px solid #b9e6ec !important;border-left:4px solid #0891b2 !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">▶️</div>
+<div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:4px;">Ready to Process</div>
+<div style="font-size:12px;line-height:1.6;color:#5b6b67 !important;">Fully reserved transfers waiting to be actioned.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#fff1f2 !important;border:1px solid #f3c2c2 !important;border-left:4px solid #dc2626 !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">⏰</div>
+<div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:4px;">Late</div>
+<div style="font-size:12px;line-height:1.6;color:#5b6b67 !important;">Past their scheduled date, surfaced instantly.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#fdf3ee !important;border:1px solid #f3c9b4 !important;border-left:4px solid #ea580c !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">📑</div>
+<div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:4px;">Backorders</div>
+<div style="font-size:12px;line-height:1.6;color:#5b6b67 !important;">Transfers split off from an earlier, incomplete one.</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+<!-- OPERATIONS -->
+<div id="operations" style="margin-top:20px;background-color:#fff !important;border:1px solid #dcebe8 !important;border-radius:18px;padding:26px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.2em;color:#0d9488 !important;text-transform:uppercase;margin-bottom:6px;">Operations</div>
+<h2 style="margin:0 0 18px;color:#0f1e1d !important;font-size:24px;letter-spacing:-.3px;">Warehouse pressure, at a glance</h2>
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="width:14.2%;padding:5px;vertical-align:top;">
+<div style="background-color:#0f1e1d !important;color:#fff !important;border-radius:12px;padding:14px 6px;text-align:center;">
+<div style="font-size:18px;margin-bottom:6px;">⬇️</div>
+<div style="font-size:10px;color:rgba(255,255,255,.6) !important;text-transform:uppercase;letter-spacing:.06em;">Incoming</div>
+</div>
+</td>
+<td style="width:14.2%;padding:5px;vertical-align:top;">
+<div style="background-color:#0f1e1d !important;color:#fff !important;border-radius:12px;padding:14px 6px;text-align:center;">
+<div style="font-size:18px;margin-bottom:6px;">⬆️</div>
+<div style="font-size:10px;color:rgba(255,255,255,.6) !important;text-transform:uppercase;letter-spacing:.06em;">Outgoing</div>
+</div>
+</td>
+<td style="width:14.2%;padding:5px;vertical-align:top;">
+<div style="background-color:#0f1e1d !important;color:#fff !important;border-radius:12px;padding:14px 6px;text-align:center;">
+<div style="font-size:18px;margin-bottom:6px;">🔀</div>
+<div style="font-size:10px;color:rgba(255,255,255,.6) !important;text-transform:uppercase;letter-spacing:.06em;">Internal</div>
+</div>
+</td>
+<td style="width:14.2%;padding:5px;vertical-align:top;">
+<div style="background-color:#0f1e1d !important;color:#fff !important;border-radius:12px;padding:14px 6px;text-align:center;">
+<div style="font-size:18px;margin-bottom:6px;">♻️</div>
+<div style="font-size:10px;color:rgba(255,255,255,.6) !important;text-transform:uppercase;letter-spacing:.06em;">Scrap</div>
+</div>
+</td>
+<td style="width:14.2%;padding:5px;vertical-align:top;">
+<div style="background-color:#0f1e1d !important;color:#fff !important;border-radius:12px;padding:14px 6px;text-align:center;">
+<div style="font-size:18px;margin-bottom:6px;">🎯</div>
+<div style="font-size:10px;color:rgba(255,255,255,.6) !important;text-transform:uppercase;letter-spacing:.06em;">On-Time</div>
+</div>
+</td>
+<td style="width:14.2%;padding:5px;vertical-align:top;">
+<div style="background-color:#0f1e1d !important;color:#fff !important;border-radius:12px;padding:14px 6px;text-align:center;">
+<div style="font-size:18px;margin-bottom:6px;">💰</div>
+<div style="font-size:10px;color:rgba(255,255,255,.6) !important;text-transform:uppercase;letter-spacing:.06em;">Stock Value</div>
+</div>
+</td>
+<td style="width:14.2%;padding:5px;vertical-align:top;">
+<div style="background-color:#0f1e1d !important;color:#fff !important;border-radius:12px;padding:14px 6px;text-align:center;">
+<div style="font-size:18px;margin-bottom:6px;">🔁</div>
+<div style="font-size:10px;color:rgba(255,255,255,.6) !important;text-transform:uppercase;letter-spacing:.06em;">To Reorder</div>
+</div>
+</td>
+</tr>
+</table>
+<p style="margin:16px 0 0;font-size:13px;line-height:1.7;color:#5b6b67 !important;">Each tile opens the exact filtered list behind the number. Stock valuation and reordering-rule widgets appear automatically once inventory valuation and reordering rules are configured.</p>
+</div>
+
+<!-- INSIGHTS -->
+<div id="insights" style="margin-top:20px;background-color:#fff !important;border:1px solid #dcebe8 !important;border-radius:18px;padding:26px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.2em;color:#0d9488 !important;text-transform:uppercase;margin-bottom:6px;">Insights</div>
+<h2 style="margin:0 0 18px;color:#0f1e1d !important;font-size:24px;letter-spacing:-.3px;">Where the stock is, and what needs attention</h2>
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="width:50%;padding:8px;vertical-align:top;">
+<div style="background-color:#f5faf9 !important;border:1px solid #dcebe8 !important;border-radius:14px;padding:18px;height:100%;box-sizing:border-box;">
+<div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:10px;">📍 Stock by Location</div>
+<div style="font-size:12px;line-height:1.7;color:#5b6b67 !important;">A ranked bar view of quantity on hand per internal location. Click any bar to open the quants behind it.</div>
+</div>
+</td>
+<td style="width:50%;padding:8px;vertical-align:top;">
+<div style="background-color:#f5faf9 !important;border:1px solid #dcebe8 !important;border-radius:14px;padding:18px;height:100%;box-sizing:border-box;">
+<div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:10px;">🔁 Top Products to Reorder</div>
+<div style="font-size:12px;line-height:1.7;color:#5b6b67 !important;">The six products with the highest quantity to order, one click through to the product record.</div>
+</div>
+</td>
+</tr>
+</table>
+<div style="margin-top:12px;background-color:#f5faf9 !important;border:1px solid #dcebe8 !important;border-radius:14px;padding:18px;">
+<div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:10px;">📊 7-Day Received vs Delivered Trend</div>
+<div style="font-size:12px;line-height:1.7;color:#5b6b67 !important;">A dual-series bar chart comparing incoming receipts against outgoing deliveries over the last week, rendered with Chart.js when available and a lightweight CSS fallback otherwise.</div>
+</div>
+</div>
+
+<!-- SETUP -->
+<div id="setup" style="margin-top:20px;background-color:#fff !important;border:1px solid #dcebe8 !important;border-radius:18px;padding:26px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.2em;color:#0d9488 !important;text-transform:uppercase;margin-bottom:6px;">Setup</div>
+<h2 style="margin:0 0 18px;color:#0f1e1d !important;font-size:24px;letter-spacing:-.3px;">Up and running in two minutes</h2>
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="width:36px;vertical-align:top;padding:0 12px 18px 0;"><div style="width:32px;height:32px;border-radius:8px;background-color:#0d9488 !important;color:#fff !important;font-weight:900;font-size:14px;text-align:center;line-height:32px;">1</div></td>
+<td style="vertical-align:top;padding-bottom:18px;border-bottom:1px solid #dcebe8 !important;"><div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:3px;">Install the module</div><div style="font-size:13px;color:#5b6b67 !important;line-height:1.7;">Install <strong>Inventory Dashboard</strong> from Apps — it depends only on the standard <strong>stock</strong> app.</div></td>
+</tr>
+<tr><td colspan="2" style="height:12px;"></td></tr>
+<tr>
+<td style="width:36px;vertical-align:top;padding:0 12px 18px 0;"><div style="width:32px;height:32px;border-radius:8px;background-color:#0d9488 !important;color:#fff !important;font-weight:900;font-size:14px;text-align:center;line-height:32px;">2</div></td>
+<td style="vertical-align:top;padding-bottom:18px;border-bottom:1px solid #dcebe8 !important;"><div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:3px;">Open the dashboard</div><div style="font-size:13px;color:#5b6b67 !important;line-height:1.7;">Find it as the first entry inside the <strong>Inventory</strong> app menu. It loads live counts on open and refreshes automatically every 30 seconds.</div></td>
+</tr>
+<tr><td colspan="2" style="height:12px;"></td></tr>
+<tr>
+<td style="width:36px;vertical-align:top;padding:0 12px 0 0;"><div style="width:32px;height:32px;border-radius:8px;background-color:#0d9488 !important;color:#fff !important;font-weight:900;font-size:14px;text-align:center;line-height:32px;">3</div></td>
+<td style="vertical-align:top;"><div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:3px;">Pick a period, click a card</div><div style="font-size:13px;color:#5b6b67 !important;line-height:1.7;">Switch between Today / Week / Month / All, then click any KPI, location, or reorder row to drill straight into the filtered list.</div></td>
+</tr>
+</table>
+</div>
+
+<!-- TECHNICAL -->
+<div id="technical" style="margin-top:20px;background-color:#fff !important;border:1px solid #dcebe8 !important;border-radius:18px;padding:26px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.2em;color:#0d9488 !important;text-transform:uppercase;margin-bottom:6px;">Technical</div>
+<h2 style="margin:0 0 18px;color:#0f1e1d !important;font-size:24px;letter-spacing:-.3px;">Module information</h2>
+<table style="width:100%;border-collapse:separate;border-spacing:8px 0;">
+<tr>
+<td style="width:33%;vertical-align:top;"><div style="background-color:#f5faf9 !important;border:1px solid #dcebe8 !important;border-radius:12px;padding:14px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.12em;color:#0d9488 !important;text-transform:uppercase;margin-bottom:5px;">Frontend</div><div style="font-weight:800;color:#0f1e1d !important;margin-bottom:3px;font-size:13px;">OWL 2 Client Action</div><div style="font-size:12px;color:#5b6b67 !important;line-height:1.6;">SCSS · JavaScript · XML · Chart.js</div></div></td>
+<td style="width:33%;vertical-align:top;"><div style="background-color:#f5faf9 !important;border:1px solid #dcebe8 !important;border-radius:12px;padding:14px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.12em;color:#0d9488 !important;text-transform:uppercase;margin-bottom:5px;">Depends On</div><div style="font-weight:800;color:#0f1e1d !important;margin-bottom:3px;font-size:13px;">stock</div><div style="font-size:12px;color:#5b6b67 !important;line-height:1.6;">Standard Odoo Inventory app</div></div></td>
+<td style="width:33%;vertical-align:top;"><div style="background-color:#f5faf9 !important;border:1px solid #dcebe8 !important;border-radius:12px;padding:14px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.12em;color:#0d9488 !important;text-transform:uppercase;margin-bottom:5px;">Security</div><div style="font-weight:800;color:#0f1e1d !important;margin-bottom:3px;font-size:13px;">Internal Users</div><div style="font-size:12px;color:#5b6b67 !important;line-height:1.6;">Standard Odoo access rights</div></div></td>
+</tr>
+<tr><td colspan="3" style="height:8px;"></td></tr>
+<tr>
+<td style="vertical-align:top;"><div style="background-color:#f5faf9 !important;border:1px solid #dcebe8 !important;border-radius:12px;padding:14px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.12em;color:#0d9488 !important;text-transform:uppercase;margin-bottom:5px;">Optional Integrations</div><div style="font-weight:800;color:#0f1e1d !important;margin-bottom:3px;font-size:13px;">Inventory Valuation</div><div style="font-size:12px;color:#5b6b67 !important;line-height:1.6;">Stock value widget appears only if enabled</div></div></td>
+<td style="vertical-align:top;"><div style="background-color:#f5faf9 !important;border:1px solid #dcebe8 !important;border-radius:12px;padding:14px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.12em;color:#0d9488 !important;text-transform:uppercase;margin-bottom:5px;">License</div><div style="font-weight:800;color:#0f1e1d !important;margin-bottom:3px;font-size:13px;">OPL-1</div><div style="font-size:12px;color:#5b6b67 !important;line-height:1.6;">One-time app purchase</div></div></td>
+<td style="vertical-align:top;"><div style="background-color:#f5faf9 !important;border:1px solid #dcebe8 !important;border-radius:12px;padding:14px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.12em;color:#0d9488 !important;text-transform:uppercase;margin-bottom:5px;">Best For</div><div style="font-weight:800;color:#0f1e1d !important;margin-bottom:3px;font-size:13px;">Warehouse Teams</div><div style="font-size:12px;color:#5b6b67 !important;line-height:1.6;">Stock controllers &amp; inventory planners</div></div></td>
+</tr>
+</table>
+</div>
+
+<!-- CHANGELOG -->
+<div id="changelog" style="margin-top:20px;background-color:#fff !important;border:1px solid #dcebe8 !important;border-radius:18px;padding:26px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.2em;color:#0d9488 !important;text-transform:uppercase;margin-bottom:6px;">Changelog</div>
+<h2 style="margin:0 0 16px;color:#0f1e1d !important;font-size:24px;letter-spacing:-.3px;">Version history</h2>
+<div style="background-color:#f5faf9 !important;border:1px solid #dcebe8 !important;border-left:4px solid #0d9488 !important;border-radius:0 12px 12px 0;padding:16px;">
+<div style="font-weight:800;color:#0f1e1d !important;font-size:14px;margin-bottom:8px;">v1.0.0 — Initial Release</div>
+<table style="width:100%;border-collapse:collapse;font-size:13px;color:#5b6b67 !important;line-height:1.7;">
+<tr><td style="width:50%;padding:3px 10px 3px 0;vertical-align:top;">✓ Clickable KPI cards for stock levels and transfers</td><td style="padding:3px 0;vertical-align:top;">✓ Today / Week / Month / All period filters</td></tr>
+<tr><td style="padding:3px 10px 3px 0;vertical-align:top;">✓ Low stock &amp; out-of-stock tracking</td><td style="padding:3px 0;vertical-align:top;">✓ Incoming / outgoing / internal transfer counters</td></tr>
+<tr><td style="padding:3px 10px 3px 0;vertical-align:top;">✓ Backorder &amp; late transfer detection</td><td style="padding:3px 0;vertical-align:top;">✓ On-time delivery rate widget</td></tr>
+<tr><td style="padding:3px 10px 3px 0;vertical-align:top;">✓ Stock-by-location workload bars</td><td style="padding:3px 0;vertical-align:top;">✓ Top products to reorder drill-down list</td></tr>
+<tr><td style="padding:3px 10px 3px 0;vertical-align:top;">✓ Stock valuation widget</td><td style="padding:3px 0;vertical-align:top;">✓ 7-day received vs delivered trend chart</td></tr>
+</table>
+</div>
+</div>
+
+<!-- FOOTER -->
+<div style="margin-top:20px;background-color:#0f1e1d !important;border-radius:20px;padding:32px;text-align:center;">
+<div style="font-size:20px;font-weight:900;color:#fff !important;margin-bottom:8px;">Inventory Dashboard for Odoo</div>
+<div style="font-size:13px;color:rgba(255,255,255,.6) !important;margin-bottom:20px;">Stock Levels · Transfers · Reordering · Valuation · Locations · Odoo 19</div>
+<table style="margin:0 auto;border-collapse:collapse;">
+<tr>
+<td style="padding:5px;"><span style="display:inline-block;background-color:#0d9488 !important;color:#fff !important;border-radius:8px;padding:11px 26px;font-size:13px;font-weight:900;">Install Inventory Dashboard</span></td>
+<td style="padding:5px;"><span style="display:inline-block;background-color:rgba(255,255,255,.08) !important;color:#fff !important;border:1px solid rgba(255,255,255,.2) !important;border-radius:8px;padding:11px 20px;font-size:13px;font-weight:700;">OPL-1 License · $3.50</span></td>
+</tr>
+</table>
+</div>
+
+</div><!-- /owinv-description -->
+</section>
+</body>
+</html>

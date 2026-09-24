@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ───────────────────────────────────────────────────────────────
+         Reusable inline tree for use inside notebook pages
+    ─────────────────────────────────────────────────────────────────── -->
+    <record id="view_status_history_log_tree_inline" model="ir.ui.view">
+        <field name="name">status.history.log.tree.inline</field>
+        <field name="model">status.history.log</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false" delete="false"
+                  decoration-success="change_type == 'state'"
+                  decoration-info="change_type == 'price'"
+                  decoration-warning="change_type == 'quantity'"
+                  decoration-muted="change_type == 'discount'">
+                <field name="date" string="Date &amp; Time" optional="show"/>
+                <field name="employee_name" string="Changed By" optional="show"/>
+                <field name="field_label" string="Changed Field" optional="show"/>
+                <field name="change_type" string="Type"
+                       widget="badge"
+                       decoration-success="change_type == 'state'"
+                       decoration-info="change_type == 'price'"
+                       decoration-warning="change_type == 'quantity'"
+                       decoration-muted="change_type == 'discount'"
+                       optional="show"/>
+                <field name="product_name" string="Product" optional="show"/>
+                <field name="value_from" string="From" optional="show"/>
+                <field name="value_to" string="To" optional="show"/>
+                <field name="note" string="Reference" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ───────────────────────────────────────────────────────────────
+         Standalone list view (for menu / global view)
+    ─────────────────────────────────────────────────────────────────── -->
+    <record id="view_status_history_log_tree" model="ir.ui.view">
+        <field name="name">status.history.log.tree</field>
+        <field name="model">status.history.log</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false"
+                  decoration-success="change_type == 'state'"
+                  decoration-info="change_type == 'price'"
+                  decoration-warning="change_type == 'quantity'">
+                <field name="date" string="Date &amp; Time"/>
+                <field name="employee_name" string="Changed By"/>
+                <field name="field_label" string="Changed Field"/>
+                <field name="change_type" string="Type"
+                       widget="badge"
+                       decoration-success="change_type == 'state'"
+                       decoration-info="change_type == 'price'"
+                       decoration-warning="change_type == 'quantity'"
+                       decoration-muted="change_type == 'discount'"/>
+                <field name="product_name" string="Product"/>
+                <field name="value_from" string="From"/>
+                <field name="value_to" string="To"/>
+                <field name="purchase_order_id" string="Purchase Order" optional="show"/>
+                <field name="sale_order_id" string="Sale Order" optional="show"/>
+                <field name="stock_picking_id" string="Transfer" optional="show"/>
+                <field name="note" string="Reference" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ───────────────────────────────────────────────────────────────
+         Form view
+    ─────────────────────────────────────────────────────────────────── -->
+    <record id="view_status_history_log_form" model="ir.ui.view">
+        <field name="name">status.history.log.form</field>
+        <field name="model">status.history.log</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group string="Who &amp; When">
+                            <field name="date" string="Date &amp; Time"/>
+                            <field name="employee_name" string="Changed By"/>
+                            <field name="user_id" string="User"/>
+                            <field name="employee_id" string="Employee"/>
+                        </group>
+                        <group string="What Changed">
+                            <field name="field_label" string="Changed Field"/>
+                            <field name="change_type" string="Type" widget="badge"/>
+                            <field name="value_from" string="From"/>
+                            <field name="value_to" string="To"/>
+                        </group>
+                    </group>
+                    <group string="Related Document">
+                        <group>
+                            <field name="product_id" string="Product"/>
+                            <field name="product_name" string="Product Name"/>
+                        </group>
+                        <group>
+                            <field name="purchase_order_id" string="Purchase Order"/>
+                            <field name="sale_order_id" string="Sale Order"/>
+                            <field name="stock_picking_id" string="Transfer"/>
+                            <field name="note" string="Reference"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ───────────────────────────────────────────────────────────────
+         Search view
+    ─────────────────────────────────────────────────────────────────── -->
+    <record id="view_status_history_log_search" model="ir.ui.view">
+        <field name="name">status.history.log.search</field>
+        <field name="model">status.history.log</field>
+        <field name="arch" type="xml">
+            <search string="Search History">
+                <field name="employee_name" string="Employee"/>
+                <field name="field_label" string="Changed Field"/>
+                <field name="product_name" string="Product"/>
+                <field name="note" string="Reference"/>
+                <filter name="filter_state" string="Status Changes"
+                        domain="[('change_type','=','state')]"/>
+                <filter name="filter_price" string="Price Changes"
+                        domain="[('change_type','=','price')]"/>
+                <filter name="filter_qty" string="Quantity Changes"
+                        domain="[('change_type','=','quantity')]"/>
+                <filter name="filter_discount" string="Discount Changes"
+                        domain="[('change_type','=','discount')]"/>
+                <separator/>
+                <filter name="filter_purchase" string="Purchase"
+                        domain="[('purchase_order_id','!=',False)]"/>
+                <filter name="filter_sale" string="Sales"
+                        domain="[('sale_order_id','!=',False)]"/>
+                <filter name="filter_stock" string="Inventory"
+                        domain="[('stock_picking_id','!=',False)]"/>
+                <separator/>
+                <filter name="filter_today" string="Today"
+                        domain="[('date','&gt;=', (context_today()).strftime('%Y-%m-%d 00:00:00'))]"/>
+                
+            </search>
+        </field>
+    </record>
+
+    <!-- ───────────────────────────────────────────────────────────────
+         Action
+    ─────────────────────────────────────────────────────────────────── -->
+    <record id="action_status_history_log" model="ir.actions.act_window">
+        <field name="name">Change History</field>
+        <field name="res_model">status.history.log</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_status_history_log_tree"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No changes recorded yet.
+            </p>
+            <p>
+                Changes to Status, Price, Quantity and Discount on Purchase Orders,
+                Sales Orders and Inventory Transfers will appear here automatically.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Gmail Inbox — Odoo Wings</title></head>
+<body>
+<section class="oe_container">
+<div class="oe_row oe_spaced" style="max-width:1180px;margin:0 auto;padding:24px;background-color:#f5f7fc;font-family:Arial,Helvetica,sans-serif;color:#1e293b;">
+    <div style="background-color:#182238;border-radius:24px;padding:44px 28px;text-align:center;">
+        <p style="font-size:11px;letter-spacing:2px;font-weight:bold;color:#c7d2fe;">ODOO WINGS / ODOO 19</p>
+        <h1 style="font-size:44px;line-height:1.15;color:#fff;font-weight:bold;margin:20px 0;">Gmail, right where you work.</h1>
+        <p style="font-size:18px;line-height:1.8;color:#cbd5e1;max-width:750px;margin:0 auto;">Connect your Google mailbox and read, search, reply and compose from a dedicated workspace inside Odoo.</p>
+        <div style="margin-top:24px;"><span style="display:inline-block;background-color:#4f46e5;color:#fff;border-radius:20px;padding:10px 18px;margin:5px;font-size:12px;">Google OAuth</span><span style="display:inline-block;background-color:#334155;color:#fff;border-radius:20px;padding:10px 18px;margin:5px;font-size:12px;">Personal Inbox</span><span style="display:inline-block;background-color:#334155;color:#fff;border-radius:20px;padding:10px 18px;margin:5px;font-size:12px;">Compose &amp; Reply</span><span style="display:inline-block;background-color:#334155;color:#fff;border-radius:20px;padding:10px 18px;margin:5px;font-size:12px;">Attachments</span></div>
+    </div>
+    <div style="margin-top:22px;padding:18px 22px;background-color:#eef2ff;border:1px solid #c7d2fe;border-radius:14px;color:#3730a3;font-size:14px;line-height:1.8;"><strong>Google Cloud configuration required.</strong> Your administrator must enable Gmail API and provide a Web application OAuth client ID and secret. Google authorization opens on Google's secure page and returns to Odoo. This app does not collect your Gmail password.</div>
+    <p style="font-size:12px;color:#64748b;line-height:1.7;margin:18px 5px;">The captures below show the actual Owl interface in an isolated preview with fictional mailbox data. They are not screenshots of a live Gmail connection.</p>
+    <div style="background-color:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:12px;"><img src="banner.png" alt="Gmail connection screen — isolated interface preview" style="width:100%;height:auto;border-radius:12px;"/></div>
+    <div style="margin-top:24px;background-color:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:28px;">
+        <p style="font-size:11px;letter-spacing:2px;font-weight:bold;color:#4f46e5;">01 / YOUR MAILBOX</p>
+        <h2 style="font-size:29px;color:#1e293b;">A clear view of every conversation.</h2>
+        <p style="font-size:15px;line-height:1.8;color:#64748b;">Navigate Inbox, Starred, Unread, Sent, All mail and Trash. Search with Gmail expressions such as from:, subject: and has:attachment. Read individual messages in a clean text view, download attachments and reply from the same workspace.</p>
+        <img src="inbox_preview.png" alt="Gmail inbox and message reader with fictional preview data" style="width:100%;height:auto;border:1px solid #e2e8f0;border-radius:12px;margin-top:14px;"/>
+    </div>
+    <div style="margin-top:24px;background-color:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:28px;">
+        <p style="font-size:11px;letter-spacing:2px;font-weight:bold;color:#4f46e5;">02 / COMPOSE &amp; REPLY</p>
+        <h2 style="font-size:29px;color:#1e293b;">Your Gmail address. Your next message.</h2>
+        <p style="font-size:15px;line-height:1.8;color:#64748b;">Write plain-text messages with To, Cc and Bcc. Add up to ten files totaling 10 MB. Replies include Gmail thread information and standard reply headers. If a send fails, your compose content stays open so you can resolve the issue.</p>
+        <img src="compose_preview.png" alt="Reply composer with a sample attachment in an isolated preview" style="width:100%;height:auto;border:1px solid #e2e8f0;border-radius:12px;margin-top:14px;"/>
+    </div>
+    <div style="margin-top:24px;background-color:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:28px;">
+        <h2 style="font-size:29px;color:#1e293b;">Everyday mailbox controls.</h2>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+            <tr><td style="padding:15px;border-bottom:1px solid #e2e8f0;font-weight:bold;width:32%;">Organize</td><td style="padding:15px;border-bottom:1px solid #e2e8f0;color:#64748b;">Star messages, mark read/unread, archive or move back to Inbox.</td></tr>
+            <tr><td style="padding:15px;border-bottom:1px solid #e2e8f0;font-weight:bold;">Trash &amp; restore</td><td style="padding:15px;border-bottom:1px solid #e2e8f0;color:#64748b;">Move messages to Trash with confirmation and restore them later. No permanent-delete action.</td></tr>
+            <tr><td style="padding:15px;border-bottom:1px solid #e2e8f0;font-weight:bold;">Search &amp; browse</td><td style="padding:15px;border-bottom:1px solid #e2e8f0;color:#64748b;">Gmail search operators, manual refresh and fifteen-message pages.</td></tr>
+            <tr><td style="padding:15px;border-bottom:1px solid #e2e8f0;font-weight:bold;">Personal access</td><td style="padding:15px;border-bottom:1px solid #e2e8f0;color:#64748b;">One independent Gmail connection per internal Odoo user, with server-side OAuth tokens.</td></tr>
+            <tr><td style="padding:15px;font-weight:bold;">Disconnect</td><td style="padding:15px;color:#64748b;">Remove the local connection or explicitly revoke Google's authorization.</td></tr>
+        </table>
+    </div>
+    <div style="margin-top:24px;background-color:#182238;border-radius:18px;padding:28px;">
+        <h2 style="font-size:29px;color:#fff;">Designed for focused reading.</h2>
+        <p style="font-size:15px;line-height:1.8;color:#cbd5e1;">Messages are displayed as text. Remote images, tracking pixels and active email HTML are not loaded. Mail content is requested on demand and is not copied into Odoo business records by this addon. Each mailbox call uses the current user's own connection.</p>
+        <p style="font-size:13px;line-height:1.8;color:#cbd5e1;">OAuth tokens are encrypted in a private server-side model. Server administrators control the database and its encryption secret. See the included README for storage, retention and access details.</p>
+    </div>
+    <div id="test-configuration" style="margin-top:24px;background-color:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:28px;">
+        <p style="font-size:11px;letter-spacing:2px;font-weight:bold;color:#4f46e5;">COMPLETE TEST CONFIGURATION</p>
+        <h2 style="font-size:29px;color:#1e293b;">Connect a test Gmail account.</h2>
+        <p style="font-size:15px;color:#64748b;line-height:1.8;">Use a separate Gmail account containing only harmless test messages. Inbox actions in Odoo update the real connected mailbox, including read status, stars, archive, Trash and sent mail.</p>
+
+        <div style="margin-top:22px;padding:20px;background-color:#182238;border-radius:14px;color:#fff;">
+            <div style="font-size:12px;letter-spacing:1.5px;color:#c7d2fe;font-weight:bold;">BEFORE YOU BEGIN</div>
+            <table style="width:100%;border-collapse:collapse;margin-top:12px;font-size:14px;">
+                <tr><td style="width:34%;padding:10px 8px;color:#fff;font-weight:bold;vertical-align:top;">Test mailbox</td><td style="padding:10px 8px;color:#cbd5e1;">A separate Gmail or Google Workspace address added as an OAuth test user.</td></tr>
+                <tr><td style="padding:10px 8px;color:#fff;font-weight:bold;vertical-align:top;">Odoo address</td><td style="padding:10px 8px;color:#cbd5e1;">A public HTTPS URL, or <code style="color:#e0e7ff;">http://localhost:8069</code> for local development.</td></tr>
+                <tr><td style="padding:10px 8px;color:#fff;font-weight:bold;vertical-align:top;">Google project</td><td style="padding:10px 8px;color:#cbd5e1;">A Google Cloud project where you can configure APIs and OAuth credentials.</td></tr>
+                <tr><td style="padding:10px 8px;color:#fff;font-weight:bold;vertical-align:top;">Odoo access</td><td style="padding:10px 8px;color:#cbd5e1;">Administrator access for configuration and an internal user for the mailbox connection.</td></tr>
+            </table>
+        </div>
+
+        <div style="margin-top:26px;border-left:4px solid #4f46e5;padding-left:18px;">
+            <div style="font-size:12px;font-weight:bold;color:#4f46e5;">STEP 1</div>
+            <h3 style="font-size:20px;color:#1e293b;margin:7px 0;">Create the Google Cloud project</h3>
+            <ol style="font-size:14px;color:#64748b;line-height:1.9;padding-left:20px;margin:0;">
+                <li>Open <strong>Google Cloud Console</strong> and create or select a project reserved for this integration.</li>
+                <li>Open <strong>APIs &amp; Services → Library</strong>.</li>
+                <li>Search for <strong>Gmail API</strong>, open it and select <strong>Enable</strong>.</li>
+            </ol>
+        </div>
+
+        <div style="margin-top:26px;border-left:4px solid #7c3aed;padding-left:18px;">
+            <div style="font-size:12px;font-weight:bold;color:#7c3aed;">STEP 2</div>
+            <h3 style="font-size:20px;color:#1e293b;margin:7px 0;">Configure the OAuth consent screen</h3>
+            <ol style="font-size:14px;color:#64748b;line-height:1.9;padding-left:20px;margin:0;">
+                <li>Open <strong>Google Auth Platform</strong> and complete Branding with your app name, support email and contact email.</li>
+                <li>Under <strong>Audience</strong>, select <strong>External</strong> for ordinary Gmail testing. Google Workspace organizations may select Internal when appropriate.</li>
+                <li>Keep the external project in <strong>Testing</strong> while evaluating the module.</li>
+                <li>Add every Gmail address that will connect under <strong>Test users</strong>. Accounts missing from this list cannot authorize a testing app.</li>
+                <li>Under <strong>Data Access</strong>, add exactly:<br/><code style="display:inline-block;margin-top:8px;padding:8px 10px;background-color:#f1f5f9;border-radius:6px;color:#3730a3;word-break:break-all;">https://www.googleapis.com/auth/gmail.modify</code></li>
+            </ol>
+            <p style="margin:14px 0 0;padding:13px;background-color:#faf5ff;border:1px solid #e9d5ff;border-radius:9px;color:#6b21a8;font-size:13px;line-height:1.7;">This scope permits reading, composing, sending and changing mailbox labels. The addon does not request permanent-delete access. Google classifies Gmail mailbox scopes as restricted; public production use can require Google verification and possibly a security assessment.</p>
+        </div>
+
+        <div style="margin-top:26px;border-left:4px solid #0284c7;padding-left:18px;">
+            <div style="font-size:12px;font-weight:bold;color:#0284c7;">STEP 3</div>
+            <h3 style="font-size:20px;color:#1e293b;margin:7px 0;">Create a Web application OAuth client</h3>
+            <ol style="font-size:14px;color:#64748b;line-height:1.9;padding-left:20px;margin:0;">
+                <li>Open <strong>Google Auth Platform → Clients</strong>.</li>
+                <li>Select <strong>Create Client → Web application</strong>.</li>
+                <li>Give it a recognizable name, such as <strong>Odoo Gmail Inbox Test</strong>.</li>
+                <li>Copy the generated <strong>Client ID</strong> and <strong>Client Secret</strong>. Store the secret securely and never include it in screenshots or support messages.</li>
+            </ol>
+        </div>
+
+        <div style="margin-top:26px;border-left:4px solid #059669;padding-left:18px;">
+            <div style="font-size:12px;font-weight:bold;color:#059669;">STEP 4</div>
+            <h3 style="font-size:20px;color:#1e293b;margin:7px 0;">Enter the credentials in Odoo</h3>
+            <ol style="font-size:14px;color:#64748b;line-height:1.9;padding-left:20px;margin:0;">
+                <li>Install this addon and restart Odoo after adding it to the addons path.</li>
+                <li>Open <strong>Gmail Inbox → Configuration</strong>.</li>
+                <li>Enter the Google Client ID and Client Secret.</li>
+                <li>Enter the public Odoo base URL. Use HTTPS in a deployed system. Local example:<br/><code style="display:inline-block;margin-top:8px;padding:8px 10px;background-color:#ecfdf5;border-radius:6px;color:#065f46;">http://localhost:8069</code></li>
+                <li>Select <strong>Save</strong>. Copy the exact <strong>Authorized redirect URI</strong> displayed by Odoo.</li>
+            </ol>
+        </div>
+
+        <div style="margin-top:26px;border-left:4px solid #b45309;padding-left:18px;">
+            <div style="font-size:12px;font-weight:bold;color:#b45309;">STEP 5</div>
+            <h3 style="font-size:20px;color:#1e293b;margin:7px 0;">Register the callback with Google</h3>
+            <ol style="font-size:14px;color:#64748b;line-height:1.9;padding-left:20px;margin:0;">
+                <li>Return to the Web application OAuth client in Google Cloud.</li>
+                <li>Under <strong>Authorized redirect URIs</strong>, select <strong>Add URI</strong>.</li>
+                <li>Paste the callback copied from Odoo and save the client.</li>
+            </ol>
+            <div style="margin-top:14px;padding:15px;background-color:#fffbeb;border:1px solid #fde68a;border-radius:10px;">
+                <div style="font-size:12px;font-weight:bold;color:#92400e;">LOCAL TEST EXAMPLE</div>
+                <code style="display:block;margin-top:8px;color:#78350f;word-break:break-all;">http://localhost:8069/ow_gmail/oauth/callback</code>
+                <div style="font-size:12px;font-weight:bold;color:#92400e;margin-top:14px;">HTTPS SERVER EXAMPLE</div>
+                <code style="display:block;margin-top:8px;color:#78350f;word-break:break-all;">https://erp.example.com/ow_gmail/oauth/callback</code>
+            </div>
+            <p style="font-size:13px;color:#64748b;line-height:1.7;">The URI must match exactly. Scheme, hostname, port and path are significant. Do not add a trailing slash unless Odoo displays one.</p>
+        </div>
+
+        <div style="margin-top:26px;border-left:4px solid #be185d;padding-left:18px;">
+            <div style="font-size:12px;font-weight:bold;color:#be185d;">STEP 6</div>
+            <h3 style="font-size:20px;color:#1e293b;margin:7px 0;">Connect the test mailbox</h3>
+            <ol style="font-size:14px;color:#64748b;line-height:1.9;padding-left:20px;margin:0;">
+                <li>Sign in to Odoo as the internal user who will own the mailbox connection.</li>
+                <li>Open <strong>Gmail Inbox → My Mailbox</strong> and select <strong>Choose a Google account</strong>.</li>
+                <li>Google displays the accounts signed in to that browser. Choose the same Gmail address added to Google's Test users list, or select <strong>Use another account</strong>.</li>
+                <li>Review and approve the Gmail mailbox permission on Google's page.</li>
+                <li>After Google returns to Odoo, select <strong>Open Gmail Inbox</strong>.</li>
+            </ol>
+            <p style="margin:14px 0 0;padding:13px;background-color:#fff1f2;border:1px solid #fecdd3;border-radius:9px;color:#9f1239;font-size:13px;line-height:1.7;">The chooser belongs to Google and opens on <strong>accounts.google.com</strong>. Odoo cannot inspect or display the browser's signed-in Google accounts itself. During testing, Google may also display an unverified-app notice. Continue only when this is your own Google Cloud project and the displayed app and scope are correct. Never enter the Gmail password into Odoo; authentication happens on Google's domain.</p>
+        </div>
+
+        <div style="margin-top:28px;background-color:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:22px;">
+            <h3 style="font-size:20px;color:#1e293b;margin-top:0;">Recommended test checklist</h3>
+            <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                <tr><td style="width:34%;padding:11px;border-bottom:1px solid #e2e8f0;font-weight:bold;color:#334155;">Connect and reconnect</td><td style="padding:11px;border-bottom:1px solid #e2e8f0;color:#64748b;">Authorize the test account, reload Odoo and confirm the mailbox remains connected.</td></tr>
+                <tr><td style="padding:11px;border-bottom:1px solid #e2e8f0;font-weight:bold;color:#334155;">Read and search</td><td style="padding:11px;border-bottom:1px solid #e2e8f0;color:#64748b;">Open a test message, confirm its read status changes, and try <code>from:</code>, <code>subject:</code> and <code>has:attachment</code>.</td></tr>
+                <tr><td style="padding:11px;border-bottom:1px solid #e2e8f0;font-weight:bold;color:#334155;">Mailbox actions</td><td style="padding:11px;border-bottom:1px solid #e2e8f0;color:#64748b;">Star, mark unread, archive, move to Inbox, move to Trash and restore a harmless test message.</td></tr>
+                <tr><td style="padding:11px;border-bottom:1px solid #e2e8f0;font-weight:bold;color:#334155;">Send and reply</td><td style="padding:11px;border-bottom:1px solid #e2e8f0;color:#64748b;">Send only to another test address. Test To, Cc, Bcc, reply threading and a small attachment.</td></tr>
+                <tr><td style="padding:11px;border-bottom:1px solid #e2e8f0;font-weight:bold;color:#334155;">User separation</td><td style="padding:11px;border-bottom:1px solid #e2e8f0;color:#64748b;">Connect a second Odoo user to a different test mailbox and confirm each user sees only their own connection.</td></tr>
+                <tr><td style="padding:11px;font-weight:bold;color:#334155;">Disconnect</td><td style="padding:11px;color:#64748b;">Test local disconnect and Google access revocation separately.</td></tr>
+            </table>
+        </div>
+
+        <div style="margin-top:28px;background-color:#fff7ed;border:1px solid #fed7aa;border-radius:14px;padding:22px;">
+            <h3 style="font-size:20px;color:#9a3412;margin-top:0;">Common setup errors</h3>
+            <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                <tr><td style="width:30%;padding:11px;border-bottom:1px solid #fed7aa;font-weight:bold;color:#9a3412;vertical-align:top;">redirect_uri_mismatch</td><td style="padding:11px;border-bottom:1px solid #fed7aa;color:#7c2d12;">Copy the exact callback from Odoo. Check HTTP/HTTPS, hostname, port, reverse proxy and trailing slash.</td></tr>
+                <tr><td style="padding:11px;border-bottom:1px solid #fed7aa;font-weight:bold;color:#9a3412;vertical-align:top;">Access blocked</td><td style="padding:11px;border-bottom:1px solid #fed7aa;color:#7c2d12;">Add the Gmail address under OAuth Test users and confirm the consent audience is correct.</td></tr>
+                <tr><td style="padding:11px;border-bottom:1px solid #fed7aa;font-weight:bold;color:#9a3412;vertical-align:top;">Gmail permission denied</td><td style="padding:11px;border-bottom:1px solid #fed7aa;color:#7c2d12;">Enable Gmail API and add the <code>gmail.modify</code> scope, then reconnect and approve it.</td></tr>
+                <tr><td style="padding:11px;border-bottom:1px solid #fed7aa;font-weight:bold;color:#9a3412;vertical-align:top;">Missing offline token</td><td style="padding:11px;border-bottom:1px solid #fed7aa;color:#7c2d12;">Remove the test app from Google Account third-party connections and connect again.</td></tr>
+                <tr><td style="padding:11px;font-weight:bold;color:#9a3412;vertical-align:top;">Authorization expired</td><td style="padding:11px;color:#7c2d12;">Testing-mode authorization or user revocation can require reconnection. Use Reconnect Google from the account menu.</td></tr>
+            </table>
+        </div>
+
+        <p style="margin:24px 0 0;padding:16px;background-color:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;font-size:13px;color:#3730a3;line-height:1.8;"><strong>Testing is not production approval.</strong> Before public use, publish an accurate privacy policy, secure your server and backups, review Google API user-data requirements and complete any Google verification that applies to your OAuth project.</p>
+    </div>
+    <div style="margin-top:24px;background-color:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:28px;">
+        <h2 style="font-size:27px;color:#1e293b;">Technical scope</h2>
+        <p style="font-size:14px;color:#64748b;line-height:1.8;">Odoo 19 with custom-addon support. Dependencies: Web and Base Setup; Python requests and cryptography. Native Owl frontend. This is a Gmail API application, not an embedded gmail.com page or an Odoo sign-in provider.</p>
+        <p style="font-size:14px;color:#64748b;line-height:1.8;">This release supports individual messages and plain-text composition. It does not include Gmail draft editing, HTML composition, alias sending, background synchronization, complete conversation grouping or automatic CRM/chatter linking. Unsent content stays in the open workspace only. Gmail quotas, sending limits and Workspace policies apply.</p>
+        <p style="font-size:12px;color:#94a3b8;line-height:1.8;">Independent integration by Odoo Wings. Not endorsed by Google. Gmail and Google are trademarks of Google LLC.</p>
+    </div>
+    <div style="margin-top:24px;padding:38px 28px;text-align:center;background-color:#312e81;background-image:linear-gradient(135deg,#312e81 0%,#4f46e5 55%,#7c3aed 100%);border-radius:22px;box-shadow:0 18px 45px rgba(79,70,229,.22);">
+        <div style="display:inline-block;padding:8px 14px;background-color:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:20px;color:#e0e7ff;font-size:11px;font-weight:bold;letter-spacing:1.8px;">MORE FROM ODOO WINGS</div>
+        <h2 style="font-size:32px;line-height:1.25;color:#fff;margin:18px 0 10px;">Discover useful Odoo apps<br/>for every growing business.</h2>
+        <p style="max-width:720px;margin:0 auto;color:#e0e7ff;font-size:15px;line-height:1.8;">Explore practical apps designed to simplify daily work, improve team productivity and create a smoother Odoo experience for businesses of every size.</p>
+        <div style="margin:24px auto 4px;max-width:900px;">
+            <span style="display:inline-block;margin:5px;padding:9px 14px;border-radius:18px;background-color:rgba(255,255,255,.12);color:#fff;font-size:12px;">Sales &amp; CRM</span>
+            <span style="display:inline-block;margin:5px;padding:9px 14px;border-radius:18px;background-color:rgba(255,255,255,.12);color:#fff;font-size:12px;">HR &amp; Payroll</span>
+            <span style="display:inline-block;margin:5px;padding:9px 14px;border-radius:18px;background-color:rgba(255,255,255,.12);color:#fff;font-size:12px;">Accounting</span>
+            <span style="display:inline-block;margin:5px;padding:9px 14px;border-radius:18px;background-color:rgba(255,255,255,.12);color:#fff;font-size:12px;">Inventory</span>
+            <span style="display:inline-block;margin:5px;padding:9px 14px;border-radius:18px;background-color:rgba(255,255,255,.12);color:#fff;font-size:12px;">Productivity</span>
+            <span style="display:inline-block;margin:5px;padding:9px 14px;border-radius:18px;background-color:rgba(255,255,255,.12);color:#fff;font-size:12px;">User Experience</span>
+        </div>
+        <a href="https://apps.odoo.com/apps/modules/browse?author=Odoo%20Wings" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:25px;padding:15px 25px;background-color:#fff;color:#4338ca;border-radius:11px;text-decoration:none;font-size:14px;font-weight:bold;box-shadow:0 8px 22px rgba(30,41,59,.2);">Visit Our Odoo Wings App Page &#8594;</a>
+        <p style="margin:15px 0 0;color:#c7d2fe;font-size:12px;">Find the right tools for your team on the official Odoo Apps Store.</p>
+    </div>
+    <div style="margin-top:18px;padding:25px;text-align:center;background-color:#fff;border:1px solid #e2e8f0;border-radius:18px;">
+        <h2 style="font-size:23px;color:#1e293b;margin:0 0 8px;">Questions before you install?</h2>
+        <p style="font-size:14px;color:#64748b;margin:0 0 18px;">Odoo Wings provides installation and configuration support.</p>
+        <a href="mailto:vsmanoj144@gmail.com" style="display:inline-block;padding:11px 19px;background-color:#eef2ff;color:#4338ca;border:1px solid #c7d2fe;border-radius:9px;text-decoration:none;font-size:14px;font-weight:bold;">Contact Odoo Wings</a>
+    </div>
+</div>
+</section>
+</body>
+</html>

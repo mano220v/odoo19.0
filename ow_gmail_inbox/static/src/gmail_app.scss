@@ -1,0 +1,83 @@
+.og-app {
+    --og-ink: #1e293b; --og-muted: #77859b; --og-accent: #4f46e5;
+    height: 100%; min-height: 0; display: flex; flex-direction: column;
+    background: #f5f7fc; color: var(--og-ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    * { box-sizing: border-box; }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: default; opacity: .45; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid #a5b4fc; outline-offset: 2px; }
+    .og-topbar { min-height: 86px; display: flex; align-items: center; gap: 28px; padding: 18px 26px; background: #fff; border-bottom: 1px solid #e7ecf4; }
+    .og-brand { display: flex; align-items: center; gap: 12px; min-width: 215px; strong { display: block; font-size: 18px; letter-spacing: -.4px; } small { display: block; font-size: 8px; letter-spacing: 1.8px; color: var(--og-muted); margin-top: 5px; font-weight: 700; } }
+    .og-logo { width: 44px; height: 44px; display: grid; place-items: center; font-size: 22px; color: #fff; background: linear-gradient(135deg, #4f46e5, #7c3aed); box-shadow: 0 5px 15px #4f46e526; border-radius: 14px; }
+    .og-search { display: flex; align-items: center; gap: 12px; background: #f4f6fb; border: 1px solid #e7ecf4; border-radius: 12px; padding: 8px 12px; flex: 1; max-width: 680px; color: #8490a4; input { border: 0; outline: none; background: transparent; width: 100%; min-width: 0; color: var(--og-ink); font-size: 12px; } button { border: 0; background: #fff; border-radius: 7px; color: #4f46e5; font-size: 11px; font-weight: 650; padding: 7px 10px; } }
+    .og-account { display: flex; align-items: center; gap: 8px; margin-inline-start: auto; font-size: 11px; min-width: 0; > span:nth-child(2) { max-width: 180px; overflow: hidden; text-overflow: ellipsis; } details { position: relative; } summary { cursor: pointer; padding: 8px; list-style: none; } }
+    .og-account-dot { width: 6px; height: 6px; border-radius: 50%; background: #10b981; flex-shrink: 0; }
+    .og-account-menu { position: absolute; inset-inline-end: 0; top: 35px; z-index: 20; width: 215px; border: 1px solid #e2e8f0; padding: 6px; border-radius: 12px; background: #fff; box-shadow: 0 12px 35px #17243a20; button { display: block; width: 100%; border: 0; text-align: start; padding: 11px; background: transparent; color: #334155; border-radius: 7px; font-size: 12px; &:hover { background: #f1f5f9; } } }
+    .og-error { display: flex; align-items: center; gap: 12px; background: #fff1f2; color: #9f1239; padding: 14px 24px; font-size: 13px; border-bottom: 1px solid #fecdd3; span { flex: 1; } button { background: transparent; border: 0; color: inherit; } }
+    .og-eyebrow { font-size: 9px; font-weight: 750; letter-spacing: 1.6px; color: #6366f1; }
+    .og-loading { display: flex; gap: 10px; justify-content: center; align-items: center; min-height: 160px; color: var(--og-muted); font-size: 13px; }
+    .og-onboarding { overflow: auto; text-align: center; padding: 40px 24px; flex: 1; background-image: radial-gradient(ellipse at 50% 20%, #e9e8ff, transparent 55%); h1 { font-size: clamp(34px, 4vw, 54px); font-weight: 750; letter-spacing: -2px; line-height: 1.1; margin: 15px 0 20px; color: #1e293b; } > p { max-width: 470px; margin: 0 auto 25px; font-size: 15px; line-height: 1.8; color: #64748b; } .og-auth-note { font-size: 11px; margin-top: 16px; max-width: 380px; } }
+    .og-welcome-art { position: relative; height: 180px; width: 250px; margin: 0 auto 18px; display: grid; place-items: center; }
+    .og-art-ring { position: absolute; width: 175px; height: 175px; border-radius: 50%; border: 1px solid #c7d2fe; box-shadow: 0 0 0 22px #e0e7ff50; }
+    .og-art-envelope { width: 110px; height: 95px; border-radius: 26px; background: linear-gradient(135deg, #4f46e5, #8b5cf6); color: #fff; font-size: 50px; display: grid; place-items: center; transform: rotate(-9deg); box-shadow: 0 18px 30px #4f46e530; }
+    .og-art-tag { position: absolute; bottom: 8px; right: 0; background: #fff; box-shadow: 0 5px 20px #1e293b10; border-radius: 9px; border: 1px solid #e2e8f0; padding: 10px 15px; font-size: 10px; color: #475569; i { color: #059669; margin-right: 5px; } }
+    .og-connect, .og-primary { border: 0; border-radius: 10px; background: #4f46e5; color: #fff; padding: 12px 19px; font-size: 13px; font-weight: 650; box-shadow: 0 5px 15px #4f46e51a; i { margin-inline-end: 7px; } &:hover:not(:disabled) { background: #4338ca; } }
+    .og-connect { padding: 15px 24px; font-size: 14px; }
+    .og-setup-note { max-width: 480px; margin: 25px auto; padding: 20px; border: 1px solid #c7d2fe; border-radius: 12px; background: #fff; strong, span { display: block; } strong { font-size: 13px; } span { font-size: 12px; line-height: 1.7; margin-top: 8px; color: #64748b; } button { margin-top: 10px; padding: 5px; border: 0; color: #4f46e5; background: transparent; font-size: 12px; font-weight: 650; } }
+    .og-feature-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; font-size: 11px; color: #64748b; margin-top: 30px; i { color: #6366f1; margin-inline-end: 6px; } }
+    .og-workspace { display: grid; grid-template-columns: 205px minmax(290px, 350px) minmax(0, 1fr); flex: 1; min-height: 0; }
+    .og-sidebar { display: flex; flex-direction: column; padding: 26px 16px; overflow-y: auto; }
+    .og-compose-button { border: 0; border-radius: 12px; background: #4f46e5; color: #fff; padding: 14px; text-align: start; font-size: 13px; font-weight: 650; box-shadow: 0 5px 15px #4f46e525; i { margin: 0 12px 0 4px; } }
+    .og-sidebar-caption { margin: 28px 14px 12px; font-size: 9px; letter-spacing: 1.5px; color: #94a3b8; font-weight: 700; }
+    .og-sidebar nav { display: grid; gap: 5px; button { display: flex; align-items: center; gap: 13px; padding: 12px 15px; background: transparent; border: 0; border-radius: 10px; color: #64748b; text-align: start; font-size: 12px; i { font-size: 15px; width: 18px; } &.is-active { background: #eae9ff; color: #4f46e5; font-weight: 700; } &:hover:not(.is-active) { background: #edf0f6; } } }
+    .og-sidebar-note { margin: auto 12px 0; padding-top: 40px; color: #94a3b8; i { display: block; font-size: 20px; margin-bottom: 12px; } strong { font-size: 10px; color: #64748b; } p { font-size: 10px; line-height: 1.8; margin-top: 6px; } }
+    .og-message-list { display: flex; flex-direction: column; min-height: 0; background: #fff; border-inline: 1px solid #e7ecf4; }
+    .og-list-heading { display: flex; align-items: center; gap: 10px; padding: 23px 20px; border-bottom: 1px solid #edf0f6; h2 { margin: 0; font-size: 21px; font-weight: 700; letter-spacing: -.6px; } small { display: block; margin-top: 5px; font-size: 10px; color: #94a3b8; } > button:last-child { margin-inline-start: auto; } }
+    .og-icon-button, .og-mail-actions button { display: inline-grid; place-items: center; border: 1px solid #e7ecf4; background: #fff; border-radius: 8px; width: 33px; height: 33px; color: #64748b; font-size: 12px; &:hover { background: #f8fafc; } }
+    .og-message-scroll { flex: 1; overflow-y: auto; min-height: 0; }
+    .og-message-row { position: relative; border-bottom: 1px solid #edf0f6; &.is-selected { background: #f3f2ff; box-shadow: inset 3px 0 #6366f1; } &:hover { background: #f8f9fd; } }
+    .og-message-open { display: block; width: 100%; padding: 18px 38px 17px 20px; text-align: start; border: 0; background: transparent; min-width: 0; color: #475569; }
+    .og-message-sender { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; strong { font-weight: 550; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }
+    .og-unread-dot { flex-shrink: 0; height: 6px; width: 6px; background: #6366f1; border-radius: 50%; }
+    .og-message-subject { display: block; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .og-message-open p { font-size: 11px; color: #94a3b8; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin: 7px 0 10px; }
+    .og-message-open time { display: block; font-size: 9px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .og-message-row.is-unread { .og-message-sender strong, .og-message-subject { font-weight: 750; color: #1e293b; } }
+    .og-star { position: absolute; right: 12px; top: 18px; border: 0; background: transparent; color: #b6c0d0; padding: 5px; font-size: 13px; &.is-starred { color: #b7791f; } }
+    .og-pagination { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; border-top: 1px solid #edf0f6; font-size: 11px; color: #64748b; button { border: 1px solid #e2e8f0; background: #fff; border-radius: 7px; padding: 5px 12px; } }
+    .og-empty-list { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 55px 20px; text-align: center; color: #94a3b8; i { font-size: 27px; } strong { font-size: 13px; color: #64748b; } span { font-size: 11px; } }
+    .og-reader { display: flex; flex-direction: column; min-width: 0; min-height: 0; background: #fff; margin: 18px; border: 1px solid #e7ecf4; border-radius: 16px; box-shadow: 0 8px 25px #1e293b04; overflow: hidden; }
+    .og-reader.has-message { align-self: start; width: calc(100% - 36px); max-height: calc(100% - 36px); background: #f8fafc; box-shadow: 0 12px 35px #1e293b0b; }
+    .og-reader-empty { margin: auto; text-align: center; padding: 36px; h2 { font-size: 28px; font-weight: 650; letter-spacing: -.8px; line-height: 1.25; margin: 16px 0; color: #334155; } p { color: #94a3b8; font-size: 12px; line-height: 1.8; max-width: 290px; margin: 0 auto 22px; } }
+    .og-empty-art { width: 82px; height: 82px; margin: 0 auto 24px; display: grid; place-items: center; background: #f0efff; border-radius: 23px; transform: rotate(-7deg); color: #817aeb; font-size: 30px; }
+    .og-reader-toolbar { display: flex; align-items: center; gap: 15px; padding: 17px 22px; border-bottom: 1px solid #edf0f6; h2 { font-size: 21px; margin: 5px 0 0; color: #1e293b; font-weight: 650; } > button:last-child { margin-inline-start: auto; } }
+    .og-mail-actions { display: flex; gap: 7px; }
+    .og-reader-note { margin-inline-start: auto; font-size: 8px; letter-spacing: 1.5px; color: #94a3b8; }
+    .og-mail-content { display: block; padding: 22px; overflow-y: auto; min-height: 0; h1 { font-size: 25px; color: #1e293b; font-weight: 650; letter-spacing: -.5px; line-height: 1.35; margin: 0 0 22px; overflow-wrap: anywhere; } }
+    .og-mail-sheet { display: block !important; visibility: visible !important; opacity: 1 !important; width: 100%; max-width: 880px; min-height: 190px; margin: 0 auto; padding: 26px 28px 22px; background: #fff; border: 1px solid #e7ecf4; border-radius: 14px; box-shadow: 0 7px 22px #1e293b08; }
+    .og-message-meta { display: flex; gap: 12px; margin-bottom: 30px; strong { display: block; font-size: 12px; overflow-wrap: anywhere; } small { display: block; font-size: 11px; margin-top: 6px; color: #94a3b8; overflow-wrap: anywhere; } time { display: block; font-size: 10px; color: #94a3b8; margin-top: 8px; } }
+    .og-sender-avatar { display: grid; place-items: center; flex-shrink: 0; width: 39px; height: 39px; border-radius: 12px; background: #eef2ff; color: #6366f1; font-size: 14px; font-weight: 650; }
+    .og-mail-body { display: block !important; visibility: visible !important; opacity: 1 !important; min-height: 24px; white-space: pre-wrap; overflow-wrap: anywhere; font-family: inherit; font-size: 13px; color: #475569; line-height: 1.75; margin: 0 0 24px; }
+    .og-reply { background: #fff; border: 1px solid #dddff4; color: #4f46e5; border-radius: 9px; padding: 10px 22px; font-weight: 650; font-size: 12px; i { margin-inline-end: 7px; } }
+    .og-safe-reader { font-size: 9px; color: #94a3b8; margin: 24px 0 0; }
+    .og-received-attachments { display: grid; gap: 9px; margin-bottom: 25px; h3 { font-size: 12px; color: #64748b; margin-bottom: 6px; } a { display: flex; align-items: center; gap: 12px; padding: 13px; border: 1px solid #e2e8f0; border-radius: 9px; text-decoration: none; color: #64748b; max-width: 420px; span { flex: 1; min-width: 0; } strong { display: block; font-size: 11px; overflow-wrap: anywhere; color: #475569; } small { display: block; margin-top: 4px; font-size: 9px; color: #94a3b8; } } }
+    .og-compose-form { display: flex; flex-direction: column; min-height: 0; height: 100%; overflow: auto; }
+    .og-compose-fields { display: flex; flex-direction: column; flex: 1; border: 0; padding: 0 24px; margin: 0; min-height: 330px; label { display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #edf0f6; padding: 12px 0; margin: 0; > span { min-width: 45px; color: #94a3b8; font-size: 11px; } input { width: 100%; min-width: 0; border: 0; background: transparent; padding: 5px; color: #334155; font-size: 12px; } } .og-body-label { flex: 1; border-bottom: 0; } textarea { width: 100%; height: 100%; min-height: 180px; border: 0; background: transparent; color: #334155; resize: vertical; font-size: 13px; line-height: 1.8; padding: 8px 4px; } }
+    .og-address-pair { display: flex; gap: 18px; label { width: 50%; } }
+    .og-compose-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; padding: 18px 24px 10px; border-top: 1px solid #edf0f6; > small { font-size: 9px; color: #94a3b8; margin-inline-start: auto; } }
+    .og-attach-control { position: relative; overflow: hidden; padding: 8px 5px; color: #64748b; font-size: 11px; cursor: pointer; input { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; } &:focus-within { outline: 2px solid #818cf8; border-radius: 5px; } }
+    .og-compose-note { font-size: 9px; color: #94a3b8; margin: 8px 24px 18px; }
+    .og-compose-attachments { display: flex; gap: 8px; flex-wrap: wrap; padding: 10px 24px; > div { display: flex; align-items: center; gap: 8px; background: #f5f7fc; border: 1px solid #e2e8f0; border-radius: 7px; padding: 7px 10px; font-size: 10px; color: #64748b; span { overflow-wrap: anywhere; } button { border: 0; background: transparent; color: #94a3b8; } small { white-space: nowrap; } } }
+    .og-mobile-menu { display: none; }
+}
+@media (max-width: 1200px) {
+    .og-app { .og-workspace { grid-template-columns: 165px 285px minmax(0, 1fr); } .og-topbar { gap: 15px; padding-inline: 18px; } .og-brand { min-width: 190px; } .og-account > span:nth-child(2) { max-width: 120px; } .og-reader { margin: 12px; } .og-reader.has-message { width: calc(100% - 24px); max-height: calc(100% - 24px); } .og-mail-content { padding: 16px; } .og-mail-sheet { padding: 22px; } }
+}
+@media (max-width: 950px) {
+    .og-app { .og-topbar { flex-wrap: wrap; } .og-search { order: 3; flex-basis: 100%; max-width: none; } .og-workspace { grid-template-columns: 170px minmax(0, 1fr); } .og-reader { display: none; } .og-show-reader { .og-message-list { display: none; } .og-reader { display: flex; } } .og-sidebar { padding-top: 20px; } }
+}
+@media (max-width: 575px) {
+    .og-app { .og-brand { min-width: 0; strong { font-size: 16px; } small { font-size: 7px; } } .og-topbar { padding: 12px; gap: 12px; } .og-account > span:nth-child(2) { max-width: 100px; font-size: 9px; } .og-logo { width: 34px; height: 34px; border-radius: 10px; font-size: 18px; } .og-workspace { display: flex; position: relative; } .og-sidebar { display: none; &.is-open { display: flex; position: absolute; inset-block: 0; inset-inline-start: 0; width: 210px; z-index: 10; background: #f5f7fc; box-shadow: 8px 0 30px #17243a20; } } .og-message-list { flex: 1; min-width: 0; } .og-mobile-menu { display: inline-grid; } .og-reader { flex: 1; margin: 8px; } .og-reader.has-message { width: calc(100% - 16px); max-height: calc(100% - 16px); } .og-reader-note { display: none; } .og-reader-toolbar { padding: 14px; } .og-mail-content { padding: 10px; h1 { font-size: 22px; } } .og-mail-sheet { padding: 18px; border-radius: 10px; } .og-compose-fields { padding-inline: 16px; } .og-compose-footer { padding-inline: 16px; gap: 12px; } .og-onboarding { padding-top: 24px; } }
+}
+@media (prefers-reduced-motion: reduce) { .og-app .fa-spin { animation: none; } }

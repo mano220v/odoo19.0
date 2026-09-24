@@ -1,0 +1,289 @@
+.o_action:has(.ow-cache-dashboard-container),
+.o_view_controller:has(.ow-cache-dashboard-container),
+.o_content:has(.ow-cache-dashboard-container) {
+    overflow-y: auto !important;
+    overflow-x: hidden;
+}
+
+
+.ow-cache-dashboard-container {
+    height: 100%;
+    overflow-y: auto;   
+    overflow-x: hidden;
+}
+
+.o_tcm_dashboard {
+    padding: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+
+    .o_tcm_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+
+        h2 {
+            margin: 0;
+        }
+
+        .o_tcm_actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .o_tcm_toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            margin: 0;
+            padding: 6px 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            background: #fff;
+        }
+    }
+
+    .o_tcm_freed {
+        background: #d4edda;
+        color: #155724;
+        padding: 10px 16px;
+        border-radius: 6px;
+        margin-bottom: 16px;
+    }
+
+    .o_tcm_summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 20px;
+
+        .o_tcm_card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+
+            .o_tcm_label {
+                font-size: 12px;
+                color: #888;
+                text-transform: uppercase;
+            }
+
+            .o_tcm_value {
+                font-size: 24px;
+                font-weight: 600;
+            }
+
+            .o_tcm_sub {
+                font-size: 12px;
+                color: #999;
+            }
+
+            button {
+                margin-top: 8px;
+                align-self: flex-start;
+            }
+        }
+
+        .o_tcm_total {
+            background: linear-gradient(135deg, #714B67, #8f6a85);
+            color: #fff;
+
+            .o_tcm_label, .o_tcm_value {
+                color: #fff;
+            }
+        }
+    }
+
+    .o_tcm_breakdown {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+
+        h3 {
+            margin-top: 0;
+        }
+
+        .o_tcm_breakdown_body {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .o_tcm_donut_wrap {
+            flex: 0 0 auto;
+        }
+
+        .o_tcm_donut {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .o_tcm_donut_hole {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .o_tcm_donut_value {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .o_tcm_donut_caption {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .o_tcm_rows {
+            flex: 1 1 320px;
+            min-width: 280px;
+        }
+
+        .o_tcm_row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 6px;
+            transition: background .15s ease;
+
+            &:hover {
+                background: #f5f5f5;
+            }
+
+            .o_tcm_row_label {
+                width: 120px;
+                font-size: 13px;
+            }
+
+            .o_tcm_bar_wrap {
+                flex: 1;
+                height: 10px;
+                background: #f0f0f0;
+                border-radius: 5px;
+                overflow: hidden;
+            }
+
+            .o_tcm_bar {
+                height: 100%;
+                border-radius: 5px;
+                transition: width .4s ease;
+            }
+
+            .o_tcm_bar_image { background: #4a90d9; }
+            .o_tcm_bar_video { background: #e0574c; }
+            .o_tcm_bar_document { background: #f5a623; }
+            .o_tcm_bar_audio { background: #7ed321; }
+            .o_tcm_bar_other { background: #9b9b9b; }
+
+            .o_tcm_row_value {
+                width: 90px;
+                text-align: right;
+                font-size: 13px;
+                font-weight: 600;
+            }
+        }
+    }
+
+    .o_tcm_bottom_grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+
+        .o_tcm_panel {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+
+            h3 {
+                margin-top: 0;
+            }
+
+            table {
+                margin-bottom: 0;
+            }
+
+            .o_tcm_dup_stat {
+                font-weight: 700;
+                color: #714B67;
+            }
+        }
+    }
+}
+
+.o_tcm_dialog {
+    .o_tcm_dialog_filters {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+
+        input[type="text"] {
+            flex: 1;
+        }
+
+        select {
+            width: auto;
+        }
+    }
+
+    .o_tcm_note {
+        background: #fff3cd;
+        color: #664d03;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+    }
+
+    .o_tcm_dialog_toolbar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+
+        .o_tcm_select_all {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 0;
+            font-weight: normal;
+        }
+    }
+
+    .o_tcm_dialog_table {
+        max-height: 480px;
+        display: block;
+        overflow-y: auto;
+
+        thead, tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+    }
+}

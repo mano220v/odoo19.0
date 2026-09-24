@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="oauth_result" name="Gmail connection result">
+        <t t-call="web.layout">
+            <main style="max-width:640px;margin:10vh auto;padding:32px;font-family:system-ui,sans-serif;">
+                <div style="background:#f5f7fc;border:1px solid #e2e8f0;border-radius:20px;padding:36px;">
+                    <p style="color:#4f46e5;font-size:12px;letter-spacing:2px;font-weight:700;">ODOO WINGS / GMAIL INBOX</p>
+                    <h1 style="color:#17243a;font-size:30px;" t-if="success">You're connected.</h1>
+                    <h1 style="color:#17243a;font-size:30px;" t-else="">Connection needs attention.</h1>
+                    <p style="color:#475569;line-height:1.8;" t-esc="message"/>
+                    <a t-att-href="app_url" style="display:inline-block;margin-top:18px;background:#4f46e5;color:#fff;padding:12px 20px;border-radius:10px;text-decoration:none;">Open Gmail Inbox</a>
+                </div>
+            </main>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ═══ Security Category ══════════════════════════════════════════════ -->
+        
+        <record model="ir.module.category" id="module_word_document">
+            <field name="name">Word Editor</field>
+            <field name="sequence">19</field>
+        </record>
+
+        <record id="res_groups_privilege_word_editor" model="res.groups.privilege">
+            <field name="name">Word Editor</field>
+            <field name="category_id" ref="module_word_document"/>
+            <field name="sequence">100</field>
+        </record>
+
+        <!-- ═══ Groups ════════════════════════════════════════════════════════ -->
+        <record id="group_word_editor_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="sequence">10</field>
+            <field name="privilege_id" ref="res_groups_privilege_word_editor"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">Can create, view, and edit their own documents.</field>
+        </record>
+
+        <record id="group_word_editor_manager" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="sequence">20</field>
+            <field name="privilege_id" ref="res_groups_privilege_word_editor"/>
+            <field name="implied_ids" eval="[(4, ref('group_word_editor_user'))]"/>
+            <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+            <field name="comment">Can manage all documents, templates, tags, and categories.</field>
+        </record>
+
+        <!-- Regular users can manage their own documents. -->
+        <record id="rule_word_document_user_own" model="ir.rule">
+            <field name="name">Word documents: own documents</field>
+            <field name="model_id" ref="model_word_document"/>
+            <field name="domain_force">[('author_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_word_editor_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- Shared documents are readable by Word Editor users. -->
+        <record id="rule_word_document_user_shared_read" model="ir.rule">
+            <field name="name">Word documents: shared read</field>
+            <field name="model_id" ref="model_word_document"/>
+            <field name="domain_force">[('is_shared', '=', True)]</field>
+            <field name="groups" eval="[(4, ref('group_word_editor_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Managers can manage every document. This rule combines with the user
+             rule because managers imply the user group. -->
+        <record id="rule_word_document_manager_all" model="ir.rule">
+            <field name="name">Word documents: manager all</field>
+            <field name="model_id" ref="model_word_document"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_word_editor_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+</odoo>

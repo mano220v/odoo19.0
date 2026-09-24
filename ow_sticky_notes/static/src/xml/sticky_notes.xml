@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="ow_sticky_notes.StickyNotesWidget" owl="1">
+        <div class="o_sn_root">
+
+            <!-- Floating quick-ball -->
+            <div class="o_sn_ball"
+                 t-ref="ball"
+                 t-att-style="ballStyle"
+                 t-att-class="{ o_sn_ball_dragging: state.dragging, o_sn_ball_open: state.isOpen }"
+                 t-on-pointerdown="onBallPointerDown"
+                 title="Sticky Notes (Alt+N)">
+                <i class="fa fa-sticky-note-o"/>
+                <span class="o_sn_badge" t-if="state.notes.length">
+                    <t t-esc="state.notes.length"/>
+                </span>
+            </div>
+
+            <!-- Backdrop for click-outside-to-close on small screens -->
+            <div class="o_sn_backdrop" t-if="state.isOpen" t-on-click="closePanel"/>
+
+            <!-- Slide-in panel -->
+            <div class="o_sn_panel" t-att-class="{ o_sn_panel_open: state.isOpen }">
+                <div class="o_sn_panel_header">
+                    <span class="o_sn_panel_title">Sticky Notes</span>
+                    <div class="o_sn_panel_actions">
+                        <button class="btn btn-sm o_sn_icon_btn" t-on-click="addNote" title="New note">
+                            <i class="fa fa-plus"/>
+                        </button>
+                        <button class="btn btn-sm o_sn_icon_btn" t-on-click="closePanel" title="Close">
+                            <i class="fa fa-times"/>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="o_sn_filter_bar" t-if="hasContext">
+                    <button class="btn btn-sm"
+                            t-att-class="state.filter === 'all' ? 'btn-primary' : 'btn-light'"
+                            t-on-click="() => this.state.filter = 'all'">
+                        All notes
+                    </button>
+                    <button class="btn btn-sm"
+                            t-att-class="state.filter === 'context' ? 'btn-primary' : 'btn-light'"
+                            t-on-click="() => this.state.filter = 'context'">
+                        This record
+                    </button>
+                </div>
+
+                <div class="o_sn_panel_body">
+                    <t t-if="state.loading">
+                        <div class="o_sn_empty">
+                            <i class="fa fa-circle-o-notch fa-spin"/> Loading notes...
+                        </div>
+                    </t>
+                    <t t-elif="!visibleNotes.length">
+                        <div class="o_sn_empty">
+                            <i class="fa fa-sticky-note-o"/>
+                            <p>No notes yet. Click the + button to add one.</p>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div t-foreach="visibleNotes" t-as="note" t-key="note.id"
+                             class="o_sn_card"
+                             t-attf-data-color="{{note.color}}">
+
+                            <div class="o_sn_card_toolbar">
+                                <div class="o_sn_swatches">
+                                    <span t-foreach="colors" t-as="c" t-key="c"
+                                          class="o_sn_swatch"
+                                          t-attf-data-color="{{c}}"
+                                          t-att-class="{ o_sn_swatch_active: note.color === c }"
+                                          t-on-click="() => this.setColor(note, c)"/>
+                                </div>
+                                <div class="o_sn_card_icons">
+                                    <i class="fa"
+                                       t-att-class="note.is_pinned ? 'fa-thumb-tack o_sn_pinned' : 'fa-thumb-tack'"
+                                       title="Pin note"
+                                       t-on-click="() => this.togglePin(note)"/>
+                                    <i class="fa fa-link"
+                                       t-if="hasContext"
+                                       title="Link to current record"
+                                       t-on-click="() => this.linkToCurrentRecord(note)"/>
+                                    <i class="fa fa-trash-o"
+                                       title="Delete note"
+                                       t-on-click="() => this.deleteNote(note)"/>
+                                </div>
+                            </div>
+
+                            <input type="text"
+                                   class="o_sn_card_title"
+                                   placeholder="Title"
+                                   t-att-value="note.name"
+                                   t-on-input="(ev) => this.onFieldInput(note, 'name', ev.target.value)"/>
+
+                            <textarea class="o_sn_card_content"
+                                      placeholder="Take a note..."
+                                      t-on-input="(ev) => this.onFieldInput(note, 'content', ev.target.value)"
+                                      t-esc="note.content"/>
+
+                            <div class="o_sn_card_footer">
+                                <span t-if="note.res_name" class="o_sn_chip">
+                                    <i class="fa fa-link"/> <t t-esc="note.res_name"/>
+                                </span>
+                                <span class="o_sn_timestamp" t-esc="formatDate(note.write_date)"/>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

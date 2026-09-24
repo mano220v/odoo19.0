@@ -1,0 +1,147 @@
+// Extended finishes. Native Odoo widget structure and interaction remain intact.
+:root {
+    --ow-depth-alpha: .138;
+    --ow-glow-alpha: .14;
+    --ow-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+html.ow-premium {
+    &[data-ow-font-family="humanist"] { --ow-font-family: "Trebuchet MS", "Segoe UI", sans-serif; }
+    &[data-ow-font-family="geometric"] { --ow-font-family: "Century Gothic", "Avenir Next", "Segoe UI", sans-serif; }
+    &[data-ow-surface="elevated"] { --ow-shadow: 0 16px 42px rgba(15, 23, 42, var(--ow-depth-alpha)); }
+    .o_web_client, .ow-studio { font-family: var(--ow-font-family); }
+    .o_web_client {
+        .o_control_panel { box-shadow: 0 3px 14px rgba(15, 23, 42, .025); }
+        .o_form_view .oe_title h1 { letter-spacing: -.035em; line-height: 1.18; }
+        .o_form_view .o_form_label { letter-spacing: .01em; }
+        .o_form_view .o_notebook .nav { gap: 10px; }
+        .o_form_view .o_notebook .nav-link.active {
+            background-image: linear-gradient(180deg, transparent, var(--ow-accent-soft));
+        }
+        .o_form_view .oe_button_box .oe_stat_button {
+            .o_button_icon { color: var(--ow-accent-ink); }
+            &:focus-visible { outline: 2px solid var(--ow-accent); outline-offset: -2px; }
+        }
+        .o_searchview .o_searchview_facet {
+            box-shadow: 0 2px 5px rgba(15, 23, 42, .04);
+            .o_searchview_facet_label { background-image: var(--ow-gradient); }
+        }
+        .o_field_progressbar .o_progressbar_complete { background: var(--ow-gradient); }
+        .o_field_progressbar .o_progress { border-radius: 20px; overflow: hidden; }
+        .o_field_image img { border-radius: var(--ow-small-radius); }
+        .o_list_renderer .o_list_table tfoot { border-top: 2px solid var(--ow-border); }
+        .o_list_renderer .o_list_table .o_data_row:hover > .o_data_cell:first-of-type { box-shadow: inset 3px 0 var(--ow-accent); }
+        .o_form_view .o_field_widget:not(.o_field_invalid) .o_input::placeholder { color: var(--ow-muted); opacity: .8; }
+        .modal-content { border-top: 2px solid var(--ow-accent); }
+        .modal-header { background: linear-gradient(110deg, var(--ow-accent-soft), var(--ow-surface)); border-radius: var(--ow-radius) var(--ow-radius) 0 0; }
+    }
+    &[data-ow-accent-line="true"] .o_web_client .o_form_sheet {
+        border-top: 0;
+        background-image: var(--ow-gradient);
+        background-position: top;
+        background-size: 100% 3px;
+        background-repeat: no-repeat;
+    }
+    &[data-ow-accent-line="false"] .o_web_client .o_form_sheet { border-top: 1px solid var(--ow-border); }
+    &[data-ow-surface="glass"] .o_web_client {
+        .o_form_sheet, .o_kanban_record:not(.o_kanban_ghost), .ow-studio-settings, .ow-preview-window {
+            box-shadow: 0 12px 36px rgba(15, 23, 42, var(--ow-depth-alpha)), inset 0 1px 0 rgba(255, 255, 255, .1);
+        }
+    }
+    &[data-ow-form-width="wide"] .o_web_client .o_form_view .o_form_sheet {
+        max-width: 1680px; width: 100%;
+    }
+    &[data-ow-input-style="outlined"] .o_web_client .o_form_view .o_field_widget:not(.o_field_boolean):not(.o_field_image):not(.o_field_x2many) .o_input,
+    &[data-ow-input-style="outlined"] .ow-studio .ow-demo-input {
+        background: var(--ow-surface);
+        border-color: color-mix(in srgb, var(--ow-accent) 22%, var(--ow-border));
+    }
+    &[data-ow-input-style="minimal"] .o_web_client .o_form_view .o_field_widget:not(.o_field_boolean):not(.o_field_image):not(.o_field_x2many) .o_input,
+    &[data-ow-input-style="minimal"] .ow-studio .ow-demo-input {
+        background: transparent;
+        border-top: 0; border-inline: 0;
+        border-bottom: 1px solid var(--ow-border);
+        border-radius: 0;
+        &:focus { border-bottom-color: var(--ow-accent); }
+    }
+    // Validation and required indicators remain visible across every finish.
+    &[data-ow-input-style] .o_web_client .o_form_view .o_field_widget.o_required_modifier .o_input { border-inline-start: 3px solid var(--ow-accent); }
+    &[data-ow-input-style] .o_web_client .o_form_view .o_field_widget.o_field_invalid .o_input { border-color: #dc3545; }
+    &[data-ow-field-glow="true"] .o_web_client {
+        .o_form_view .o_field_widget .o_input:focus, .o_searchview:focus-within,
+        .ow-studio .ow-demo-input:focus {
+            box-shadow: 0 0 0 3px var(--ow-focus-color);
+        }
+        .o_form_view .o_field_widget.o_field_invalid .o_input:focus { box-shadow: 0 0 0 3px rgba(220, 53, 69, .15); }
+    }
+    &[data-ow-table-style="tinted"] .o_web_client .o_list_renderer .o_list_table thead th,
+    &[data-ow-table-style="tinted"] .ow-demo-table th {
+        background: var(--ow-accent-soft); color: var(--ow-accent-ink);
+        border-bottom-color: color-mix(in srgb, var(--ow-accent) 38%, var(--ow-border));
+    }
+    &[data-ow-striped-rows="true"] .ow-demo-table tbody tr:nth-child(even) { background: color-mix(in srgb, var(--ow-accent) 4%, var(--ow-surface)); }
+    &[data-ow-card-accent="top"] .o_web_client .o_kanban_record:not(.o_kanban_ghost),
+    &[data-ow-card-accent="top"] .ow-demo-card { border-top: 2px solid var(--ow-accent); }
+    &[data-ow-card-accent="edge"] .o_web_client .o_kanban_record:not(.o_kanban_ghost),
+    &[data-ow-card-accent="edge"] .ow-demo-card { border-top: 1px solid var(--ow-border); border-inline-start: 3px solid var(--ow-accent); }
+    &[data-ow-card-accent="none"] .o_web_client .o_kanban_record:not(.o_kanban_ghost),
+    &[data-ow-card-accent="none"] .ow-demo-card { border: 1px solid var(--ow-border); }
+    &[data-ow-mode="dark"] {
+        .ow-studio .ow-studio-nav, .ow-studio .ow-profile-form input,
+        .ow-studio textarea { background: var(--ow-subtle); color: var(--ow-text); }
+    }
+}
+
+.ow-studio {
+    .ow-studio-hero {
+        min-height: 240px;
+        padding: 36px 40px;
+        > div:first-child { position: relative; z-index: 1; }
+        &::after { content: ""; position: absolute; inset-inline-end: 16%; top: -100px; width: 440px; height: 440px; border: 1px solid rgba(255, 255, 255, .08); border-radius: 50%; box-shadow: 0 0 0 45px rgba(255, 255, 255, .025), 0 0 0 90px rgba(255, 255, 255, .018); pointer-events: none; }
+    }
+    .ow-hero-mark { z-index: 1; width: 110px; height: 110px; border-radius: 30px; }
+    .ow-studio-settings { padding: 22px; }
+    .ow-studio-nav {
+        display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px;
+        padding: 5px; margin: 20px 0 4px; background: var(--ow-subtle);
+        border: 1px solid var(--ow-border); border-radius: 12px;
+        button { background: transparent; border: 0; border-radius: 8px; padding: 10px 2px; color: var(--ow-muted); font-size: 10px; font-weight: 650; i { display: block; font-size: 13px; margin-bottom: 6px; } &.is-selected { color: #fff; background: var(--ow-gradient); box-shadow: 0 3px 10px var(--ow-focus-color); } }
+    }
+    .ow-studio-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border-top: 1px solid var(--ow-border); padding-top: 18px; margin-top: 22px; .btn { font-size: 11px; } }
+    .ow-settings-section { padding-top: 2px; }
+    .ow-studio-divider { display: flex; align-items: center; gap: 12px; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: var(--ow-muted); margin: 24px 0 12px; &::after { content: ""; height: 1px; background: var(--ow-border); flex: 1; } }
+    .ow-custom-colors { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding-top: 18px; label { font-size: 11px; font-weight: 600; } input { display: block; width: 100%; height: 44px; border: 1px solid var(--ow-border); padding: 4px; border-radius: 8px; background: var(--ow-surface); margin-block: 8px; cursor: pointer; } code { font-size: 10px; color: var(--ow-muted); } p { grid-column: 1 / -1; font-size: 11px; line-height: 1.6; color: var(--ow-muted); } }
+    .ow-range-label { > span { display: flex; justify-content: space-between; align-items: center; } output { font-size: 10px; font-variant-numeric: tabular-nums; color: var(--ow-accent-ink); background: var(--ow-accent-soft); padding: 3px 7px; border-radius: 6px; } input { width: 100%; margin-top: 16px; accent-color: var(--ow-accent); cursor: pointer; } }
+    .ow-library-intro { text-align: center; padding: 24px 8px 18px; > i { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--ow-accent-soft); color: var(--ow-accent-ink); font-size: 20px; } h3 { font-size: 18px; margin: 13px 0 9px; font-weight: 650; } p { font-size: 11px; line-height: 1.7; color: var(--ow-muted); } }
+    .ow-profile-form { label { font-size: 11px; display: block; font-weight: 600; } input { margin-block: 9px 12px; border: 1px solid var(--ow-border); font-size: 12px; background: var(--ow-surface); color: var(--ow-text); } .btn { width: 100%; font-size: 12px; padding-block: 10px; } }
+    .ow-empty-library { margin-block: 20px; text-align: center; padding: 18px; font-size: 11px; color: var(--ow-muted); border: 1px dashed var(--ow-border); border-radius: var(--ow-small-radius); }
+    .ow-saved-themes { display: grid; gap: 8px; margin-top: 18px; }
+    .ow-saved-theme { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--ow-border); border-radius: var(--ow-small-radius); background: var(--ow-subtle); button { border: 0; background: transparent; padding: 9px; border-radius: 6px; color: var(--ow-text); font-size: 12px; text-align: start; &:hover { background: var(--ow-accent-soft); } &:first-child { flex: 1; display: flex; align-items: center; gap: 10px; min-width: 0; i { color: var(--ow-accent-ink); } span { overflow-wrap: anywhere; } } } .ow-remove-theme { color: var(--ow-muted); } }
+    .ow-transfer { font-family: ui-monospace, monospace; font-size: 10px; margin-top: 9px; background: var(--ow-subtle); color: var(--ow-text); border-color: var(--ow-border); resize: vertical; }
+    .ow-studio-message { padding: 12px; border-radius: var(--ow-small-radius); background: var(--ow-accent-soft); color: var(--ow-accent-ink); margin-top: 14px; font-size: 11px; line-height: 1.7; &.is-error { background: #fff1f2; color: #9f1239; } }
+    input.ow-demo-input { width: 100%; display: block; color: var(--ow-text); font-family: inherit; outline: none; &:focus-visible { outline: 2px solid var(--ow-accent); outline-offset: 2px; } }
+    .ow-preview-feedback { display: inline-block; margin: 8px 12px; font-size: 11px; color: var(--ow-accent-ink); }
+    .ow-detail-showcase { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; justify-content: space-between; margin-top: 20px; padding: 20px 22px; border: 1px solid var(--ow-border); border-radius: var(--ow-radius); background: linear-gradient(125deg, var(--ow-surface), var(--ow-accent-soft)); .ow-eyebrow { font-size: 8px; color: var(--ow-accent-ink); } h3 { font-size: 16px; font-weight: 650; margin-top: 8px; } }
+    .ow-showcase-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .ow-showcase-status { font-size: 10px; color: var(--ow-accent-ink); i { font-size: 6px; margin-inline-end: 5px; } }
+    .ow-showcase-avatar { display: grid; place-items: center; height: 32px; width: 32px; background: var(--ow-gradient); color: #fff; border: 3px solid var(--ow-surface); border-radius: 50%; font-size: 8px; font-weight: 700; box-shadow: 0 0 0 1px var(--ow-border); }
+    .ow-showcase-progress { width: 90px; height: 6px; background: var(--ow-border); border-radius: 20px; overflow: hidden; span { display: block; width: 70%; height: 100%; border-radius: inherit; background: var(--ow-gradient); } }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    html.ow-premium[data-ow-motion="true"][data-ow-button-shine="true"] .o_web_client button.btn-primary:not(.dropdown-toggle):not(:disabled):hover {
+        background-image: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, .2) 49%, transparent 63%), var(--ow-gradient);
+        background-size: 250% 100%, 100% 100%;
+        background-repeat: no-repeat;
+        animation: ow-button-sheen 650ms ease-out 1;
+        background-position: -100% 0, 0 0;
+    }
+    html.ow-premium[data-ow-motion="true"] .ow-settings-section { animation: ow-reveal var(--ow-duration) ease-out; }
+}
+@keyframes ow-button-sheen { from { background-position: 160% 0, 0 0; } to { background-position: -100% 0, 0 0; } }
+@media (max-width: 575px) {
+    .ow-studio .ow-studio-hero { padding: 24px; min-height: 200px; }
+    .ow-studio .ow-preview-stats { gap: 6px; > div { padding: 14px 10px; } }
+}
+@media print {
+    html.ow-premium .o_web_client .o_form_sheet { background-image: none; border-top: 0; box-shadow: none; }
+    .ow-appearance-systray { display: none !important; }
+}

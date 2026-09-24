@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sticky_note_rule_own" model="ir.rule">
+        <field name="name">Sticky Note: user sees only own notes</field>
+        <field name="model_id" ref="model_ow_sticky_note"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+        <field name="perm_read">1</field>
+        <field name="perm_write">1</field>
+        <field name="perm_create">1</field>
+        <field name="perm_unlink">1</field>
+    </record>
+</odoo>

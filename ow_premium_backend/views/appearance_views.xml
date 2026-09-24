@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_appearance" model="ir.actions.client">
+        <field name="name">Appearance Studio</field>
+        <field name="tag">ow_premium_backend.appearance</field>
+    </record>
+    <menuitem id="menu_appearance" name="Appearance Studio" action="action_appearance"
+              sequence="95" groups="base.group_user"
+              web_icon="ow_premium_backend,static/description/icon.png"/>
+</odoo>

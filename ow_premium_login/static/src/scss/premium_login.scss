@@ -1,0 +1,601 @@
+/* Premium sign-in surface */
+
+:root {
+    --ow-login-ink: #171526;
+    --ow-login-muted: #77758a;
+    --ow-login-purple: #84547d;
+    --ow-login-purple-dark: #593654;
+    --ow-login-purple-deep: #3b253b;
+    --ow-login-lilac: #f5eaf5;
+    --ow-login-border: #e8e3eb;
+    --ow-login-card: rgba(255, 255, 255, .91);
+}
+
+body:has(.ow_premium_login_shell) {
+    position: relative;
+    overflow-x: hidden;
+    min-height: 100vh;
+    color: var(--ow-login-ink);
+    background:
+        radial-gradient(circle at 13% 14%, rgba(216, 176, 222, .48), transparent 25rem),
+        radial-gradient(circle at 91% 8%, rgba(187, 222, 216, .58), transparent 24rem),
+        radial-gradient(circle at 65% 100%, rgba(238, 211, 224, .62), transparent 30rem),
+        #f7f6fa;
+
+    &::before,
+    &::after {
+        position: fixed;
+        z-index: 0;
+        border-radius: 50%;
+        content: '';
+        pointer-events: none;
+    }
+
+    &::before {
+        top: -8rem;
+        right: -7rem;
+        width: 19rem;
+        height: 19rem;
+        border: 1px solid rgba(132, 84, 125, .12);
+        box-shadow: 0 0 0 2.2rem rgba(132, 84, 125, .035), 0 0 0 4.5rem rgba(132, 84, 125, .025);
+    }
+
+    &::after {
+        bottom: -10rem;
+        left: -8rem;
+        width: 24rem;
+        height: 24rem;
+        border: 1px solid rgba(97, 142, 139, .12);
+        box-shadow: 0 0 0 2rem rgba(97, 142, 139, .035), 0 0 0 4rem rgba(97, 142, 139, .025);
+    }
+}
+
+.ow_premium_login_shell {
+    position: relative;
+    z-index: 1;
+    width: calc(100% - 2rem);
+    max-width: 38rem;
+    min-height: 100vh;
+    padding: clamp(1.5rem, 6vh, 4.75rem) 0 !important;
+}
+
+.ow_premium_login_card {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 37rem !important;
+    border: 1px solid rgba(255, 255, 255, .92) !important;
+    border-radius: 2rem !important;
+    background: var(--ow-login-card) !important;
+    box-shadow: 0 2rem 5rem rgba(53, 31, 57, .16), 0 .35rem 1.2rem rgba(53, 31, 57, .06) !important;
+    backdrop-filter: blur(18px);
+    animation: ow-login-rise .65s cubic-bezier(.2, .75, .25, 1) both;
+
+    &::before {
+        display: block;
+        height: .4rem;
+        background: linear-gradient(90deg, #4d2d49, #a86e9d 48%, #75aaa7);
+        content: '';
+    }
+
+    .card-body {
+        padding: clamp(1.5rem, 4vw, 2.85rem) !important;
+    }
+
+    > .card-body > .text-center.pb-3 {
+        position: relative;
+        padding: .1rem 0 1.55rem !important;
+        border-bottom: 0 !important;
+        margin-bottom: 0 !important;
+
+        &::after {
+            position: absolute;
+            right: 15%;
+            bottom: .25rem;
+            left: 15%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e6dce8, transparent);
+            content: '';
+        }
+
+        img {
+            max-height: 4.1rem !important;
+            filter: drop-shadow(0 .25rem .45rem rgba(89, 54, 84, .1));
+        }
+    }
+}
+
+.ow_premium_login_intro {
+    margin: .65rem 0 1.8rem;
+    text-align: center;
+
+    h1 {
+        margin: 1rem 0 .4rem;
+        color: var(--ow-login-ink);
+        font-size: clamp(1.65rem, 5vw, 2rem);
+        font-weight: 800;
+        letter-spacing: -.04em;
+    }
+
+    p {
+        margin: 0;
+        color: var(--ow-login-muted);
+        font-size: .88rem;
+        letter-spacing: .01em;
+    }
+}
+
+.ow_premium_eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .38rem .75rem .38rem .42rem;
+    border: 1px solid rgba(132, 84, 125, .18);
+    border-radius: 99rem;
+    background: rgba(255, 255, 255, .7);
+    color: var(--ow-login-purple);
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.ow_premium_eyebrow_icon {
+    display: grid;
+    width: 1.35rem;
+    height: 1.35rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--ow-login-purple);
+    color: #fff;
+    font-size: .65rem;
+}
+
+.ow_premium_login_form {
+    .field-login {
+        margin-bottom: 1.2rem !important;
+
+        label,
+        .form-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--ow-login-ink);
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .01em;
+        }
+
+        input {
+            height: 3rem;
+            border-radius: .75rem;
+            border-color: var(--ow-login-border);
+            background: #fcfcfd;
+            box-shadow: 0 .25rem .8rem rgba(66, 40, 69, .025);
+
+            &:focus {
+                border-color: #a77aa0;
+                box-shadow: 0 0 0 .22rem rgba(118, 80, 111, .12);
+            }
+        }
+    }
+}
+
+.ow_login_label_hint {
+    color: var(--ow-login-muted);
+    font-size: .69rem;
+    font-weight: 500;
+}
+
+.ow_premium_authentication {
+    margin-top: .15rem;
+}
+
+.ow_login_methods {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: .3rem;
+    padding: .35rem;
+    margin-bottom: 1.35rem;
+    border: 1px solid rgba(132, 84, 125, .12);
+    border-radius: 1.1rem;
+    background: rgba(246, 242, 248, .86);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9);
+}
+
+.ow_login_method {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+    min-height: 2.65rem;
+    padding: .4rem .25rem;
+    border: 0;
+    border-radius: .7rem;
+    background: transparent;
+    color: #858194;
+    font-size: .69rem;
+    font-weight: 650;
+    transition: color .2s ease, background .2s ease, box-shadow .2s ease, transform .2s ease;
+
+    i {
+        font-size: .78rem;
+    }
+
+    &:hover,
+    &.is-active {
+        background: rgba(255, 255, 255, .98);
+        color: var(--ow-login-purple-dark);
+        box-shadow: 0 .35rem .85rem rgba(75, 44, 73, .12), inset 0 0 0 1px rgba(132, 84, 125, .08);
+        transform: translateY(-1px);
+    }
+}
+
+.ow_login_panel_heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: .45rem;
+
+    .form-label {
+        margin: 0;
+        color: var(--ow-login-ink);
+        font-size: .78rem;
+        font-weight: 700;
+    }
+}
+
+.ow_login_reset,
+.ow_login_reset_pattern {
+    border: 0;
+    background: transparent;
+    color: var(--ow-login-purple);
+    font-size: .72rem;
+    text-decoration: none;
+
+    &:hover {
+        color: var(--ow-login-purple-dark);
+        text-decoration: underline;
+    }
+}
+
+.ow_premium_input_group {
+    position: relative;
+
+    input {
+        height: 3.15rem;
+        padding-right: 3rem;
+        border: 1px solid var(--ow-login-border);
+        border-radius: .85rem !important;
+        background: rgba(255, 255, 255, .76);
+        box-shadow: none !important;
+
+        &:focus {
+            border-color: #a26a99;
+            background: #fff;
+            box-shadow: 0 0 0 .25rem rgba(132, 84, 125, .12), 0 .5rem 1rem rgba(82, 48, 79, .06) !important;
+        }
+    }
+}
+
+.ow_input_action {
+    position: absolute;
+    top: 50%;
+    right: .35rem;
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    transform: translateY(-50%);
+    border: 0;
+    border-radius: .55rem;
+    background: transparent;
+    color: #9a94a5;
+
+    &:hover {
+        background: #f3e6f3;
+        color: var(--ow-login-purple);
+        transform: translateY(-50%) scale(1.04);
+    }
+}
+
+.ow_panel_hint {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+    margin: .5rem 0 0;
+    color: var(--ow-login-muted);
+    font-size: .68rem;
+
+    i {
+        color: #9b7595;
+    }
+}
+
+.ow_panel_badge {
+    padding: .25rem .5rem;
+    border-radius: 99rem;
+    background: #f5eef6;
+    color: var(--ow-login-purple);
+    font-size: .65rem;
+}
+
+.ow_pin_pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .55rem;
+    width: 100%;
+    max-width: 15rem;
+    margin: 1rem auto .1rem;
+
+    button,
+    .ow_pin_pad_spacer {
+        display: grid;
+        min-height: 2.5rem;
+        place-items: center;
+        border: 1px solid rgba(132, 84, 125, .13);
+        border-radius: .8rem;
+        background: rgba(255, 255, 255, .72);
+        color: var(--ow-login-ink);
+        font-size: .9rem;
+        font-weight: 650;
+        box-shadow: 0 .2rem .45rem rgba(76, 43, 74, .035);
+        transition: .16s ease;
+    }
+
+    button:hover {
+        border-color: #b98ab3;
+        background: #f5eaf5;
+        color: var(--ow-login-purple-dark);
+        box-shadow: 0 .35rem .7rem rgba(76, 43, 74, .1);
+        transform: translateY(-2px);
+    }
+
+    .ow_pin_backspace {
+        color: #8c8995;
+    }
+}
+
+.ow_pattern_lock {
+    padding: .9rem 1rem .7rem;
+    border: 1px solid rgba(132, 84, 125, .14);
+    border-radius: 1rem;
+    background: linear-gradient(145deg, rgba(255, 255, 255, .82), rgba(244, 234, 246, .9));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 .45rem 1rem rgba(76, 43, 74, .06);
+}
+
+.ow_backend_pattern_widget {
+    min-width: 15rem;
+
+    .ow_pattern_lock {
+        width: 15rem;
+        max-width: 100%;
+    }
+}
+
+.ow_backend_pattern_heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: .45rem;
+    color: #6c7485;
+    font-size: .72rem;
+
+    button {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: #76506f;
+        font-size: .72rem;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.ow_backend_pattern_value {
+    margin-top: .4rem;
+    color: #6c7485;
+    font-size: .68rem;
+
+    strong {
+        color: #76506f;
+        letter-spacing: .05em;
+    }
+}
+
+.ow_pattern_trace {
+    min-height: 1rem;
+    margin-bottom: .65rem;
+    color: #aaa5b0;
+    font-size: .68rem;
+    text-align: center;
+
+    &.has-pattern {
+        color: var(--ow-login-purple);
+        font-weight: 700;
+        letter-spacing: .05em;
+    }
+}
+
+.ow_pattern_grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 3.25rem);
+    justify-content: center;
+    gap: .85rem 1.2rem;
+    touch-action: none;
+
+    .ow_pattern_lines {
+        position: absolute;
+        z-index: 0;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        pointer-events: none;
+
+        polyline {
+            fill: none;
+            stroke: #8b6384;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 7;
+            filter: drop-shadow(0 .15rem .2rem rgba(93, 59, 87, .18));
+        }
+    }
+
+    button {
+        position: relative;
+        z-index: 1;
+        width: 3.25rem;
+        height: 3.25rem;
+        border: .35rem solid #e7dce9;
+        border-radius: 50%;
+        background: #fff;
+        color: #fff;
+        font-size: .66rem;
+        font-weight: 700;
+        box-shadow: 0 .2rem .45rem rgba(69, 43, 70, .08);
+        transition: .18s ease;
+
+        &::after {
+            position: absolute;
+            inset: .37rem;
+            border-radius: 50%;
+            background: #d7c5da;
+            content: '';
+            transition: .18s ease;
+        }
+
+        &.is-selected {
+            border-color: #8b6384;
+            background: #8b6384;
+            transform: scale(1.08);
+
+            &::after {
+                background: #fff;
+            }
+        }
+
+        &:hover {
+            border-color: #b28aae;
+        }
+    }
+}
+
+.ow_premium_login_actions {
+    padding-top: 1.35rem !important;
+
+    > button[type='submit'] {
+        position: relative;
+        overflow: hidden;
+        min-height: 3.2rem;
+        border: 0;
+        border-radius: .75rem;
+        background: linear-gradient(135deg, var(--ow-login-purple-deep), var(--ow-login-purple) 68%, #9a6792);
+        box-shadow: 0 .7rem 1.3rem rgba(89, 54, 84, .24);
+        font-weight: 700;
+        letter-spacing: .01em;
+        transition: .2s ease;
+
+        &::before {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: -35%;
+            width: 25%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .25), transparent);
+            content: '';
+            transform: skewX(-18deg);
+            transition: left .65s ease;
+        }
+
+        &:hover {
+            box-shadow: 0 .9rem 1.7rem rgba(89, 54, 84, .3);
+            transform: translateY(-1px);
+
+            &::before {
+                left: 120%;
+            }
+        }
+
+        &.is-authenticating {
+            opacity: .7;
+            pointer-events: none;
+        }
+    }
+
+    .btn-link {
+        color: var(--ow-login-purple);
+    }
+}
+
+.ow_premium_login_form {
+    .alert {
+        border: 0;
+        border-radius: .75rem;
+        font-size: .78rem;
+    }
+}
+
+.ow_premium_login_trust {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.4rem .25rem .2rem;
+    color: #9693a0;
+    font-size: .67rem;
+    letter-spacing: .01em;
+
+    i {
+        margin-right: .2rem;
+        color: #9b7595;
+    }
+}
+
+@media (max-width: 520px) {
+    .ow_premium_login_shell {
+        width: calc(100% - 1rem);
+    }
+
+    .ow_premium_login_card .card-body {
+        padding: 1.35rem !important;
+    }
+
+    .ow_login_methods {
+        gap: .2rem;
+    }
+
+    .ow_login_method {
+        flex-direction: column;
+        gap: .15rem;
+        font-size: .6rem;
+    }
+
+    .ow_premium_login_trust {
+        flex-direction: column;
+        align-items: center;
+        gap: .25rem;
+    }
+}
+
+@keyframes ow-login-rise {
+    from {
+        opacity: 0;
+        transform: translateY(1rem) scale(.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ow_premium_login_card {
+        animation: none;
+    }
+}

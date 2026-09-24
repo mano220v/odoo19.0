@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_word_document_user,word.document user,model_word_document,word_editor.group_word_editor_user,1,1,1,1
+access_word_document_tag_user,word.document.tag user,model_word_document_tag,word_editor.group_word_editor_user,1,1,1,1
+access_word_document_tag_manager,word.document.tag manager,model_word_document_tag,word_editor.group_word_editor_manager,1,1,1,1
+access_word_document_category_user,word.document.category user,model_word_document_category,word_editor.group_word_editor_user,1,0,0,0
+access_word_document_category_manager,word.document.category manager,model_word_document_category,word_editor.group_word_editor_manager,1,1,1,1
+access_word_document_template_user,word.document.template user,model_word_document_template,word_editor.group_word_editor_user,1,0,0,0
+access_word_document_template_manager,word.document.template manager,model_word_document_template,word_editor.group_word_editor_manager,1,1,1,1

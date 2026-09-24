@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_calculator_dashboard" model="ir.actions.client">
+        <field name="name">Calculator</field>
+        <field name="tag">calculator_pro.dashboard</field>
+    </record>
+
+    <menuitem id="menu_calculator_root"
+              name="Calculator"
+              sequence="120"
+              web_icon="ow_calculator_pro,static/description/icon.png"/>
+
+    <menuitem id="menu_calculator_dashboard"
+              name="Calculator"
+              parent="menu_calculator_root"
+              action="action_calculator_dashboard"
+              sequence="1"/>
+
+    <menuitem id="menu_calculator_history"
+              name="History"
+              parent="menu_calculator_root"
+              action="action_calculator_history"
+              sequence="10"/>
+
+    <menuitem id="menu_calculator_favorite"
+              name="Favorites"
+              parent="menu_calculator_root"
+              action="action_calculator_favorite"
+              sequence="20"/>
+
+    <menuitem id="menu_calculator_config"
+              name="Configuration"
+              parent="menu_calculator_root"
+              sequence="90"
+              groups="base.group_system"/>
+
+    <menuitem id="menu_calculator_settings"
+              name="Settings"
+              parent="menu_calculator_config"
+              action="base_setup.action_general_configuration"
+              sequence="10"/>
+
+</odoo>

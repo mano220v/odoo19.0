@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ow_storage_log_tree" model="ir.ui.view">
+        <field name="name">ow.storage.log.tree</field>
+        <field name="model">ow.storage.log</field>
+        <field name="arch" type="xml">
+            <list default_order="create_date desc" create="false" edit="false" delete="false">
+                <field name="create_date" string="Date"/>
+                <field name="create_uid" string="Cleared By"/>
+                <field name="action_type" string="Action"/>
+                <field name="cleared_count" string="Files"/>
+                <field name="freed_mb" string="Freed (MB)" sum="Total Freed"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_ow_storage_log" model="ir.actions.act_window">
+        <field name="name">Cleanup History</field>
+        <field name="res_model">ow.storage.log</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <menuitem id="menu_ow_cache_manager_pro_history"
+              name="Cleanup History"
+              parent="menu_ow_cache_manager_pro_root"
+              action="action_ow_storage_log"
+              sequence="2"/>
+</odoo>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="gmail_account_own_rule" model="ir.rule">
+        <field name="name">Gmail: personal connection only</field>
+        <field name="model_id" ref="model_ow_gmail_account"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
+</odoo>

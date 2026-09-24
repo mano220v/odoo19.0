@@ -1,0 +1,28 @@
+<odoo>
+    <record id="view_db_backup_now_wizard_form" model="ir.ui.view">
+        <field name="name">db.backup.now.wizard.form</field>
+        <field name="model">db.backup.now.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Instant Backup">
+                <group>
+                    <field name="database_name" readonly="state == 'done'"/>
+                    <field name="backup_format" readonly="state == 'done'"/>
+                    <field name="backup_filename" invisible="1"/>
+                    <field name="backup_file" filename="backup_filename" invisible="state != 'done'"/>
+                </group>
+                <footer>
+                    <button name="action_generate" type="object" string="Generate Backup"
+                            class="btn-primary" invisible="state == 'done'"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_db_backup_now_wizard" model="ir.actions.act_window">
+        <field name="name">Instant Backup</field>
+        <field name="res_model">db.backup.now.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="group_calculator_admin" model="res.groups">
+        <field name="name">Calculator Administrator</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Can view and manage every user's calculation history and favorites.</field>
+    </record>
+
+    <record id="rule_calculator_history_own" model="ir.rule">
+        <field name="name">Calculator History: own records only</field>
+        <field name="model_id" ref="model_calculator_history"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="rule_calculator_history_admin" model="ir.rule">
+        <field name="name">Calculator History: administrators see all</field>
+        <field name="model_id" ref="model_calculator_history"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_calculator_admin'))]"/>
+    </record>
+
+    <record id="rule_calculator_favorite_own" model="ir.rule">
+        <field name="name">Calculator Favorite: own records only</field>
+        <field name="model_id" ref="model_calculator_favorite"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="rule_calculator_favorite_admin" model="ir.rule">
+        <field name="name">Calculator Favorite: administrators see all</field>
+        <field name="model_id" ref="model_calculator_favorite"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_calculator_admin'))]"/>
+    </record>
+
+</odoo>

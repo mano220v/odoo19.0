@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_confirmed_stamp" model="ir.ui.view">
+        <field name="name">sale.order.form.confirmed.stamp</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/*[1]" position="before">
+                <field name="ow_confirmed_at" invisible="1"/>
+                <field name="ow_confirmed_date_label" invisible="1"/>
+                <field name="ow_stamp_company_name" invisible="1"/>
+                <field name="ow_stamp_svg" invisible="1"/>
+                <div class="ow_sale_confirm_stamp" invisible="state not in ('sale', 'done')">
+                    <field name="ow_stamp_svg" widget="html" readonly="1" nolabel="1"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

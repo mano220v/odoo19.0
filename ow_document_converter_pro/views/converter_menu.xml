@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <menuitem id="menu_converter_root" name="Converter Pro" sequence="35" web_icon="ow_document_converter_pro,static/description/icon.png" groups="ow_document_converter_pro.group_converter_user"/>
+  <menuitem id="menu_converter" name="Convert Documents" parent="menu_converter_root" action="action_conversion" sequence="10"/>
+</odoo>

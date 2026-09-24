@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_woo_instance_list" model="ir.ui.view">
+        <field name="name">woo.instance.list</field>
+        <field name="model">woo.instance</field>
+        <field name="arch" type="xml">
+            <list string="WooCommerce Instances">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="store_url"/>
+                <field name="company_id"/>
+                <field name="last_sync_date"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_woo_instance_form" model="ir.ui.view">
+        <field name="name">woo.instance.form</field>
+        <field name="model">woo.instance</field>
+        <field name="arch" type="xml">
+            <form string="WooCommerce Instance">
+                <header>
+                    <button name="action_test_connection" string="Test Connection" type="object" class="btn-primary"/>
+                    <button name="action_sync_all" string="Sync All" type="object"/>
+                    <button name="action_import_products" string="Import Products" type="object"/>
+                    <button name="action_import_customers" string="Import Customers" type="object"/>
+                    <button name="action_import_orders" string="Import Orders" type="object"/>
+                    <button name="action_export_products" string="Export Products" type="object"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-cubes" type="action" name="%(action_woo_product_mapping)d">
+                            <field name="product_mapping_count" widget="statinfo" string="Products"/>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-users" type="action" name="%(action_woo_partner_mapping)d">
+                            <field name="partner_mapping_count" widget="statinfo" string="Customers"/>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-shopping-cart" type="action" name="%(action_woo_sale_order_mapping)d">
+                            <field name="order_mapping_count" widget="statinfo" string="Orders"/>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-history" type="action" name="%(action_woo_sync_log)d">
+                            <field name="sync_log_count" widget="statinfo" string="Logs"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Main WooCommerce Store"/></h1>
+                    </div>
+                    <group>
+                        <group string="Connection">
+                            <field name="active"/>
+                            <field name="store_url" placeholder="https://store.example.com"/>
+                            <field name="consumer_key" password="True"/>
+                            <field name="consumer_secret" password="True"/>
+                            <field name="api_version"/>
+                        </group>
+                        <group string="Odoo Defaults">
+                            <field name="company_id"/>
+                            <field name="warehouse_id"/>
+                            <field name="pricelist_id"/>
+                            <field name="auto_confirm_orders"/>
+                            <field name="last_sync_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Workflow">
+                            <div class="alert alert-info" role="alert">
+                                Configure API credentials, test the connection, import customers and products, then import orders. Export products after validating product mappings.
+                            </div>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes" nolabel="1" placeholder="Internal sync notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_woo_instance_search" model="ir.ui.view">
+        <field name="name">woo.instance.search</field>
+        <field name="model">woo.instance</field>
+        <field name="arch" type="xml">
+            <search string="WooCommerce Instances">
+                <field name="name"/>
+                <field name="store_url"/>
+                <filter name="active" string="Active" domain="[('active', '=', True)]"/>
+                <filter name="inactive" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_woo_instance" model="ir.actions.act_window">
+        <field name="name">Instances</field>
+        <field name="res_model">woo.instance</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_woo_instance_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first WooCommerce connection</p>
+            <p>Add the store URL and WooCommerce REST API keys to start synchronization.</p>
+        </field>
+    </record>
+</odoo>

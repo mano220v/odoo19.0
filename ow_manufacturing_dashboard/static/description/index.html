@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>Manufacturing Dashboard for Odoo 19</title>
+</head>
+<body>
+<section class="oe_container">
+<div class="owmfg-description" style="background-color:#faf7f2 !important;color:#2b2620 !important;max-width:1180px !important;margin:0 auto !important;padding:18px !important;font-family:Arial,Helvetica,sans-serif !important;box-sizing:border-box;">
+
+<!-- HERO -->
+<div style="background-color:#1c1410 !important;color:#fff !important;border-radius:20px;padding:40px 30px 34px;box-shadow:0 18px 40px rgba(28,20,16,.28) !important;overflow:hidden;position:relative;">
+  <div style="position:absolute;top:0;right:0;width:220px;height:220px;background-color:rgba(245,158,11,.12) !important;border-radius:50%;transform:translate(60px,-90px);"></div>
+  <div style="text-align:center;max-width:880px;margin:0 auto;position:relative;">
+    <div style="display:inline-block;background-color:rgba(245,158,11,.16) !important;border:1px solid rgba(245,158,11,.4) !important;border-radius:8px;padding:7px 18px;font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#f5a524 !important;margin-bottom:22px;">
+      ⚙ Built for Odoo 19 · Manufacturing
+    </div>
+    <h1 style="margin:0 0 16px;font-size:42px;line-height:1.12;letter-spacing:-1px;font-weight:900;color:#fff !important;">
+      One screen for the<br/>
+      <span style="color:#f5a524 !important;">entire shop floor</span>
+    </h1>
+    <p style="margin:0 auto 26px;font-size:16px;line-height:1.8;color:rgba(255,255,255,.78) !important;max-width:760px;">
+      A clickable, color-coded control room for Manufacturing Orders and Job Orders — shortages, scrap, on-time rate, work center load and delayed orders, all in one live view.
+    </p>
+    <table style="margin:0 auto;border-collapse:collapse;">
+      <tr>
+        <td style="padding:5px;"><span style="display:inline-block;background-color:#f5a524 !important;color:#1c1410 !important;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:900;">Odoo 19</span></td>
+        <td style="padding:5px;"><span style="display:inline-block;background-color:rgba(255,255,255,.08) !important;color:#fff !important;border:1px solid rgba(255,255,255,.2) !important;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;">Fully Clickable KPIs</span></td>
+        <td style="padding:5px;"><span style="display:inline-block;background-color:rgba(255,255,255,.08) !important;color:#fff !important;border:1px solid rgba(255,255,255,.2) !important;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;">Auto-Refresh 30s</span></td>
+        <td style="padding:5px;"><span style="display:inline-block;background-color:rgba(255,255,255,.08) !important;color:#fff !important;border:1px solid rgba(255,255,255,.2) !important;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;">OWL 2 · OPL-1</span></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- NAV -->
+<div style="margin-top:14px;background-color:#fff !important;border:1px solid #ece4d8 !important;border-radius:12px;padding:10px;text-align:center;">
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="text-align:center;padding:6px;"><a href="#kpis" style="color:#7a5a1e !important;text-decoration:none;font-size:13px;font-weight:800;">KPIs</a></td>
+<td style="text-align:center;padding:6px;"><a href="#operations" style="color:#7a5a1e !important;text-decoration:none;font-size:13px;font-weight:800;">Operations</a></td>
+<td style="text-align:center;padding:6px;"><a href="#insights" style="color:#7a5a1e !important;text-decoration:none;font-size:13px;font-weight:800;">Insights</a></td>
+<td style="text-align:center;padding:6px;"><a href="#screenshots" style="color:#7a5a1e !important;text-decoration:none;font-size:13px;font-weight:800;">Screenshots</a></td>
+<td style="text-align:center;padding:6px;"><a href="#setup" style="color:#7a5a1e !important;text-decoration:none;font-size:13px;font-weight:800;">Setup</a></td>
+<td style="text-align:center;padding:6px;"><a href="#technical" style="color:#7a5a1e !important;text-decoration:none;font-size:13px;font-weight:800;">Technical</a></td>
+<td style="text-align:center;padding:6px;"><a href="#changelog" style="color:#7a5a1e !important;text-decoration:none;font-size:13px;font-weight:800;">Changelog</a></td>
+</tr>
+</table>
+</div>
+
+<!-- KPI SECTION -->
+<div id="kpis" style="margin-top:20px;background-color:#fff !important;border:1px solid #ece4d8 !important;border-radius:18px;padding:26px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.2em;color:#c8781a !important;text-transform:uppercase;margin-bottom:6px;">Kpis</div>
+<h2 style="margin:0 0 18px;color:#1c1410 !important;font-size:24px;letter-spacing:-.3px;">Every card is a live filter, one click away</h2>
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#fef8ee !important;border:1px solid #f6dfb4 !important;border-left:4px solid #f59e0b !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">🏭</div>
+<div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:4px;">Manufacturing Orders</div>
+<div style="font-size:12px;line-height:1.6;color:#6b5f4f !important;">Total active MOs, filtered by the period you're viewing.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#fdf3ee !important;border:1px solid #f3c9b4 !important;border-left:4px solid #ea580c !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">⚙️</div>
+<div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:4px;">In Progress</div>
+<div style="font-size:12px;line-height:1.6;color:#6b5f4f !important;">Orders currently running on the floor right now.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#fdeeee !important;border:1px solid #f3c2c2 !important;border-left:4px solid #dc2626 !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">⏰</div>
+<div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:4px;">Late Orders</div>
+<div style="font-size:12px;line-height:1.6;color:#6b5f4f !important;">Anything past its planned start, surfaced instantly.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#eef8f0 !important;border:1px solid #bfe3c6 !important;border-left:4px solid #059669 !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">✅</div>
+<div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:4px;">Completed Today</div>
+<div style="font-size:12px;line-height:1.6;color:#6b5f4f !important;">Finished manufacturing orders, always for today.</div>
+</div>
+</td>
+</tr>
+</table>
+<table style="width:100%;border-collapse:collapse;margin-top:12px;">
+<tr>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#eef4fd !important;border:1px solid #bcd4f3 !important;border-left:4px solid #2563eb !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">📋</div>
+<div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:4px;">Job Orders</div>
+<div style="font-size:12px;line-height:1.6;color:#6b5f4f !important;">Active work orders across every work center.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#fdf3ee !important;border:1px solid #f3c9b4 !important;border-left:4px solid #ea580c !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">▶️</div>
+<div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:4px;">In Progress</div>
+<div style="font-size:12px;line-height:1.6;color:#6b5f4f !important;">Job orders being worked on this exact moment.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#eaf9fb !important;border:1px solid #b9e6ec !important;border-left:4px solid #0891b2 !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">⏳</div>
+<div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:4px;">Pending</div>
+<div style="font-size:12px;line-height:1.6;color:#6b5f4f !important;">Waiting in the queue, ready to be picked up.</div>
+</div>
+</td>
+<td style="width:25%;padding:6px;vertical-align:top;">
+<div style="background-color:#fdeeee !important;border:1px solid #f3c2c2 !important;border-left:4px solid #dc2626 !important;border-radius:12px;padding:16px;height:100%;box-sizing:border-box;">
+<div style="font-size:22px;margin-bottom:8px;">🕐</div>
+<div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:4px;">Late</div>
+<div style="font-size:12px;line-height:1.6;color:#6b5f4f !important;">Job orders past their planned start time.</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+<!-- OPERATIONS -->
+<div id="operations" style="margin-top:20px;background-color:#fff !important;border:1px solid #ece4d8 !important;border-radius:18px;padding:26px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.2em;color:#c8781a !important;text-transform:uppercase;margin-bottom:6px;">Operations</div>
+<h2 style="margin:0 0 18px;color:#1c1410 !important;font-size:24px;letter-spacing:-.3px;">Shop-floor pressure, at a glance</h2>
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="width:16.6%;padding:5px;vertical-align:top;">
+<div style="background-color:#1c1410 !important;color:#fff !important;border-radius:12px;padding:16px 10px;text-align:center;">
+<div style="font-size:20px;margin-bottom:6px;">🚚</div>
+<div style="font-size:11px;color:rgba(255,255,255,.6) !important;text-transform:uppercase;letter-spacing:.08em;">Shortages</div>
+</div>
+</td>
+<td style="width:16.6%;padding:5px;vertical-align:top;">
+<div style="background-color:#1c1410 !important;color:#fff !important;border-radius:12px;padding:16px 10px;text-align:center;">
+<div style="font-size:20px;margin-bottom:6px;">♻️</div>
+<div style="font-size:11px;color:rgba(255,255,255,.6) !important;text-transform:uppercase;letter-spacing:.08em;">Scrap</div>
+</div>
+</td>
+<td style="width:16.6%;padding:5px;vertical-align:top;">
+<div style="background-color:#1c1410 !important;color:#fff !important;border-radius:12px;padding:16px 10px;text-align:center;">
+<div style="font-size:20px;margin-bottom:6px;">🎯</div>
+<div style="font-size:11px;color:rgba(255,255,255,.6) !important;text-transform:uppercase;letter-spacing:.08em;">On-Time</div>
+</div>
+</td>
+<td style="width:16.6%;padding:5px;vertical-align:top;">
+<div style="background-color:#1c1410 !important;color:#fff !important;border-radius:12px;padding:16px 10px;text-align:center;">
+<div style="font-size:20px;margin-bottom:6px;">🧩</div>
+<div style="font-size:11px;color:rgba(255,255,255,.6) !important;text-transform:uppercase;letter-spacing:.08em;">BoMs</div>
+</div>
+</td>
+<td style="width:16.6%;padding:5px;vertical-align:top;">
+<div style="background-color:#1c1410 !important;color:#fff !important;border-radius:12px;padding:16px 10px;text-align:center;">
+<div style="font-size:20px;margin-bottom:6px;">🧪</div>
+<div style="font-size:11px;color:rgba(255,255,255,.6) !important;text-transform:uppercase;letter-spacing:.08em;">Quality</div>
+</div>
+</td>
+<td style="width:16.6%;padding:5px;vertical-align:top;">
+<div style="background-color:#1c1410 !important;color:#fff !important;border-radius:12px;padding:16px 10px;text-align:center;">
+<div style="font-size:20px;margin-bottom:6px;">🔧</div>
+<div style="font-size:11px;color:rgba(255,255,255,.6) !important;text-transform:uppercase;letter-spacing:.08em;">Maintenance</div>
+</div>
+</td>
+</tr>
+</table>
+<p style="margin:16px 0 0;font-size:13px;line-height:1.7;color:#6b5f4f !important;">Each tile opens the exact filtered list behind the number — material shortages by component availability, scrap tied to production, on-time completion against planned finish dates, and quality or maintenance widgets that appear automatically when those apps are installed.</p>
+</div>
+
+<!-- INSIGHTS -->
+<div id="insights" style="margin-top:20px;background-color:#fff !important;border:1px solid #ece4d8 !important;border-radius:18px;padding:26px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.2em;color:#c8781a !important;text-transform:uppercase;margin-bottom:6px;">Insights</div>
+<h2 style="margin:0 0 18px;color:#1c1410 !important;font-size:24px;letter-spacing:-.3px;">Where the load is, and what's falling behind</h2>
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="width:50%;padding:8px;vertical-align:top;">
+<div style="background-color:#faf7f2 !important;border:1px solid #ece4d8 !important;border-radius:14px;padding:18px;height:100%;box-sizing:border-box;">
+<div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:10px;">📊 Work Center Workload</div>
+<div style="font-size:12px;line-height:1.7;color:#6b5f4f !important;">A ranked bar view of open job orders per work center. Click any bar to jump straight to that work center's queue.</div>
+</div>
+</td>
+<td style="width:50%;padding:8px;vertical-align:top;">
+<div style="background-color:#faf7f2 !important;border:1px solid #ece4d8 !important;border-radius:14px;padding:18px;height:100%;box-sizing:border-box;">
+<div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:10px;">🚨 Top Delayed Orders</div>
+<div style="font-size:12px;line-height:1.7;color:#6b5f4f !important;">The six most overdue manufacturing orders, oldest planned start first, with one click through to the record.</div>
+</div>
+</td>
+</tr>
+</table>
+<div style="margin-top:12px;background-color:#faf7f2 !important;border:1px solid #ece4d8 !important;border-radius:14px;padding:18px;">
+<div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:10px;">📈 7-Day Completed Orders Trend</div>
+<div style="font-size:12px;line-height:1.7;color:#6b5f4f !important;">A simple bar chart of finished manufacturing orders over the last week, rendered with Chart.js when available and a lightweight CSS fallback otherwise.</div>
+</div>
+</div>
+
+<!-- SCREENSHOTS -->
+<div id="screenshots" style="margin-top:22px;background-color:#fff !important;border:1px solid #e5e7eb !important;border-radius:22px;padding:28px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.22em;color:#4e73df !important;text-transform:uppercase;margin-bottom:8px;">Screenshots</div>
+<h2 style="margin:0 0 6px;color:#111827 !important;font-size:26px;letter-spacing:-.3px;">See exactly what you get</h2>
+
+<!-- Screenshot 1 — Full Dashboard -->
+<div style="background-color:#f8faff !important;border:1px solid #e2e8f0 !important;border-radius:18px;padding:20px;margin-bottom:16px;">
+<table style="width:100%;border-collapse:collapse;margin-bottom:12px;">
+<tr>
+<td style="width:42px;vertical-align:top;padding:0;"><div style="width:32px;height:32px;border-radius:8px;background-color:#4e73df !important;color:#fff !important;text-align:center;line-height:32px;font-weight:800;font-size:14px;">1</div></td>
+<td style="vertical-align:middle;padding:0 0 0 10px;">Full Dashboard — Summary Cards</td>
+</tr>
+</table>
+<img alt="Full Manufacturing Dashboard showing summary cards" src="1_screenshot.png" style="width:100%;display:block;border-radius:12px;border:1px solid #dde3ef !important;"/>
+</div>
+
+<!-- Screenshot 2 — Insights Below Cards -->
+<div style="background-color:#f8faff !important;border:1px solid #e2e8f0 !important;border-radius:18px;padding:20px;">
+<table style="width:100%;border-collapse:collapse;margin-bottom:12px;">
+<tr>
+<td style="width:42px;vertical-align:top;padding:0;"><div style="width:32px;height:32px;border-radius:8px;background-color:#f59e0b !important;color:#fff !important;text-align:center;line-height:32px;font-weight:800;font-size:14px;">2</div></td>
+<td style="vertical-align:middle;padding:0 0 0 10px;">Work Center &amp; Insights View</td>
+</tr>
+</table>
+<div style="text-align:center;">
+<img alt="Manufacturing Dashboard showing insights below the summary cards" src="2_screenshot.png" style="width:100%;display:block;border-radius:12px;border:1px solid #dde3ef !important;"/>
+</div>
+</div>
+</div>
+
+<!-- SETUP -->
+<div id="setup" style="margin-top:20px;background-color:#fff !important;border:1px solid #ece4d8 !important;border-radius:18px;padding:26px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.2em;color:#c8781a !important;text-transform:uppercase;margin-bottom:6px;">Setup</div>
+<h2 style="margin:0 0 18px;color:#1c1410 !important;font-size:24px;letter-spacing:-.3px;">Up and running in two minutes</h2>
+<table style="width:100%;border-collapse:collapse;">
+<tr>
+<td style="width:36px;vertical-align:top;padding:0 12px 18px 0;"><div style="width:32px;height:32px;border-radius:8px;background-color:#f5a524 !important;color:#1c1410 !important;font-weight:900;font-size:14px;text-align:center;line-height:32px;">1</div></td>
+<td style="vertical-align:top;padding-bottom:18px;border-bottom:1px solid #ece4d8 !important;"><div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:3px;">Install the module</div><div style="font-size:13px;color:#6b5f4f !important;line-height:1.7;">Install <strong>Manufacturing Dashboard</strong> from Apps — it depends only on the standard <strong>mrp</strong> app.</div></td>
+</tr>
+<tr><td colspan="2" style="height:12px;"></td></tr>
+<tr>
+<td style="width:36px;vertical-align:top;padding:0 12px 18px 0;"><div style="width:32px;height:32px;border-radius:8px;background-color:#f5a524 !important;color:#1c1410 !important;font-weight:900;font-size:14px;text-align:center;line-height:32px;">2</div></td>
+<td style="vertical-align:top;padding-bottom:18px;border-bottom:1px solid #ece4d8 !important;"><div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:3px;">Open the dashboard</div><div style="font-size:13px;color:#6b5f4f !important;line-height:1.7;">Find it under the <strong>Manufacturing</strong> app menu. It loads live counts on open and refreshes automatically every 30 seconds.</div></td>
+</tr>
+<tr><td colspan="2" style="height:12px;"></td></tr>
+<tr>
+<td style="width:36px;vertical-align:top;padding:0 12px 0 0;"><div style="width:32px;height:32px;border-radius:8px;background-color:#f5a524 !important;color:#1c1410 !important;font-weight:900;font-size:14px;text-align:center;line-height:32px;">3</div></td>
+<td style="vertical-align:top;"><div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:3px;">Pick a period, click a card</div><div style="font-size:13px;color:#6b5f4f !important;line-height:1.7;">Switch between Today / Week / Month / All, then click any KPI, work center, or delayed order to drill straight into the filtered list.</div></td>
+</tr>
+</table>
+</div>
+
+<!-- TECHNICAL -->
+<div id="technical" style="margin-top:20px;background-color:#fff !important;border:1px solid #ece4d8 !important;border-radius:18px;padding:26px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.2em;color:#c8781a !important;text-transform:uppercase;margin-bottom:6px;">Technical</div>
+<h2 style="margin:0 0 18px;color:#1c1410 !important;font-size:24px;letter-spacing:-.3px;">Module information</h2>
+<table style="width:100%;border-collapse:separate;border-spacing:8px 0;">
+<tr>
+<td style="width:33%;vertical-align:top;"><div style="background-color:#faf7f2 !important;border:1px solid #ece4d8 !important;border-radius:12px;padding:14px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.12em;color:#c8781a !important;text-transform:uppercase;margin-bottom:5px;">Frontend</div><div style="font-weight:800;color:#1c1410 !important;margin-bottom:3px;font-size:13px;">OWL 2 Client Action</div><div style="font-size:12px;color:#6b5f4f !important;line-height:1.6;">SCSS · JavaScript · XML · Chart.js</div></div></td>
+<td style="width:33%;vertical-align:top;"><div style="background-color:#faf7f2 !important;border:1px solid #ece4d8 !important;border-radius:12px;padding:14px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.12em;color:#c8781a !important;text-transform:uppercase;margin-bottom:5px;">Depends On</div><div style="font-weight:800;color:#1c1410 !important;margin-bottom:3px;font-size:13px;">mrp</div><div style="font-size:12px;color:#6b5f4f !important;line-height:1.6;">Standard Odoo Manufacturing app</div></div></td>
+<td style="width:33%;vertical-align:top;"><div style="background-color:#faf7f2 !important;border:1px solid #ece4d8 !important;border-radius:12px;padding:14px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.12em;color:#c8781a !important;text-transform:uppercase;margin-bottom:5px;">Security</div><div style="font-weight:800;color:#1c1410 !important;margin-bottom:3px;font-size:13px;">Internal Users</div><div style="font-size:12px;color:#6b5f4f !important;line-height:1.6;">Standard Odoo access rights</div></div></td>
+</tr>
+<tr><td colspan="3" style="height:8px;"></td></tr>
+<tr>
+<td style="vertical-align:top;"><div style="background-color:#faf7f2 !important;border:1px solid #ece4d8 !important;border-radius:12px;padding:14px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.12em;color:#c8781a !important;text-transform:uppercase;margin-bottom:5px;">Optional Integrations</div><div style="font-weight:800;color:#1c1410 !important;margin-bottom:3px;font-size:13px;">Quality &amp; Maintenance</div><div style="font-size:12px;color:#6b5f4f !important;line-height:1.6;">Widgets appear only if installed</div></div></td>
+<td style="vertical-align:top;"><div style="background-color:#faf7f2 !important;border:1px solid #ece4d8 !important;border-radius:12px;padding:14px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.12em;color:#c8781a !important;text-transform:uppercase;margin-bottom:5px;">License</div><div style="font-weight:800;color:#1c1410 !important;margin-bottom:3px;font-size:13px;">OPL-1</div><div style="font-size:12px;color:#6b5f4f !important;line-height:1.6;">One-time app purchase</div></div></td>
+<td style="vertical-align:top;"><div style="background-color:#faf7f2 !important;border:1px solid #ece4d8 !important;border-radius:12px;padding:14px;height:100%;box-sizing:border-box;"><div style="font-size:10px;font-weight:900;letter-spacing:.12em;color:#c8781a !important;text-transform:uppercase;margin-bottom:5px;">Best For</div><div style="font-weight:800;color:#1c1410 !important;margin-bottom:3px;font-size:13px;">Manufacturing Teams</div><div style="font-size:12px;color:#6b5f4f !important;line-height:1.6;">Shop-floor supervisors &amp; planners</div></div></td>
+</tr>
+</table>
+</div>
+
+<!-- CHANGELOG -->
+<div id="changelog" style="margin-top:20px;background-color:#fff !important;border:1px solid #ece4d8 !important;border-radius:18px;padding:26px;">
+<div style="font-size:11px;font-weight:900;letter-spacing:.2em;color:#c8781a !important;text-transform:uppercase;margin-bottom:6px;">Changelog</div>
+<h2 style="margin:0 0 16px;color:#1c1410 !important;font-size:24px;letter-spacing:-.3px;">Version history</h2>
+<div style="background-color:#faf7f2 !important;border:1px solid #ece4d8 !important;border-left:4px solid #f5a524 !important;border-radius:0 12px 12px 0;padding:16px;">
+<div style="font-weight:800;color:#1c1410 !important;font-size:14px;margin-bottom:8px;">v1.0.0 — Initial Release</div>
+<table style="width:100%;border-collapse:collapse;font-size:13px;color:#6b5f4f !important;line-height:1.7;">
+<tr><td style="width:50%;padding:3px 10px 3px 0;vertical-align:top;">✓ Clickable KPI cards for MOs and Job Orders</td><td style="padding:3px 0;vertical-align:top;">✓ Today / Week / Month / All period filters</td></tr>
+<tr><td style="padding:3px 10px 3px 0;vertical-align:top;">✓ Material shortage &amp; scrap tracking</td><td style="padding:3px 0;vertical-align:top;">✓ On-time completion rate widget</td></tr>
+<tr><td style="padding:3px 10px 3px 0;vertical-align:top;">✓ Work center workload bars</td><td style="padding:3px 0;vertical-align:top;">✓ Top delayed orders drill-down list</td></tr>
+<tr><td style="padding:3px 10px 3px 0;vertical-align:top;">✓ 7-day completed orders trend chart</td><td style="padding:3px 0;vertical-align:top;">✓ Auto-refresh every 30 seconds</td></tr>
+</table>
+</div>
+</div>
+
+<!-- FOOTER -->
+<div style="margin-top:20px;background-color:#1c1410 !important;border-radius:20px;padding:32px;text-align:center;">
+<div style="font-size:20px;font-weight:900;color:#fff !important;margin-bottom:8px;">Manufacturing Dashboard for Odoo</div>
+<div style="font-size:13px;color:rgba(255,255,255,.6) !important;margin-bottom:20px;">Manufacturing Orders · Job Orders · Shortages · Scrap · On-Time Rate · Odoo 19</div>
+<table style="margin:0 auto;border-collapse:collapse;">
+<tr>
+<td style="padding:5px;"><span style="display:inline-block;background-color:#f5a524 !important;color:#1c1410 !important;border-radius:8px;padding:11px 26px;font-size:13px;font-weight:900;">Install Manufacturing Dashboard</span></td>
+<td style="padding:5px;"><span style="display:inline-block;background-color:rgba(255,255,255,.08) !important;color:#fff !important;border:1px solid rgba(255,255,255,.2) !important;border-radius:8px;padding:11px 20px;font-size:13px;font-weight:700;">OPL-1 License · $3.50</span></td>
+</tr>
+</table>
+</div>
+
+</div><!-- /owmfg-description -->
+</section>
+</body>
+</html>

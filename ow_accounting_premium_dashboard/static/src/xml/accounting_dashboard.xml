@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ow_accounting_premium_dashboard.Dashboard" owl="1">
+        <Layout display="display" className="'h-100 overflow-auto'">
+            <main class="o_acc_dashboard">
+                <section class="o_acc_hero">
+                    <div class="o_acc_hero_copy">
+                        <span class="o_acc_eyebrow"><i class="fa fa-bolt"/> MONEY · MOMENTUM · MARGIN</span>
+                        <h1>Finance Studio</h1>
+                        <p>Your numbers, priorities, and cash position in one clear view.</p>
+                        <div class="o_acc_company"><i class="fa fa-building-o"/><t t-esc="state.companyName"/></div>
+                    </div>
+                    <div class="o_acc_hero_tools">
+                        <div class="o_acc_periods" role="group" aria-label="Reporting period">
+                            <button t-attf-class="o_acc_period {{ state.period === 'month' ? 'active' : '' }}" t-on-click="() => this.setPeriod('month')">Month</button>
+                            <button t-attf-class="o_acc_period {{ state.period === 'quarter' ? 'active' : '' }}" t-on-click="() => this.setPeriod('quarter')">Quarter</button>
+                            <button t-attf-class="o_acc_period {{ state.period === 'year' ? 'active' : '' }}" t-on-click="() => this.setPeriod('year')">Year</button>
+                            <button t-attf-class="o_acc_period {{ state.period === 'all' ? 'active' : '' }}" t-on-click="() => this.setPeriod('all')">All time</button>
+                        </div>
+                        <button class="o_acc_refresh" t-on-click="() => this.loadDashboard()" title="Refresh dashboard" aria-label="Refresh dashboard">
+                            <i t-attf-class="fa {{ state.loading ? 'fa-spinner fa-spin' : 'fa-refresh' }}"/>
+                        </button>
+                        <small class="o_acc_updated" t-if="state.lastUpdated">Updated <t t-esc="state.lastUpdated"/></small>
+                    </div>
+                    <div class="o_acc_hero_glow"/>
+                </section>
+
+                <div t-if="state.error" class="o_acc_notice" role="alert">
+                    <i class="fa fa-exclamation-circle"/>
+                    Some accounting data could not be loaded. Check your accounting access and refresh the dashboard.
+                </div>
+
+                <section class="o_acc_kpis" aria-label="Financial summary">
+                    <button class="o_acc_kpi kpi_income" t-on-click="() => this.openMoves(this.moveDomain(['out_invoice', 'out_refund'], this.periodDomain()), 'Income')">
+                        <span class="o_acc_kpi_top"><span class="o_acc_kpi_icon"><i class="fa fa-arrow-down"/></span><span class="o_acc_kpi_period">Selected period</span></span>
+                        <span class="o_acc_kpi_label">Revenue</span>
+                        <strong class="o_acc_kpi_value"><t t-esc="this.formatAmount(state.kpis.income)"/></strong>
+                        <span class="o_acc_kpi_note">Customer invoices, less credit notes</span>
+                    </button>
+                    <button class="o_acc_kpi kpi_expense" t-on-click="() => this.openMoves(this.moveDomain(['in_invoice', 'in_refund'], this.periodDomain()), 'Expenses')">
+                        <span class="o_acc_kpi_top"><span class="o_acc_kpi_icon"><i class="fa fa-arrow-up"/></span><span class="o_acc_kpi_period">Selected period</span></span>
+                        <span class="o_acc_kpi_label">Vendor costs</span>
+                        <strong class="o_acc_kpi_value"><t t-esc="this.formatAmount(state.kpis.expenses)"/></strong>
+                        <span class="o_acc_kpi_note">Vendor bills, less vendor credits</span>
+                    </button>
+                    <button class="o_acc_kpi kpi_net" t-on-click="() => this.openMoves(this.moveDomain(['out_invoice', 'out_refund', 'in_invoice', 'in_refund'], this.periodDomain()), 'Income and expenses')">
+                        <span class="o_acc_kpi_top"><span class="o_acc_kpi_icon"><i class="fa fa-balance-scale"/></span><span class="o_acc_kpi_period">Selected period</span></span>
+                        <span class="o_acc_kpi_label">Net invoiced</span>
+                        <strong class="o_acc_kpi_value"><t t-esc="this.formatAmount(state.kpis.net)"/></strong>
+                        <span class="o_acc_kpi_note">Revenue less vendor costs</span>
+                    </button>
+                    <button class="o_acc_kpi kpi_receivable" t-on-click="() => this.openReceivables()">
+                        <span class="o_acc_kpi_top"><span class="o_acc_kpi_icon"><i class="fa fa-handshake-o"/></span><span class="o_acc_kpi_count"><t t-esc="state.counts.receivables"/> open</span></span>
+                        <span class="o_acc_kpi_label">Receivables</span>
+                        <strong class="o_acc_kpi_value"><t t-esc="this.formatAmount(state.kpis.receivables)"/></strong>
+                        <span class="o_acc_kpi_note">Outstanding customer invoices</span>
+                    </button>
+                    <button class="o_acc_kpi kpi_payable" t-on-click="() => this.openPayables()">
+                        <span class="o_acc_kpi_top"><span class="o_acc_kpi_icon"><i class="fa fa-credit-card"/></span><span class="o_acc_kpi_count"><t t-esc="state.counts.payables"/> open</span></span>
+                        <span class="o_acc_kpi_label">Payables</span>
+                        <strong class="o_acc_kpi_value"><t t-esc="this.formatAmount(state.kpis.payables)"/></strong>
+                        <span class="o_acc_kpi_note">Outstanding vendor bills</span>
+                    </button>
+                    <button class="o_acc_kpi kpi_cash" t-on-click="() => this.openCashAccounts()">
+                        <span class="o_acc_kpi_top"><span class="o_acc_kpi_icon"><i class="fa fa-university"/></span><span class="o_acc_kpi_period">Current balance</span></span>
+                        <span class="o_acc_kpi_label">Cash &amp; bank</span>
+                        <strong class="o_acc_kpi_value"><t t-esc="this.formatAmount(state.kpis.cash)"/></strong>
+                        <span class="o_acc_kpi_note">Posted cash and bank journal items</span>
+                    </button>
+                </section>
+
+                <section class="o_acc_content_grid">
+                    <article class="o_acc_panel o_acc_trend_panel">
+                        <div class="o_acc_panel_heading">
+                            <div>
+                                <span class="o_acc_panel_kicker">PERFORMANCE</span>
+                                <h2>Revenue &amp; vendor costs</h2>
+                                <p>Monthly totals in company currency</p>
+                            </div>
+                            <div class="o_acc_legend"><span><i class="income_dot"/>Revenue</span><span><i class="expense_dot"/>Vendor costs</span></div>
+                        </div>
+                        <div class="o_acc_chart" role="img" aria-label="Six-month income and expenses bar chart">
+                            <div class="o_acc_chart_axis"><span>Higher</span><span>Lower</span></div>
+                            <div class="o_acc_chart_months">
+                                <div t-foreach="state.trend" t-as="month" t-key="month_index" class="o_acc_month_group">
+                                    <div class="o_acc_bar_pair" t-att-title="month.label + ': income ' + this.formatAmount(month.income) + ', expenses ' + this.formatAmount(month.expenses)">
+                                        <span class="o_acc_bar income_bar" t-attf-style="height: {{ this.barHeight(month.income) }}"/>
+                                        <span class="o_acc_bar expense_bar" t-attf-style="height: {{ this.barHeight(month.expenses) }}"/>
+                                    </div>
+                                    <span class="o_acc_month_label"><t t-esc="month.label"/></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="o_acc_chart_totals">
+                            <div><span class="o_acc_total_marker income_dot"/><span>Revenue · 6 months</span><strong><t t-esc="this.formatAmount(this.trendTotal('income'))"/></strong></div>
+                            <div><span class="o_acc_total_marker expense_dot"/><span>Vendor costs · 6 months</span><strong><t t-esc="this.formatAmount(this.trendTotal('expenses'))"/></strong></div>
+                        </div>
+                    </article>
+
+                    <article class="o_acc_panel o_acc_overdue_panel">
+                        <div class="o_acc_panel_heading">
+                            <div>
+                                <span class="o_acc_panel_kicker">FOLLOW UP</span>
+                                <h2>Overdue invoices</h2>
+                                <p><t t-esc="state.counts.overdue"/> customer invoices need attention</p>
+                            </div>
+                            <button class="o_acc_text_action" t-on-click="() => this.openOverdue()">View all <i class="fa fa-arrow-right"/></button>
+                        </div>
+                        <div class="o_acc_overdue_summary">
+                            <span class="o_acc_overdue_icon"><i class="fa fa-clock-o"/></span>
+                            <span><small>Past due</small><strong><t t-esc="this.formatAmount(state.overdueAmount, true)"/></strong></span>
+                            <span class="o_acc_attention"><t t-esc="state.counts.overdue"/> items</span>
+                        </div>
+                        <div t-if="state.overdueInvoices.length" class="o_acc_due_list">
+                            <button t-foreach="state.overdueInvoices" t-as="move" t-key="move.id" class="o_acc_due_row"
+                                    t-on-click="() => this.openMoves([['id', '=', move.id]], move.name)">
+                                <span class="o_acc_avatar"><t t-esc="(move.partner_id?.[1] || '?').slice(0, 1).toUpperCase()"/></span>
+                                <span class="o_acc_due_partner"><strong><t t-esc="move.partner_id?.[1] || move.name"/></strong><small><t t-esc="move.name"/> · due <t t-esc="move.invoice_date_due || '—'"/></small></span>
+                                <strong class="o_acc_due_amount"><t t-esc="this.formatAmount(move.amount_residual_signed, true)"/></strong>
+                            </button>
+                        </div>
+                        <div t-else="" class="o_acc_empty"><span class="o_acc_empty_icon"><i class="fa fa-check"/></span><strong>You're all caught up</strong><small>No overdue customer invoices</small></div>
+                        <div class="o_acc_followup_divider"/>
+                        <div class="o_acc_due_section_heading">
+                            <span><strong>Vendor bills due this week</strong><small><t t-esc="state.counts.upcomingBills"/> open bills</small></span>
+                            <strong><t t-esc="this.formatAmount(state.upcomingBillAmount, true)"/></strong>
+                        </div>
+                        <div t-if="state.dueBills.length" class="o_acc_due_list o_acc_bill_list">
+                            <button t-foreach="state.dueBills" t-as="move" t-key="move.id" class="o_acc_due_row"
+                                    t-on-click="() => this.openMoves([['id', '=', move.id]], move.name)">
+                                <span class="o_acc_avatar vendor_avatar"><i class="fa fa-file-o"/></span>
+                                <span class="o_acc_due_partner"><strong><t t-esc="move.partner_id?.[1] || move.name"/></strong><small><t t-esc="move.name"/> · due <t t-esc="move.invoice_date_due || '—'"/></small></span>
+                                <strong class="o_acc_due_amount vendor_due_amount"><t t-esc="this.formatAmount(move.amount_residual_signed, true)"/></strong>
+                            </button>
+                        </div>
+                        <div t-else="" class="o_acc_no_bills">No vendor bills due in the next seven days.</div>
+                    </article>
+                </section>
+
+                <section class="o_acc_panel o_acc_recent_panel">
+                    <div class="o_acc_panel_heading">
+                        <div>
+                            <span class="o_acc_panel_kicker">LATEST ACTIVITY</span>
+                            <h2>Recent invoices &amp; bills</h2>
+                        </div>
+                        <button class="o_acc_text_action" t-on-click="() => this.openMoves(this.moveDomain(['out_invoice', 'out_refund', 'in_invoice', 'in_refund']), 'Invoices and bills')">Open journal <i class="fa fa-arrow-right"/></button>
+                    </div>
+                    <div t-if="state.recentMoves.length" class="o_acc_table_scroll">
+                        <table class="o_acc_table">
+                            <thead><tr><th>Document</th><th>Contact</th><th>Date</th><th>Status</th><th class="text-end">Amount</th><th/></tr></thead>
+                            <tbody>
+                                <tr t-foreach="state.recentMoves" t-as="move" t-key="move.id" t-on-click="() => this.openMoves([['id', '=', move.id]], move.name)">
+                                    <td><span t-attf-class="o_acc_doc_icon {{ move.move_type.startsWith('out_') ? 'customer' : 'vendor' }}"><i t-attf-class="fa {{ move.move_type.startsWith('out_') ? 'fa-file-text-o' : 'fa-file-o' }}"/></span><span class="o_acc_doc_name"><strong><t t-esc="move.name"/></strong><small><t t-esc="this.moveTypeLabel(move.move_type)"/></small></span></td>
+                                    <td><t t-esc="move.partner_id?.[1] || '—'"/></td>
+                                    <td><t t-esc="move.invoice_date || '—'"/></td>
+                                    <td><span t-attf-class="o_acc_status {{ move.payment_state || 'posted' }}"><t t-esc="this.paymentLabel(move.payment_state)"/></span></td>
+                                    <td class="text-end o_acc_amount"><t t-esc="this.formatAmount(move.amount_total_signed, true)"/></td>
+                                    <td class="o_acc_row_arrow"><i class="fa fa-angle-right"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div t-else="" class="o_acc_empty o_acc_recent_empty"><span class="o_acc_empty_icon"><i class="fa fa-file-text-o"/></span><strong>No posted invoices yet</strong><small>Posted customer invoices and vendor bills will appear here.</small></div>
+                </section>
+            </main>
+        </Layout>
+    </t>
+</templates>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_currency_rate_sync_log_user,currency.rate.sync.log.user,model_currency_rate_sync_log,group_ow_currency_user,1,0,0,0
+access_currency_rate_sync_log_manager,currency.rate.sync.log.manager,model_currency_rate_sync_log,group_ow_currency_manager,1,1,1,1

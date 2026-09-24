@@ -1,0 +1,32 @@
+{
+    "name": "Premium Backend Theme | Forms, Lists & Kanban",
+    "summary": "Custom gradients, saved themes, refined views and premium motion controls",
+    "version": "19.0.1.2.0",
+    "category": "Productivity",
+    "author": "Odoo Wings",
+    "website": "https://apps.odoo.com/apps/modules/browse?author=Odoo%20Wings",
+    "support": "vsmanoj144@gmail.com",
+    "license": "OPL-1",
+    "price": 4.55,
+    "currency": "USD",
+    "depends": ["web"],
+    "data": ["views/appearance_views.xml"],
+    "assets": {
+        "web.assets_backend": [
+            "ow_premium_backend/static/src/js/theme_preferences.js",
+            "ow_premium_backend/static/src/js/appearance_service.js",
+            "ow_premium_backend/static/src/js/appearance.js",
+            "ow_premium_backend/static/src/xml/appearance.xml",
+            "ow_premium_backend/static/src/scss/premium_backend.scss",
+            "ow_premium_backend/static/src/scss/signature.scss",
+        ],
+    },
+    "images": [
+        "static/description/banner.png",
+        "static/description/studio_preview.png",
+        "static/description/studio_dark.png",
+    ],
+    "installable": True,
+    "application": True,
+    "auto_install": False,
+}
