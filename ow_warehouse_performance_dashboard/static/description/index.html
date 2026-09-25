@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Warehouse Performance Dashboard</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f3f5f8 !important;color:#202638 !important;font-family:Arial,Helvetica,sans-serif !important;line-height:1.65;">
+<section class="oe_container">
+<div style="max-width:1180px !important;margin:0 auto !important;padding:18px !important;box-sizing:border-box;background-color:#f3f5f8 !important;color:#202638 !important;">
+
+    <div style="overflow:hidden;border:1px solid #e4e8ef !important;border-radius:22px;background-color:#ffffff !important;box-shadow:0 12px 32px rgba(31,41,55,.08) !important;">
+        <img src="banner.png" alt="Odoo Wings Warehouse Performance Dashboard for Odoo 16, 17, 18 and 19" style="display:block;width:100%;height:auto;border:0;" />
+        <div style="padding:30px 30px 26px;background-color:#ffffff !important;">
+            <div style="display:inline-block;padding:7px 13px;border-radius:999px;background-color:#e4f7f4 !important;color:#078f86 !important;font-size:12px;font-weight:800;letter-spacing:.08em;">WAREHOUSE INTELLIGENCE · ODOO 19.0</div>
+            <h1 style="margin:14px 0 8px;color:#292d48 !important;font-size:34px;line-height:1.18;letter-spacing:-.6px;">Run every shift from one control surface</h1>
+            <p style="max-width:900px;margin:0;color:#626b7b !important;font-size:16px;line-height:1.75;">See what is due, what is late, where workload is building, and which stock needs attention. Warehouse Performance Dashboard turns live Inventory operations into a clear, actionable shift view.</p>
+            <div style="margin-top:18px;">
+                <span style="display:inline-block;margin:4px 5px 4px 0;padding:8px 13px;border:1px solid #d7e5e3 !important;border-radius:999px;background-color:#f1faf8 !important;color:#087f77 !important;font-size:13px;font-weight:700;">Live operations</span>
+                <span style="display:inline-block;margin:4px 5px 4px 0;padding:8px 13px;border:1px solid #e3def0 !important;border-radius:999px;background-color:#f7f4fb !important;color:#684b83 !important;font-size:13px;font-weight:700;">SLA and aging</span>
+                <span style="display:inline-block;margin:4px 5px 4px 0;padding:8px 13px;border:1px solid #f0dfc8 !important;border-radius:999px;background-color:#fff8ef !important;color:#a96719 !important;font-size:13px;font-weight:700;">14-day movement trends</span>
+                <span style="display:inline-block;margin:4px 5px 4px 0;padding:8px 13px;border:1px solid #dce6f3 !important;border-radius:999px;background-color:#f3f7fc !important;color:#426b9c !important;font-size:13px;font-weight:700;">Replenishment watch</span>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top:18px;padding:12px;border:1px solid #e4e8ef !important;border-radius:18px;background-color:#ffffff !important;text-align:center;">
+        <a href="#overview" style="display:inline-block;margin:5px;padding:10px 15px;border-radius:999px;background-color:#70446f !important;color:#ffffff !important;text-decoration:none;font-size:13px;font-weight:800;">Overview</a>
+        <a href="#screenshots" style="display:inline-block;margin:5px;padding:10px 15px;border:1px solid #dfe4eb !important;border-radius:999px;background-color:#f7f8fa !important;color:#30364a !important;text-decoration:none;font-size:13px;font-weight:800;">Screenshots</a>
+        <a href="#features" style="display:inline-block;margin:5px;padding:10px 15px;border:1px solid #dfe4eb !important;border-radius:999px;background-color:#f7f8fa !important;color:#30364a !important;text-decoration:none;font-size:13px;font-weight:800;">Features</a>
+        <a href="#setup" style="display:inline-block;margin:5px;padding:10px 15px;border:1px solid #dfe4eb !important;border-radius:999px;background-color:#f7f8fa !important;color:#30364a !important;text-decoration:none;font-size:13px;font-weight:800;">Setup</a>
+        <a href="#faq" style="display:inline-block;margin:5px;padding:10px 15px;border:1px solid #dfe4eb !important;border-radius:999px;background-color:#f7f8fa !important;color:#30364a !important;text-decoration:none;font-size:13px;font-weight:800;">FAQs</a>
+        <a href="#technical" style="display:inline-block;margin:5px;padding:10px 15px;border:1px solid #dfe4eb !important;border-radius:999px;background-color:#f7f8fa !important;color:#30364a !important;text-decoration:none;font-size:13px;font-weight:800;">Technical</a>
+    </div>
+
+    <div id="overview" style="margin-top:20px;padding:26px;border:1px solid #e4e8ef !important;border-radius:20px;background-color:#ffffff !important;box-shadow:0 8px 24px rgba(31,41,55,.05) !important;">
+        <div style="color:#078f86 !important;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;">Overview</div>
+        <h2 style="margin:5px 0 10px;color:#292d48 !important;font-size:26px;line-height:1.25;">Warehouse work, exceptions and stock risk in one view</h2>
+        <p style="margin:0;color:#626b7b !important;font-size:15px;line-height:1.8;">The dashboard reads your existing stock transfers, operation types and replenishment rules. Clickable indicators open the relevant Odoo records so supervisors can move from a signal to the work behind it without searching manually.</p>
+        <table style="width:100%;margin-top:16px;border-collapse:separate;border-spacing:8px;">
+            <tr>
+                <td style="width:33.33%;padding:17px;vertical-align:top;border:1px solid #dceeea !important;border-radius:14px;background-color:#f3faf8 !important;">
+                    <div style="margin-bottom:6px;color:#078f86 !important;font-size:15px;font-weight:900;">Shift control</div>
+                    <div style="color:#586273 !important;font-size:13px;line-height:1.7;">Open work, due in 24 hours, overdue transfers, ready operations and outbound dispatch SLA.</div>
+                </td>
+                <td style="width:33.33%;padding:17px;vertical-align:top;border:1px solid #e8e1f0 !important;border-radius:14px;background-color:#f8f5fb !important;">
+                    <div style="margin-bottom:6px;color:#70446f !important;font-size:15px;font-weight:900;">Exception pressure</div>
+                    <div style="color:#586273 !important;font-size:13px;line-height:1.7;">Age late work in 0–24, 24–48 and 48+ hour bands; track reservations and optional active picking batches.</div>
+                </td>
+                <td style="width:33.33%;padding:17px;vertical-align:top;border:1px solid #f0e5d4 !important;border-radius:14px;background-color:#fff9f0 !important;">
+                    <div style="margin-bottom:6px;color:#a96719 !important;font-size:15px;font-weight:900;">Stock and flow</div>
+                    <div style="color:#586273 !important;font-size:13px;line-height:1.7;">Review 14-day receipts, deliveries and internal movements, workload by operation type, and top replenishment suggestions.</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="screenshots" style="margin-top:20px;padding:26px;border:1px solid #e4e8ef !important;border-radius:20px;background-color:#ffffff !important;box-shadow:0 8px 24px rgba(31,41,55,.05) !important;">
+        <div style="color:#078f86 !important;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;">Screenshots</div>
+        <h2 style="margin:5px 0 6px;color:#292d48 !important;font-size:26px;">See the dashboard in context</h2>
+        <p style="margin:0 0 17px;color:#626b7b !important;font-size:14px;">Dashboard, transfer list and transfer form using standard Odoo Inventory records.</p>
+
+        <div style="margin-bottom:18px;padding:14px;border:1px solid #e4e8ef !important;border-radius:16px;background-color:#f8f9fb !important;">
+            <h3 style="margin:0 0 10px;color:#30364a !important;font-size:17px;">1. Warehouse operations dashboard</h3>
+            <img src="screenshots/screenshot_01_dashboard.png" alt="Warehouse Performance Dashboard showing KPIs, warehouse flow, SLA aging, priority queue and replenishment" style="display:block;width:100%;height:auto;border:1px solid #dce2e9 !important;border-radius:10px;" />
+            <div style="margin-top:8px;color:#737d8d !important;font-size:12px;font-style:italic;">Shift metrics and operational panels at a glance.</div>
+        </div>
+        <div style="margin-bottom:18px;padding:14px;border:1px solid #e4e8ef !important;border-radius:16px;background-color:#f8f9fb !important;">
+            <h3 style="margin:0 0 10px;color:#30364a !important;font-size:17px;">2. Transfer list</h3>
+            <img src="screenshots/screenshot_02_transfer_list.png" alt="Odoo Inventory transfer list opened from the warehouse dashboard" style="display:block;width:100%;height:auto;border:1px solid #dce2e9 !important;border-radius:10px;" />
+            <div style="margin-top:8px;color:#737d8d !important;font-size:12px;font-style:italic;">Dashboard indicators drill down to the corresponding stock transfers.</div>
+        </div>
+        <div style="padding:14px;border:1px solid #e4e8ef !important;border-radius:16px;background-color:#f8f9fb !important;">
+            <h3 style="margin:0 0 10px;color:#30364a !important;font-size:17px;">3. Transfer details</h3>
+            <img src="screenshots/screenshot_03_transfer_form.png" alt="Odoo Inventory transfer form with operation details and product lines" style="display:block;width:100%;height:auto;border:1px solid #dce2e9 !important;border-radius:10px;" />
+            <div style="margin-top:8px;color:#737d8d !important;font-size:12px;font-style:italic;">Open a transfer directly to inspect and process the operation.</div>
+        </div>
+    </div>
+
+    <div id="features" style="margin-top:20px;padding:26px;border:1px solid #e4e8ef !important;border-radius:20px;background-color:#ffffff !important;box-shadow:0 8px 24px rgba(31,41,55,.05) !important;">
+        <div style="color:#078f86 !important;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;">Features</div>
+        <h2 style="margin:5px 0 12px;color:#292d48 !important;font-size:26px;">Built for day-to-day warehouse decisions</h2>
+        <table style="width:100%;border-collapse:separate;border-spacing:8px;">
+            <tr>
+                <td style="width:50%;padding:17px;vertical-align:top;border:1px solid #e4e8ef !important;border-radius:14px;background-color:#fafbfc !important;"><strong style="color:#292d48 !important;">Actionable KPI strip</strong><div style="margin-top:5px;color:#626b7b !important;font-size:13px;">Open, due, overdue, ready and on-time dispatch indicators open their matching transfer views.</div></td>
+                <td style="width:50%;padding:17px;vertical-align:top;border:1px solid #e4e8ef !important;border-radius:14px;background-color:#fafbfc !important;"><strong style="color:#292d48 !important;">Fourteen-day movement signal</strong><div style="margin-top:5px;color:#626b7b !important;font-size:13px;">Compare completed incoming, outgoing and internal transfers across a rolling two-week window.</div></td>
+            </tr>
+            <tr>
+                <td style="width:50%;padding:17px;vertical-align:top;border:1px solid #e4e8ef !important;border-radius:14px;background-color:#fafbfc !important;"><strong style="color:#292d48 !important;">Prioritized transfer queue</strong><div style="margin-top:5px;color:#626b7b !important;font-size:13px;">See scheduled work with overdue operations first, then the nearest upcoming transfer; open a row to process it.</div></td>
+                <td style="width:50%;padding:17px;vertical-align:top;border:1px solid #e4e8ef !important;border-radius:14px;background-color:#fafbfc !important;"><strong style="color:#292d48 !important;">Workload and replenishment</strong><div style="margin-top:5px;color:#626b7b !important;font-size:13px;">Compare open work by operation type and review the highest suggested order quantities from reordering rules.</div></td>
+            </tr>
+            <tr>
+                <td style="width:50%;padding:17px;vertical-align:top;border:1px solid #e4e8ef !important;border-radius:14px;background-color:#fafbfc !important;"><strong style="color:#292d48 !important;">Flexible time windows</strong><div style="margin-top:5px;color:#626b7b !important;font-size:13px;">Switch between today, this week, this month and all operations; refresh manually or let the dashboard refresh every minute.</div></td>
+                <td style="width:50%;padding:17px;vertical-align:top;border:1px solid #e4e8ef !important;border-radius:14px;background-color:#fafbfc !important;"><strong style="color:#292d48 !important;">Quick operation creation</strong><div style="margin-top:5px;color:#626b7b !important;font-size:13px;">Start a receipt, delivery or internal transfer from the dashboard using the configured operation type.</div></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="setup" style="margin-top:20px;padding:26px;border:1px solid #e4e8ef !important;border-radius:20px;background-color:#ffffff !important;box-shadow:0 8px 24px rgba(31,41,55,.05) !important;">
+        <div style="color:#078f86 !important;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;">Setup</div>
+        <h2 style="margin:5px 0 8px;color:#292d48 !important;font-size:26px;">Install and start using the dashboard</h2>
+        <ol style="margin:10px 0 0;padding-left:24px;color:#626b7b !important;font-size:14px;line-height:1.9;">
+            <li>Install the standard Odoo Inventory application.</li>
+            <li>Add this module to your addons path, update the Apps list, and install Warehouse Performance Dashboard.</li>
+            <li>Open the Warehouse Performance Dashboard menu and select a time window.</li>
+            <li>Click any metric, queue row, workload bar or replenishment figure to open its related Odoo records.</li>
+        </ol>
+        <div style="margin-top:14px;padding:13px 15px;border-left:4px solid #078f86 !important;border-radius:5px;background-color:#f1faf8 !important;color:#52606d !important;font-size:13px;">The dashboard follows the current user's Inventory access rights. Batch indicators are shown when the optional stock picking batch model is available.</div>
+    </div>
+
+    <div id="faq" style="margin-top:20px;padding:26px;border:1px solid #e4e8ef !important;border-radius:20px;background-color:#ffffff !important;box-shadow:0 8px 24px rgba(31,41,55,.05) !important;">
+        <div style="color:#078f86 !important;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;">FAQs</div>
+        <h2 style="margin:5px 0 12px;color:#292d48 !important;font-size:26px;">Frequently asked questions</h2>
+        <div style="padding:14px 16px;border:1px solid #e4e8ef !important;border-radius:12px 12px 0 0;background-color:#f8f9fb !important;"><strong style="color:#30364a !important;">Does this create or replace stock operations?</strong><div style="margin-top:4px;color:#626b7b !important;font-size:13px;">No. It reads standard stock records and provides shortcuts to existing Odoo transfer workflows.</div></div>
+        <div style="padding:14px 16px;border:1px solid #e4e8ef !important;border-top:0 !important;background-color:#ffffff !important;"><strong style="color:#30364a !important;">How often does the data refresh?</strong><div style="margin-top:4px;color:#626b7b !important;font-size:13px;">The dashboard refreshes automatically every minute and also has a manual refresh control.</div></div>
+        <div style="padding:14px 16px;border:1px solid #e4e8ef !important;border-top:0 !important;background-color:#f8f9fb !important;"><strong style="color:#30364a !important;">Does it depend on a separate barcode or batch module?</strong><div style="margin-top:4px;color:#626b7b !important;font-size:13px;">No. Inventory is the required dependency. Picking batch counts appear only if the batch model is installed and accessible.</div></div>
+        <div style="padding:14px 16px;border:1px solid #e4e8ef !important;border-top:0 !important;border-radius:0 0 12px 12px;background-color:#ffffff !important;"><strong style="color:#30364a !important;">Does the dashboard bypass access rules?</strong><div style="margin-top:4px;color:#626b7b !important;font-size:13px;">No. It uses the signed-in user's standard Odoo access rights and record visibility.</div></div>
+    </div>
+
+    <div id="technical" style="margin-top:20px;padding:26px;border:1px solid #e4e8ef !important;border-radius:20px;background-color:#ffffff !important;box-shadow:0 8px 24px rgba(31,41,55,.05) !important;">
+        <div style="color:#078f86 !important;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;">Technical</div>
+        <h2 style="margin:5px 0 12px;color:#292d48 !important;font-size:26px;">Module information</h2>
+        <table style="width:100%;border-collapse:separate;border-spacing:7px;">
+            <tr>
+                <td style="width:33.33%;padding:14px;vertical-align:top;border:1px solid #e4e8ef !important;border-radius:12px;background-color:#fafbfc !important;"><strong style="color:#30364a !important;">Odoo version</strong><div style="margin-top:4px;color:#626b7b !important;font-size:13px;">Compatible module build: Odoo 19.0.</div></td>
+                <td style="width:33.33%;padding:14px;vertical-align:top;border:1px solid #e4e8ef !important;border-radius:12px;background-color:#fafbfc !important;"><strong style="color:#30364a !important;">Dependency</strong><div style="margin-top:4px;color:#626b7b !important;font-size:13px;">stock (Odoo Inventory).</div></td>
+                <td style="width:33.33%;padding:14px;vertical-align:top;border:1px solid #e4e8ef !important;border-radius:12px;background-color:#fafbfc !important;"><strong style="color:#30364a !important;">Publisher</strong><div style="margin-top:4px;color:#626b7b !important;font-size:13px;">Odoo Wings · Warehouse Ops Center.</div></td>
+            </tr>
+        </table>
+        <div style="margin-top:10px;color:#7a8492 !important;font-size:12px;">License: OPL-1 · Inventory data remains in your Odoo database.</div>
+    </div>
+
+    <div style="margin-top:20px;padding:18px;border-radius:16px;background-color:#70446f !important;color:#ffffff !important;text-align:center;">
+        <div style="font-size:17px;font-weight:900;color:#ffffff !important;">Odoo Wings · Warehouse Performance Dashboard</div>
+        <div style="margin-top:4px;color:#f4edf4 !important;font-size:12px;">Odoo 16 · 17 · 18 · 19</div>
+    </div>
+</div>
+</section>
+</body>
+</html>

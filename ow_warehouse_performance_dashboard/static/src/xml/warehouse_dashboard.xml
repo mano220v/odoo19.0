@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="ow_warehouse_performance_dashboard.Dashboard" owl="1">
+    <Layout display="display" className="'h-100 overflow-auto'">
+      <div class="o_whx">
+        <header class="o_whx_top">
+          <div class="o_whx_brand"><div class="o_whx_mark"><i class="fa fa-cubes"/></div><div><span class="o_whx_micro">WAREHOUSE INTELLIGENCE</span><h1>Ops Center</h1></div><span class="o_whx_live"><i/> LIVE</span></div>
+          <div class="o_whx_controls">
+            <div class="o_whx_period">
+              <button t-attf-class="{{state.period === 'today' ? 'is-active' : ''}}" t-on-click="() => this.setPeriod('today')">Today</button>
+              <button t-attf-class="{{state.period === 'week' ? 'is-active' : ''}}" t-on-click="() => this.setPeriod('week')">This week</button>
+              <button t-attf-class="{{state.period === 'month' ? 'is-active' : ''}}" t-on-click="() => this.setPeriod('month')">This month</button>
+              <button t-attf-class="{{state.period === 'all' ? 'is-active' : ''}}" t-on-click="() => this.setPeriod('all')">All</button>
+            </div>
+            <button class="o_whx_refresh" title="Refresh data" t-on-click="() => this.reload()"><i t-attf-class="fa {{state.loading ? 'fa-refresh fa-spin' : 'fa-refresh'}}"/></button>
+          </div>
+        </header>
+        <div t-if="state.error" class="o_whx_error"><i class="fa fa-warning"/> Live operations could not load. Check Inventory access and refresh.</div>
+        <section class="o_whx_signal">
+          <button class="o_whx_metric" t-on-click="() => this.openTransfers(state.data.domains.open, 'Open warehouse work')"><span>OPEN WORK</span><strong><t t-esc="state.data.kpi.open"/></strong><small>in selected window <i class="fa fa-arrow-up"/></small></button>
+          <button class="o_whx_metric metric-hot" t-on-click="() => this.openTransfers(state.data.domains.due24, 'Due in the next 24 hours')"><span>DUE NEXT 24H</span><strong><t t-esc="state.data.kpi.due24"/></strong><small>scheduled arrivals &amp; dispatch</small></button>
+          <button class="o_whx_metric metric-alert" t-on-click="() => this.openTransfers(state.data.domains.overdue, 'Overdue warehouse work')"><span>OVERDUE</span><strong><t t-esc="state.data.kpi.overdue"/></strong><small><t t-esc="state.data.aging.over48"/> aged beyond 48h</small></button>
+          <button class="o_whx_metric" t-on-click="() => this.openTransfers(state.data.domains.ready, 'Ready to execute')"><span>READY TO EXECUTE</span><strong><t t-esc="state.data.kpi.ready"/></strong><small>reserved and actionable</small></button>
+          <button class="o_whx_metric metric-sla" t-on-click="() => this.openTransfers(state.data.domains.doneOutbound, 'Completed deliveries')"><span>DISPATCH SLA</span><strong><t t-esc="state.data.kpi.onTime"/>%</strong><small>outbound orders on time</small></button>
+        </section>
+        <div class="o_whx_sectionline"><span><i class="fa fa-crosshairs"/> SHIFT CONTROL</span><small t-if="state.updated">Last sync <t t-esc="state.updated"/></small><small t-else="">Connecting to live stock operations</small></div>
+
+        <main class="o_whx_main">
+          <section class="o_whx_panel o_whx_flow">
+            <div class="o_whx_panel_title"><div><span class="o_whx_overline">MOVEMENT SIGNAL · 14 DAYS</span><h2>Warehouse flow</h2><p>Completed receipts, deliveries and internal movements</p></div><div class="o_whx_legend"><span><i class="legend-in"/>Inbound</span><span><i class="legend-out"/>Outbound</span><span><i class="legend-int"/>Internal</span></div></div>
+            <div class="o_whx_chart"><div class="o_whx_chart_scale"><span>PEAK</span><span>0</span></div>
+              <div class="o_whx_day" t-foreach="state.data.trend" t-as="day" t-key="day.key"><div class="o_whx_columns">
+                <i class="col-in" t-att-style="'height:' + barHeight(day.incoming) + '%'" t-att-title="day.incoming + ' inbound'"/>
+                <i class="col-out" t-att-style="'height:' + barHeight(day.outgoing) + '%'" t-att-title="day.outgoing + ' outbound'"/>
+                <i class="col-int" t-att-style="'height:' + barHeight(day.internal) + '%'" t-att-title="day.internal + ' internal'"/>
+              </div><small><t t-esc="day.label"/></small></div>
+            </div>
+            <div class="o_whx_flowfoot"><span><b><t t-esc="state.data.kpi.incoming"/></b> inbound open</span><span><b><t t-esc="state.data.kpi.outgoing"/></b> outbound open</span><span><b><t t-esc="state.data.kpi.completed"/></b> completed in window</span></div>
+          </section>
+          <section class="o_whx_panel o_whx_exceptions">
+            <div class="o_whx_panel_title"><div><span class="o_whx_overline">SLA AGING</span><h2>Exception pressure</h2><p>Overdue work grouped by age</p></div><span class="o_whx_alert_mark"><i class="fa fa-bolt"/></span></div>
+            <div class="o_whx_ageband">
+              <button t-on-click="() => this.openTransfers(state.data.domains.under24, 'Overdue work under 24 hours')"><small>0–24H</small><b><t t-esc="state.data.aging.under24"/></b><span>fresh delay</span></button>
+              <button t-on-click="() => this.openTransfers(state.data.domains.under48, 'Overdue work 24 to 48 hours')"><small>24–48H</small><b><t t-esc="state.data.aging.under48"/></b><span>at risk</span></button>
+              <button class="age-critical" t-on-click="() => this.openTransfers(state.data.domains.over48, 'Overdue work over 48 hours')"><small>48H+</small><b><t t-esc="state.data.aging.over48"/></b><span>critical</span></button>
+            </div>
+            <div class="o_whx_attention"><span>NEEDS RESERVATION</span><button t-on-click="() => this.openTransfers(state.data.domains.waiting, 'Needs reservation')"><b><t t-esc="state.data.kpi.waiting"/></b><i class="fa fa-arrow-right"/></button></div>
+            <div class="o_whx_attention" t-if="state.data.kpi.batches !== null"><span>ACTIVE PICKING BATCHES</span><button t-on-click="() => this.open('stock.picking.batch', [['state','not in',['done','cancel']]], 'Active batches')"><b><t t-esc="state.data.kpi.batches"/></b><i class="fa fa-arrow-right"/></button></div>
+          </section>
+          <section class="o_whx_panel o_whx_queue">
+            <div class="o_whx_panel_title"><div><span class="o_whx_overline">PRIORITY QUEUE</span><h2>Next moves</h2><p>Past-due first, then nearest scheduled work</p></div><span class="o_whx_queue_count"><t t-esc="state.data.queue.length"/> ITEMS</span></div>
+            <div t-if="!state.data.queue.length" class="o_whx_empty">No scheduled transfers are waiting in this queue.</div>
+            <div t-if="state.data.queue.length" class="o_whx_tablewrap"><table class="o_whx_table"><thead><tr><th>OPERATION</th><th>REFERENCE</th><th>CONTACT</th><th>AGE / ETA</th><th>PRIORITY</th></tr></thead><tbody>
+              <tr t-foreach="state.data.queue" t-as="row" t-key="row.id" t-on-click="() => this.openTransfer(row.id)"><td><span t-attf-class="o_whx_type {{row.code}}"><i class="fa fa-exchange"/><t t-esc="row.operation"/></span></td><td class="ref"><t t-esc="row.name"/></td><td><t t-esc="row.partner"/></td><td t-attf-class="{{row.late ? 'late-text' : ''}}"><t t-esc="row.age"/></td><td><span t-attf-class="o_whx_flag {{row.late ? 'flag-late' : 'flag-plan'}}"><t t-if="row.late">ACTION</t><t t-else="">PLANNED</t></span></td></tr>
+            </tbody></table></div>
+          </section>
+          <section class="o_whx_panel o_whx_capacity">
+            <div class="o_whx_panel_title"><div><span class="o_whx_overline">WORK ALLOCATION</span><h2>Load by operation</h2><p>Open transfers by configured operation type</p></div></div>
+            <div t-if="!state.data.workload.length" class="o_whx_empty">No open work in this period.</div>
+            <button class="o_whx_loadrow" t-foreach="state.data.workload" t-as="item" t-key="item.id" t-on-click="() => this.openTransfers([...state.data.domains.open, ['picking_type_id','=',item.id]], item.name)"><span><i t-attf-class="fa {{item.code === 'incoming' ? 'fa-sign-in' : item.code === 'outgoing' ? 'fa-sign-out' : 'fa-random'}}"/><t t-esc="item.name"/></span><div class="o_whx_track"><i t-att-style="'width:' + workloadWidth(item.count) + '%'"/></div><b><t t-esc="item.count"/></b></button>
+            <div class="o_whx_attention o_whx_reorder"><span>REPLENISHMENT FLAGS</span><button t-on-click="openReplenishment"><b><t t-esc="state.data.kpi.reorder"/></b><i class="fa fa-arrow-right"/></button></div>
+          </section>
+          <section class="o_whx_panel o_whx_stock">
+            <div class="o_whx_panel_title"><div><span class="o_whx_overline">STOCK RISK</span><h2>Replenish before it stops flow</h2><p>Highest suggested order quantities</p></div><button class="o_whx_textbutton" t-on-click="openReplenishment">ALL RULES <i class="fa fa-arrow-right"/></button></div>
+            <div t-if="!state.data.reorders.length" class="o_whx_empty">No replenishment suggestions right now.</div>
+            <button class="o_whx_stockrow" t-foreach="state.data.reorders" t-as="row" t-key="row.id" t-on-click="openReplenishment"><span class="stock-index">0<t t-esc="row_index + 1"/></span><b><t t-esc="row.product"/></b><span>ORDER</span><strong><t t-esc="row.qty"/></strong></button>
+            <div class="o_whx_quick"><span>CREATE OPERATION</span><button t-on-click="() => this.createOperation('incoming')">+ Receipt</button><button t-on-click="() => this.createOperation('outgoing')">+ Delivery</button><button t-on-click="() => this.createOperation('internal')">+ Move</button></div>
+          </section>
+        </main>
+        <footer class="o_whx_footer"><span><i class="fa fa-shield"/> Operations shown with your Odoo access rights</span><span>ODOO WINGS <b> / </b> WAREHOUSE OPS CENTER <b> / </b> ODOO 16 · 17 · 18 · 19</span></footer>
+      </div>
+    </Layout>
+  </t>
+</templates>

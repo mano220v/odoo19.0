@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_warehouse_performance_dashboard" model="ir.actions.client">
+        <field name="name">Warehouse Performance Dashboard</field>
+        <field name="tag">ow_warehouse_performance_dashboard_tag</field>
+    </record>
+
+    <menuitem id="menu_warehouse_performance_dashboard_root"
+              name="Warehouse Performance Dashboard"
+              action="action_warehouse_performance_dashboard"
+              sequence="1" groups="stock.group_stock_user"/>
+
+    <!-- Also surface it as the first item inside the standard Inventory app -->
+    <menuitem id="menu_warehouse_performance_dashboard_in_stock"
+              name="Dashboard"
+              parent="stock.menu_stock_root"
+              action="action_warehouse_performance_dashboard"
+              sequence="1" groups="stock.group_stock_user"/>
+
+</odoo>
